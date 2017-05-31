@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="chca,markdown" />
+    <meta name="description" content="&lt;h1&gt;Chca是什么？&lt;/h1&gt;
+
+&lt;p&gt;Chca是一个静态博客生成器。&lt;br /&gt;
+最大的特色就是简单、方便、快捷，不需要使用命令编译文件，&lt;br /&gt;
+我们写博文时，只需把markdown文件放到markdown文件夹下就能自动生成html了。&lt;br /&gt;
+如果你没有使用过其他生成工具的话，直接入手Chca肯定是个不错的选择&amp;hellip;&lt;/p&gt;
+
+&lt;h3&gt;1. 下载chca&lt;/h3&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>分享使用CHCA搭建静态博客全过程</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://github.com/num5"><i class="fa fa-git"></i></a>
+        </li>
+        <li><a href="http://weibo.com/golune"><i class="fa fa-qq"></i></a>
+        </li>
+		<li><a href="http://weibo.com/golune"><i class="fa fa-link"></i></a>
+        </li>		
+    </ul>
+
+
+
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/Markdown">
+                    Markdown
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/Noark">
+                    Noark
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e5%8d%9a%e5%ae%a2">
+                    博客
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e5%bf%83%e5%be%97">
+                    心得
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>分享使用CHCA搭建静态博客全过程
+            </h3>
+        </div>
+        <div class="post-content">
+
+            <h1>Chca是什么？</h1>
+
+<p>Chca是一个静态博客生成器。<br />
+最大的特色就是简单、方便、快捷，不需要使用命令编译文件，<br />
+我们写博文时，只需把markdown文件放到markdown文件夹下就能自动生成html了。<br />
+如果你没有使用过其他生成工具的话，直接入手Chca肯定是个不错的选择&hellip;</p>
+
+<h3>1. 下载chca</h3>
+
+<p>Windows：<a href="http://golune.qiniudn.com/chca-win64.tar.gz">http://golune.qiniudn.com/chca-win64.tar.gz</a><br />
+Linux：<a href="http://golune.qiniudn.com/chca-linux64.tar.gz">http://golune.qiniudn.com/chca-linux64.tar.gz</a><br />
+Mac：<a href="http://golune.qiniudn.com/chca-darwin64.tar.gz">http://golune.qiniudn.com/chca-darwin64.tar.gz</a></p>
+
+<h3>2. 初始化</h3>
+
+<p>打开命令终端，出入命令：</p>
+
+<pre><code>E:\oschina.net\blog&gt;chca.exe init
+============================================
+*   _______________  __________________    *
+*   __  ____/___  / / /__  ____/___    |   *
+*   _  /     __  /_/ / _  /     __  /| |   *
+*   / /___   _  __  /  / /___   _  ___ |   *
+*   \____/   /_/ /_/   \____/   /_/  |_|   *
+*                                          *
+*             Simple and fast              *
+============================================
+
+2017/05/31 16:21:58 [chca.go:139] [DEBUG] 初始化成功！
+
+E:\oschina.net\blog&gt;
+</code></pre>
+
+<h3>3. 下载模板</h3>
+
+<p>地址：<a href="http://golune.qiniudn.com/default-theme.tar.gz">http://golune.qiniudn.com/default-theme.tar.gz</a></p>
+
+<p>模板文件夹结构<br />
+- blog          模版文件夹<br />
+- -- assets         资源文件夹<br />
+- -- -- css<br />
+- -- -- js<br />
+- -- layout         布局文件夹<br />
+- -- -- main.html       公共布局<br />
+- -- -- index.html      主页<br />
+- -- -- post.html       文章页<br />
+- -- -- archive.html    导航导航页<br />
+- -- -- category.html   分类导航页<br />
+- -- -- tag.html        标签导航页<br />
+- -- -- page.html       标签、导航和分类列表页面</p>
+
+<h3>4. 创建一个博文</h3>
+
+<p>新建 markdown 文件</p>
+
+<pre><code>E:\oschina.net\blog&gt;chca.exe new test
+============================================
+*   _______________  __________________    *
+*   __  ____/___  / / /__  ____/___    |   *
+*   _  /     __  /_/ / _  /     __  /| |   *
+*   / /___   _  __  /  / /___   _  ___ |   *
+*   \____/   /_/ /_/   \____/   /_/  |_|   *
+*                                          *
+*             Simple and fast              *
+============================================
+
+E:\oschina.net\blog&gt;
+</code></pre>
+
+<p>自行编辑在markdown主文件夹下的filename.md文件</p>
+
+<h3>5. 运行chca</h3>
+
+<pre><code>E:\oschina.net\blog&gt;chca.exe run 9000
+============================================
+*   _______________  __________________    *
+*   __  ____/___  / / /__  ____/___    |   *
+*   _  /     __  /_/ / _  /     __  /| |   *
+*   / /___   _  __  /  / /___   _  ___ |   *
+*   \____/   /_/ /_/   \____/   /_/  |_|   *
+*                                          *
+*             Simple and fast              *
+============================================
+
+2017/05/31 16:32:20 [compile.go:33] [TRAC] 开始编译博客...
+2017/05/31 16:32:20 [compile.go:48] [DEBUG] 编译完成...
+2017/05/31 16:32:20 [watcher.go:27] [TRAC] 初始化监听器... ... 
+2017/05/31 16:32:20 [watcher.go:77] [TRAC] 监听文件夹: [markdown]
+2017/05/31 16:32:20 [watcher.go:84] [DEBUG] 初始化监控成功... ...
+2017/05/31 16:32:20 [chca.go:144] [TRAC] 打开内置web服务器...
+2017/05/31 16:32:20 [chca.go:155] [DEBUG] 打开内置web服务器成功，监听端口:9000...
+</code></pre>
+
+<h3>6. 访问</h3>
+
+<p><a href="http://127.0.0.1:9000/">http://127.0.0.1:9000/</a></p>
+
+<h3>7. 总结</h3>
+
+<p>不需要安装软件，无第三方依赖，没有DB，好简单嘛，使用方面，本地编辑好了 记得上传Github。</p>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2017/5/31/%e5%88%86%e4%ba%ab%e4%bd%bf%e7%94%a8chca%e6%90%ad%e5%bb%ba%e9%9d%99%e6%80%81%e5%8d%9a%e5%ae%a2%e5%85%a8%e8%bf%87%e7%a8%8b/">http://blog.noark.xyz/article/2017/5/31/分享使用chca搭建静态博客全过程/</a>
+            </p>
+
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2017-05-31</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/%e5%bf%83%e5%be%97">心得</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/chca">chca</a>&nbsp;
+                    
+                    <a href="/tag/markdown">markdown</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="SOHUCS" sid="9fedcee86cdc8812c683070dd311f327" ></div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>
