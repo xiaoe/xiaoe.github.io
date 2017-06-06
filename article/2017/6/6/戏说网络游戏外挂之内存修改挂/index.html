@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="CE,内存修改" />
+    <meta name="description" content="&lt;p&gt;很多游戏开发者一直以为网络游戏的数据是在服务器上的。你怎么改都无济于事，修改客户端内存只是修改了显示，自己骗自己呢。&lt;/p&gt;
+
+&lt;p&gt;事实上打钱工作室的兄弟调试游戏经验 都出一本叫 《外挂入门之内存修改》，序就写着的，掩耳盗铃。&lt;/p&gt;
+
+&lt;h4&gt;掩耳盗铃&lt;/h4&gt;
+
+&lt;p&gt;原为掩耳盗钟。掩：遮盖；盗：偷。把耳朵捂住偷铃铛，以为自己听不见别人也会听不见，比喻自欺欺人。&lt;/p&gt;
+
+&lt;p&gt;《吕氏春秋·自知》：“范氏之亡也,百姓有得钟者.欲负而走,则钟大不可负；以椎毁之,钟况然有音.恐人闻之而夺己也,遽掩其耳.恶人闻之,可也；恶己自闻之,悖矣。”&lt;/p&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>戏说网络游戏外挂之内存修改挂</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/%e5%a4%96%e6%8c%82">
+                    外挂
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%9c%8d%e5%8a%a1%e5%99%a8">
+                    服务器
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e9%9a%8f%e7%ac%94">
+                    随笔
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>戏说网络游戏外挂之内存修改挂
+            </h3>
+        </div>
+        <div class="post-content">
+
+            <p>很多游戏开发者一直以为网络游戏的数据是在服务器上的。你怎么改都无济于事，修改客户端内存只是修改了显示，自己骗自己呢。</p>
+
+<p>事实上打钱工作室的兄弟调试游戏经验 都出一本叫 《外挂入门之内存修改》，序就写着的，掩耳盗铃。</p>
+
+<h4>掩耳盗铃</h4>
+
+<p>原为掩耳盗钟。掩：遮盖；盗：偷。把耳朵捂住偷铃铛，以为自己听不见别人也会听不见，比喻自欺欺人。</p>
+
+<p>《吕氏春秋·自知》：“范氏之亡也,百姓有得钟者.欲负而走,则钟大不可负；以椎毁之,钟况然有音.恐人闻之而夺己也,遽掩其耳.恶人闻之,可也；恶己自闻之,悖矣。”</p>
+
+<hr />
+
+<h4>内存修改工具的代表</h4>
+
+<p>CE 全名：Cheat Engine，它允许你修改你的游戏或软件内存数据。它包括16进制编辑，反汇编程序，内存查找工具。<br />
+与同类修改工具相比，它具有强大的反汇编功能，且自身附带了外挂制作工具，可以用它直接生成外挂。</p>
+
+<h4>修改内存数值流程编辑</h4>
+
+<ol>
+<li>运行CE。<br /></li>
+<li>运行游戏。<br /></li>
+<li>打开游戏进程。<br /></li>
+<li>首次搜索一个数值。<br /></li>
+<li>回游戏中让这个数值增加或减少。<br /></li>
+<li>回CE按数值增减的情况再次搜索。<br /></li>
+<li>重复5和6直到得到一个或很少的几个结果。<br /></li>
+<li>在这几个结果中判断哪一个是真正的结果。<br /></li>
+<li>修改数值或锁定数值。<br />
+<br /></li>
+</ol>
+
+<p>换成程序猿能听得懂的就是<br />
+<strong>在你写的代码中所有变量里以值的方式搜索定位内存地址，然后修改测试服务器端的逻辑Bug.</strong></p>
+
+<p>一般测试者都会找带有数据相关的系统为入口进行参数检查测试，计算溢出测试，逻辑Bug测试等等.</p>
+
+<h5>举个例子：</h5>
+
+<p>《X武神》的福利大厅中资源追回功能，可追回的次数可以修改为负数，这是你会发现钻石在增加（参数合适性未检查）.</p>
+
+<p>《XX王座》的好友赠送功能，修改道具数量，同样的道具放4份，就可以复制道具（逻辑Bug）。</p>
+
+<p>商城购买时，修改数量为很大时，计算溢出而只花很少的钱买很多很多的商品（计算溢出）。</p>
+
+<h4>防御之策</h4>
+
+<p>这里<strong>不讨论服务器的是与非</strong>，咱来聊一聊客户端如何应对内存修改.</p>
+
+<p>上面提到CE的工作原理，那对应的方案就内存加密或内存保护，让你搜不到你想找的数值就没法改了吧.</p>
+
+<pre><code>自己编写一个Int32包装类，
+提供一个Set方法，方法做加密处理
+提供一个Get方法，方法做解密处理
+
+重要的数据，切换为此类实现，这样CE等内存修改工具就无用武之地了.
+</code></pre>
+
+<p>CE可基于数值精确搜索，也可以增加了减少了的方式模糊搜索，所以我们不能只是简单的把数值加上一个定值。</p>
+
+<p>加密方案仁者见仁,智者见智，不宜过于复杂，不要影响性能为前提，更不要掩耳盗铃。</p>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2017/6/6/%e6%88%8f%e8%af%b4%e7%bd%91%e7%bb%9c%e6%b8%b8%e6%88%8f%e5%a4%96%e6%8c%82%e4%b9%8b%e5%86%85%e5%ad%98%e4%bf%ae%e6%94%b9%e6%8c%82/">http://blog.noark.xyz/article/2017/6/6/戏说网络游戏外挂之内存修改挂/</a>
+            </p>
+
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2017-06-06</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/%e5%a4%96%e6%8c%82">外挂</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/CE">CE</a>&nbsp;
+                    
+                    <a href="/tag/%e5%86%85%e5%ad%98%e4%bf%ae%e6%94%b9">内存修改</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>
