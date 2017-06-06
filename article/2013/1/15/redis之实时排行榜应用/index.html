@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="Redis,排行榜" />
+    <meta name="description" content="&lt;h3&gt;Redis是什么？&lt;/h3&gt;
+
+&lt;p&gt;Redis就是个key-value结构的存储系统。他提供了非常丰富的数据结构，包括 字符串（String）哈希（Hashs） 列表（Lists） 集合（Sets） 有序集合（Sorted Sets），当然还提供了操作这些数据结构的API。&lt;/p&gt;
+
+&lt;p&gt;Redis具有性能极高 – Redis能支持超过 100K&#43; 每秒的读写频率。&lt;/p&gt;
+
+&lt;p&gt;Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。&lt;/p&gt;
+
+&lt;p&gt;Redis还支持 publish/subscribe, Lua脚本，key过期等等特性。&lt;/p&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>Redis之实时排行榜应用</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/%e5%a4%96%e6%8c%82">
+                    外挂
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%9c%8d%e5%8a%a1%e5%99%a8">
+                    服务器
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e9%9a%8f%e7%ac%94">
+                    随笔
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>Redis之实时排行榜应用
+            </h3>
+        </div>
+        <div class="post-content">
+
+            <h3>Redis是什么？</h3>
+
+<p>Redis就是个key-value结构的存储系统。他提供了非常丰富的数据结构，包括 字符串（String）哈希（Hashs） 列表（Lists） 集合（Sets） 有序集合（Sorted Sets），当然还提供了操作这些数据结构的API。</p>
+
+<p>Redis具有性能极高 – Redis能支持超过 100K+ 每秒的读写频率。</p>
+
+<p>Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。</p>
+
+<p>Redis还支持 publish/subscribe, Lua脚本，key过期等等特性。</p>
+
+<p>Redis的作者是个很努力的大神，版本更新快，2.6里又多了好多实用的API</p>
+
+<h3>Redis的应用场景</h3>
+
+<ol>
+<li>取最新N个数据的操作<br /></li>
+<li>排行榜应用，取TOP N操作<br /></li>
+<li>需要精准设定过期时间的应用<br /></li>
+<li>计数器应用<br /></li>
+<li>Uniq操作，获取某段时间所有数据排重值<br /></li>
+<li>实时系统，反垃圾系统<br /></li>
+<li>Pub/Sub构建实时消息系统<br /></li>
+<li>构建队列系统<br /></li>
+<li>缓存<br />
+<br /></li>
+</ol>
+
+<p>这些都是作者自己说的，这里不讨论其他的，适用当前场景就好，我们还是来关注一下排行榜的实现策划需求描述:</p>
+
+<p>SNS游戏中，一般只有一个服，玩家数量非常多，玩家角色在线或离线状态比较模糊，这类游戏玩家角色一般是看不见的，所以排行榜是他们努力活下来依靠之一。<br />
+因此实现一个实时的排行榜尤为重要<br />
+一个类似下图的排行榜，要求是实时动态排行榜，一但后面的功勋值变化，要是排行榜上马上能看到自己的排行变化情况.</p>
+
+<p>在了解了Redis数据结构发现，Redis中的sorted set数据结构，几乎就是为这个场景而生的。</p>
+
+<p>假设一下排行的场景：有100W个角色，那么通过如下操作，就可以创建一个排行的角色基本信息的Hash：</p>
+
+<pre><code class="language-java">    private int max = 100_0000;
+    private Random random = new Random();
+    
+    @Test
+    public void testAdd100WRoleBaseInfo() {
+		for(int i = 1; i &lt;= max; i ++){
+			Map&lt;String, String&gt; role = new HashMap&lt;String, String&gt;();
+			role.put(&quot;id&quot;, String.valueOf(i));
+			role.put(&quot;name&quot;, &quot;小流氓&quot; + i + &quot;号&quot;);
+			role.put(&quot;level&quot;, String.valueOf(random.nextInt(200)));
+			role.put(&quot;exp&quot;, String.valueOf(random.nextInt(100000000)));
+			role.put(&quot;rank&quot;, String.valueOf(i));
+			role.put(&quot;name&quot;, &quot;联盟名字&quot;);
+			role.put(&quot;meritorious&quot;, String.valueOf(random.nextInt(10000)));
+			redis.hmset(&quot;role:&quot; + i, role);
+		}
+	}
+</code></pre>
+
+<pre><code>used_memory_human:157.25M
+</code></pre>
+
+<p>100W条角色基本数据占用内存为157M</p>
+
+<p>下面模拟功勋值变化的情况，他们的功勋值在10000以内随机</p>
+
+<pre><code class="language-java">    @Test
+	public void testUpdateAllMeritorious() {
+		String RANK_KEY = &quot;rank_key&quot;;
+		for (int i = 1; i &lt;= max; i++) {
+			String key = &quot;role:&quot; + i;
+			int meritorious = random.nextInt(10000);
+			redis.hset(key, &quot;meritorious&quot;, String.valueOf(meritorious));
+			redis.zadd(RANK_KEY, meritorious, key);
+		}
+	}
+</code></pre>
+
+<p>测试数据还在跑，先来介绍一下上面两个API</p>
+
+<pre><code>HSET key field value
+加入版本 1.3.10。
+时间复杂度 O(1)
+设置 key 指定的哈希集中指定字段的值。如果 key 指定的哈希集不存在，会创建一个新的哈希集并与 key 关联。如果字段在哈希集中存在，它将被重写。
+返回值
+整数：含义如下
+•    1如果field是一个新的字段
+•	0如果field原来在map里面已经存在
+
+redis&gt; HSET role:1 name &quot;Hello&quot;
+(integer) 1
+redis&gt; HGET role:1 name
+&quot;Hello&quot;
+redis&gt; 
+</code></pre>
+
+<pre><code>ZADD key
+加入版本 1.1。
+时间复杂度O(log(N)),N是有序集合中元素的个数。
+该命令添加指定的成员到key对应的有序集合中，每个成员都有一个分数。你可以指定多个分数/成员组合。如果一个指定的成员已经在对应的有序集合中了，那么其分数就会被更新成最新的，并且该成员会重新调整到正确的位置，以确保集合有序。如果key不存在，就会创建一个含有这些成员的有序集合，就好像往一个空的集合中添加一样。如果key存在，但是它并不是一个有序集合，那么就返回一个错误。
+分数的值必须是一个表示数字的字符串，并且可以是double类型的浮点数。
+对于有序集合的介绍，可以参考sorted sets页面。
+返回值
+整数, 如下整数:
+•	返回添加到有序集合中元素的个数，不包括那种已经存在只是更新分数的元素。
+历史
+•	&gt;= 2.4: 接受多个元素。在redis 2.4之前的版本中，每次只能添加或者更新一个元素。
+
+
+redis&gt; ZADD myzset 1 &quot;one&quot;
+(integer) 1
+redis&gt; ZADD myzset 1 &quot;uno&quot;
+(integer) 1
+redis&gt; ZADD myzset 2 &quot;two&quot;
+(integer) 1
+redis&gt; ZADD myzset 3 &quot;two&quot;
+(integer) 0
+redis&gt; ZRANGE myzset 0 -1 WITHSCORES
+1) &quot;one&quot;
+2) &quot;1&quot;
+3) &quot;uno&quot;
+4) &quot;1&quot;
+5) &quot;two&quot;
+6) &quot;3&quot;
+redis&gt;
+</code></pre>
+
+<p>排行榜只占了一个Key (rank_key)</p>
+
+<pre><code>used_memory_human:253.80M
+</code></pre>
+
+<p>此时内存占用为253M</p>
+
+<pre><code class="language-java">    @Test
+	public void testUpdateMeritorious() {
+		String RANK_KEY = &quot;rank_key&quot;;
+		String key = &quot;role:1&quot;;
+		int meritorious = 0;
+		long hsetStartTime = System.nanoTime();
+		redis.hset(key, &quot;meritorious&quot;, String.valueOf(meritorious));
+		long hsetEndTime = System.nanoTime();
+		System.out.println(&quot;hset --&gt; &quot; + (hsetEndTime - hsetStartTime)/1000000 + &quot; ms&quot;);
+		
+		long zaddStartTime = System.nanoTime();
+		redis.zadd(RANK_KEY, meritorious, key);
+		long zaddEndTime = System.nanoTime();
+		System.out.println(&quot;zadd --&gt; &quot; + (zaddEndTime - zaddStartTime)/1000000 + &quot; ms&quot;);
+	}
+</code></pre>
+
+<p>测试结果</p>
+
+<p>上面功勋值为0，由于Zadd是的时间复杂度来看，移动最大，所用时间最多，再次测试</p>
+
+<pre><code class="language-java">    @Test
+	public void testUpdateMeritorious() {
+		String RANK_KEY = &quot;rank_key&quot;;
+		String key = &quot;role:100&quot;;
+		int[] ms = {0, 10001, 200, 8000, 5000};
+		for (int i = 0; i &lt; ms.length; i ++){
+			int meritorious = ms[i];
+			long hsetStartTime = System.nanoTime();
+			redis.hset(key, &quot;meritorious&quot;, String.valueOf(meritorious));
+			long hsetEndTime = System.nanoTime();
+			System.out.println(&quot;hset &quot;+meritorious+&quot; --&gt; &quot; + (hsetEndTime - hsetStartTime)/1000000 + &quot; ms&quot;);
+			
+			long zaddStartTime = System.nanoTime();
+			redis.zadd(RANK_KEY, meritorious, key);
+			long zaddEndTime = System.nanoTime();
+			System.out.println(&quot;zadd &quot;+meritorious+&quot; --&gt; &quot; + (zaddEndTime - zaddStartTime)/1000000 + &quot; ms&quot;);
+		}
+	}
+</code></pre>
+
+<p>测试结果来看 100W数据的实时排行榜可行。</p>
+
+<p>如果获取前50名角色Id</p>
+
+<pre><code class="language-java">@Test
+	public void testGetTop50() {
+		int page = 1, size = 50;
+		for(int i = 0; i &lt; 5; i ++){
+			long startTime = System.nanoTime();
+			Set&lt;String&gt; ranks = redis.zrevrange(RANK_KEY, (page - 1) * size, page * size - 1);
+			long endTime = System.nanoTime();
+			System.out.println(&quot;testGetTop50  --&gt; &quot; + (endTime - startTime)/1000000 + &quot; ms&quot;);
+			System.out.println(&quot;size  --&gt; &quot; + ranks.size());
+		}
+	}
+</code></pre>
+
+<pre><code class="language-java">@Test
+	public void testGetTop10RoleInfo() {
+		int page = 1, size = 10;
+		long startTime = System.nanoTime();
+		Set&lt;String&gt; ranks = redis.zrevrange(RANK_KEY, (page - 1) * size, page * size - 1);
+		long endTime = System.nanoTime();
+		for(String roleId: ranks){
+			System.out.println(redis.hgetAll(roleId));
+		}
+		System.out.println(&quot;testGetTop10RoleInfo  --&gt; &quot; + (endTime - startTime)				/ 1000000 + &quot; ms&quot;);
+	}
+</code></pre>
+
+<p>第10页 的50条</p>
+
+<pre><code>testGet10_50RoleInfo  --&gt; 37 ms
+testGet100_100RoleInfo  --&gt; 35 ms
+testGet1000_100RoleInfo  --&gt; 35 ms
+</code></pre>
+
+<pre><code>HGETALL key
+加入版本 1.3.10。
+时间复杂度
+O(N), 其中 N 是哈希集的大小
+返回 key 指定的哈希集中所有的字段和值。返回值中，每个字段名的下一个是它的值，所以返回值的长度是哈希集大小的两倍
+返回值
+多个返回值：哈希集中字段和值的列表。当 key 指定的哈希集不存在时返回空列表。
+</code></pre>
+
+<h4>每周的排名变化</h4>
+
+<p>当前的排名 – 上周的的排名 = 排名变化</p>
+
+<p>如何记录一次排名，简单粗暴的一次Get，100W 4秒左右</p>
+
+<p>Redis2.6以后有个Dump一个key的功能，时间跟Get差不多，再restore回去使用</p>
+
+<h4>多条件排行</h4>
+
+<p>由于sorted set只有一个条件，所以多条件排行好像是个太奢侈的要求。</p>
+
+<p>问题产生原因：从上面测试结果里也能发现，数据量大了，前50的人 都是9999功勋值，有些等级高的在下面，要是按此排行榜发送奖励，显然玩家会有意见</p>
+
+<p>为解决此问题尝试一下曲线求国。</p>
+
+<p>一个条件，那就加吧！功勋值*1000+等级 这样来排</p>
+
+<p>这样需要重构此SortedSet的排行榜</p>
+
+<p>如果再有经验为第三条件，经验正常为long类型，这有点难度了…</p>
+
+<p>又看了一下SortedSet的API其分数的值必须是一个表示数字的字符串，并且可以是double类型的浮点数。</p>
+
+<p>Double是个好东东，将其他条件加入小数部分</p>
+
+<pre><code>{id=7500, exp=94565268, rank=7500, level=168, meritorious=9999, name=联盟名字}
+{id=406, exp=97149316, rank=406, level=142, meritorious=9999, name=联盟名字}
+{id=4054, exp=73429686, rank=4054, level=189, meritorious=9998, name=联盟名字}
+{id=3798, exp=61974309, rank=3798, level=41, meritorious=9998, name=联盟名字}
+{id=3126, exp=16462104, rank=3126, level=73, meritorious=9996, name=联盟名字}
+{id=7518, exp=59497309, rank=7518, level=164, meritorious=9995, name=联盟名字}
+{id=2429, exp=10389944, rank=2429, level=98, meritorious=9995, name=联盟名字}
+{id=431, exp=39615033, rank=431, level=24, meritorious=9995, name=联盟名字}
+{id=5573, exp=75663066, rank=5573, level=124, meritorious=9994, name=联盟名字}
+{id=7478, exp=75361854, rank=7478, level=43, meritorious=9994, name=联盟名字}
+{id=1340, exp=73811757, rank=1340, level=185, meritorious=9993, name=联盟名字}
+{id=7101, exp=98409114, rank=7101, level=118, meritorious=9993, name=联盟名字}
+{id=364, exp=63513412, rank=364, level=126, meritorious=9990, name=联盟名字}
+{id=4269, exp=32826804, rank=4269, level=69, meritorious=9990, name=联盟名字}
+{id=3163, exp=49462278, rank=3163, level=136, meritorious=9988, name=联盟名字}
+{id=4962, exp=98373781, rank=4962, level=44, meritorious=9987, name=联盟名字}
+</code></pre>
+
+<p>建议：如果一开始明确，能放在小数点左边就放左边，小数点右边留着扩展功能</p>
+
+<p><a href="http://redis.io/">Reids官方网站传送点</a></p>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2013/1/15/redis%e4%b9%8b%e5%ae%9e%e6%97%b6%e6%8e%92%e8%a1%8c%e6%a6%9c%e5%ba%94%e7%94%a8/">http://blog.noark.xyz/article/2013/1/15/redis之实时排行榜应用/</a>
+            </p>
+
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2013-01-15</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/%e6%9c%8d%e5%8a%a1%e5%99%a8">服务器</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Redis">Redis</a>&nbsp;
+                    
+                    <a href="/tag/%e6%8e%92%e8%a1%8c%e6%a6%9c">排行榜</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>
