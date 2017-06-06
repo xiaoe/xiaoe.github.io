@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="Protobuf,协议" />
+    <meta name="description" content="&lt;h3&gt;Protocol Buffers简介&lt;/h3&gt;
+
+&lt;p&gt;这个玩意就是Google定义的一种序列化的协议格式，具有语言无关性、平台无关性、可扩展性等优点，类似于XML或Json，下面简称为Protobuf。&lt;/p&gt;
+
+&lt;h3&gt;Protbuf的适用场景&lt;/h3&gt;
+
+&lt;p&gt;先看个例子&lt;/p&gt;
+
+&lt;p&gt;一个角色对象拥有2个属性，Id和name&lt;/p&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>Protobuf之通信协议</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/%e5%a4%96%e6%8c%82">
+                    外挂
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%9c%8d%e5%8a%a1%e5%99%a8">
+                    服务器
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e9%9a%8f%e7%ac%94">
+                    随笔
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>Protobuf之通信协议
+            </h3>
+        </div>
+        <div class="post-content">
+
+            <h3>Protocol Buffers简介</h3>
+
+<p>这个玩意就是Google定义的一种序列化的协议格式，具有语言无关性、平台无关性、可扩展性等优点，类似于XML或Json，下面简称为Protobuf。</p>
+
+<h3>Protbuf的适用场景</h3>
+
+<p>先看个例子</p>
+
+<p>一个角色对象拥有2个属性，Id和name</p>
+
+<p>如果使用XML来表示</p>
+
+<pre><code class="language-xml">&lt;role&gt;
+    &lt;id&gt;1&lt;/id&gt;
+    &lt;name&gt;小流氓&lt;/name&gt;
+&lt;/role&gt;
+</code></pre>
+
+<p>如果用Json来表示</p>
+
+<pre><code>{&quot;id&quot;:1; &quot;name&quot;:&quot;小流氓&quot;}
+</code></pre>
+
+<p>Protobuf</p>
+
+<pre><code>08 01 12 09 E5 B0 8F E6 B5 81 E6 B0 93
+</code></pre>
+
+<p>要说哪个最好，我认为这个没得比，他们不是一个起点，XML和Json是基于文本，Protobuf是基于二进制</p>
+
+<p>关注一下我们所关心的点，Protobuf 支持多种数据类型，如list，支持嵌套，体积最小，解析速度快，可读性差，所以用他来做协议最好不过了.</p>
+
+<p>我们可以定义自己的数据结构，然后使用代码生成器生成的代码来读写这个数据结构。</p>
+
+<p>当然，Protobuf并不是在任何时候都比XML更合适。</p>
+
+<p>例如 策划数据，对策划数据的大小没有太苛刻的要求时，还有XML比较合适，他是自解释的，可读性好，便于排错等优点，而Protobuf仅在拥有 .proto 文件时才有意义。</p>
+
+<h4>个人认为适用protobuf的场合：</h4>
+
+<ol>
+<li>多语言的项目，因为Protobuf与语言无关。定义好描述文件，可以生成对应的代码，可以减少连调的成本。<br /></li>
+<li>通信协议，对消息大小很敏感的。那么Protobuf就适合了，消息空间相对xml和json等节省很多。<br /></li>
+<li>存取数据，需要序列化操作时，如果你想新的数据结构向后兼容，而你的旧数据可以向前兼容，而且Protobuf的序列化和反序列化的效率非常高。<br />
+<br />
+<br /></li>
+</ol>
+
+<p>网络游戏之通信协议应用</p>
+
+<p>以前网络通信协议的存在的问题</p>
+
+<p>先来看个QQ2010的通信协议：</p>
+
+<pre><code>02 1E 0D 00 91 5B AB 90 D8 85 0A 02 00 00 00 01
+01 01 00 00 64 1F 5C 6E 23 B6 95 1E 43 08 CC 35
+0A CE 6C C2 5E 25 A0 3A 1A AC 54 20 4C 4D 02 88
+BC D2 06 6B 17 6F FF F0 6C B4 46 8A 9A 82 C6 17
+8E C8 78 FC 1F B2 BA B7 BE C6 F0 32 FF AE 50 FF
+E1 EF 2A 59 B8 36 03
+
+Header: 02     //Protocol Start Flag
+        1E 0D   //Client Version
+        00 91   //Opcode
+        5B AB   //自增长的Id
+90 D8 85 0A //QQ号
+        02 00 00 00 01 01 01 00 00 64 1F   //Unknown filling, 1F differs among versions
+Body:   5C 6E 23 B6 95 1E 43 08 CC 35 0A CE 6C C2 5E 25 //128bit Key of TEA
+        A0 3A 1A AC 54 20 4C 4D 02 88 BC D2 06 6B 17 6F 
+        FF F0 6C B4 46 8A 9A 82 C6 17 8E C8 78 FC 1F B2 
+        BA B7 BE C6 F0 32 FF AE 50 FF E1 EF 2A 59 B8 36 //48bytes Encrypted Code of TEA
+Tail:   03      //Protocol End Flag
+</code></pre>
+
+<p>大体可以看出此协议是按约定的位来解析的，客户端发给服务器的协议中有版本号，操作码，自增长Id，内容等</p>
+
+<p>为了兼容以前的版本，当其中的占位符不够时，可能会有IF的写法，如：</p>
+
+<pre><code>if (version == 1) {
+//TODO
+}else if (version == 2) {
+ //TODO
+}
+</code></pre>
+
+<p>通信协议因此变得越来越复杂，因为开发者必须确保，发出请求的人和接受请求的人必须同时兼容，并且在一方开始使用新协议时，另外一方也要可以接受。</p>
+
+<p>Protobuf设计可用于解决这一类问题：<br />
+可以自行修改描述文件，并且可以在多种语言中使用<br />
+optional可选属性，很方便添加新属性，兼容以前的属性，默认值可以替代新属性初始值。</p>
+
+<p>定义游戏网关的协议格式</p>
+
+<pre><code>			GatewayMessage协议              RpcMessage协议
+Client ------------------------&gt; Gateway -----------------&gt; Logic
+
+Client &lt;----------------------  Gateway &lt;------------------- Logic
+			GatewayMessage协议              RpcMessage协议
+</code></pre>
+
+<p>首先定义一个 msg.proto 文件很简单,内容如下：</p>
+
+<pre><code class="language-java">package com.ztgame.noark.protobuf.msg;
+
+message GatewayMessage {
+    required int32  opcode      = 1;
+	optional int32  counter     = 2;//计数器(包id自增校验，可以解决WPE)
+	optional string checkCode   = 3;//包校验码可以消灭包拦截篡改
+	optional int32  codec       = 4;//(codec &gt;&gt; index) &amp; 1 第一位为是否加密 第二位为是否压缩
+	required bytes  context     = 5;//内容
+}
+</code></pre>
+
+<p>编译文件：</p>
+
+<pre><code>protoc.exe --java_out=src/main/java --proto_path=src/main/java/com/ztgame/noark/protobuf/msg src/main/java/com/ztgame/noark/protobuf/msg/msg.proto
+</code></pre>
+
+<p>生成Java类文件</p>
+
+<pre><code class="language-java">GatewayMessage部分代码
+    // required int32 opcode = 1;
+    boolean hasOpcode();
+    int getOpcode();
+    
+    // optional int32 counter = 2;
+    boolean hasCounter();
+    int getCounter();
+    
+    // optional string checkCode = 3;
+    boolean hasCheckCode();
+    String getCheckCode();
+    
+    // optional int32 codec = 4;
+    boolean hasCodec();
+    int getCodec();
+    
+    // required bytes context = 5;
+    boolean hasContext();
+</code></pre>
+
+<p>客户端发给网关时的数据如下所示：包长+上面我们所定义的协议内容</p>
+
+<pre><code> BEFORE DECODE (302 bytes)       AFTER DECODE (300 bytes)
+ +--------+---------------+      +---------------+
+ | Length | Protobuf Data |-----&gt;| Protobuf Data |
+ | 0xAC02 |  (300 bytes)  |      |  (300 bytes)  |
+ +--------+---------------+      +---------------+
+</code></pre>
+
+<p>网关服务器处理过程</p>
+
+<pre><code>client连接到gateway，发送封包数据。
+
+gateway收到 包长度 + GatewayMessage数据。
+
+取出长度解析GatewayMessage对象
+
+分析Opcode 对包频率控制可以消灭变速齿轮
+
+如果存在counter值，校验包计数器的自增长值，可以消灭WPE
+
+如果存在checkCode值，校验校验码可以消灭包拦截篡改
+
+如果存在codec值，进行运算(codec &gt;&gt; index) &amp; 1 第一位为是否加密 第二位为是否压缩
+
+解析成功，将解密后的内容直接转发相对应的是逻辑服务器
+Opcode &gt;&gt; 12 如果为0 则转给逻辑服务器 1转给Session等
+</code></pre>
+
+<p>主要用于保持和Client的连接，转发游戏封包</p>
+
+<h4>网关主要有以下用途：</h4>
+
+<ul>
+<li>1：分担了网络IO资源<br><br /></li>
+<li>2：同时，也分担了网络消息包的加解密，压缩解压等CPU密集的操作。<br><br /></li>
+<li>3：隔离了client和内部服务器组，对client来说，它只需要知道网关的相关信息即可（IP和port）。<br><br /></li>
+<li>4：client由于一直和网关保持常连接，所以切换场景服务器等操作对client来说是透明的。<br><br /></li>
+<li>5：维护玩家登录状态。<br><br />
+<br /></li>
+</ul>
+
+<p>逻辑服务器处理过程</p>
+
+<p>Logic收到网关转发的消息为服务器之间的异步RPC消息，此消息也是Protobuf协议。</p>
+
+<p>msg.proto文件中添加</p>
+
+<pre><code>package com.ztgame.noark.protobuf.msg;
+
+message RpcMessage {
+	required int32 opcode = 1;
+	optional int64 roleId = 2;//如果网关已绑定此操作者的角色Id
+	optional int64 sessionId = 3;//没有登录前，由SessionId来维护
+	required bytes context = 4;//内容
+}
+</code></pre>
+
+<p>编译文件：</p>
+
+<pre><code>protoc.exe --java_out=src/main/java --proto_path=src/main/java/com/ztgame/noark/protobuf/msg src/main/java/com/ztgame/noark/protobuf/msg/msg.proto
+</code></pre>
+
+<p>生成Java类文件</p>
+
+<pre><code class="language-java">    // required int32 opcode = 1;
+    boolean hasOpcode();
+    int getOpcode();
+    
+    // optional int64 roleId = 2;
+    boolean hasRoleId();
+    long getRoleId();
+    
+    // optional int64 sessionId = 3;
+    boolean hasSessionId();
+    long getSessionId();
+    
+    // required bytes context = 4;
+    boolean hasContext();
+</code></pre>
+
+<p>逻辑服务器解析出Rpc转发过来的协议取出此内容，按Opcode解析成相对应的协议</p>
+
+<pre><code class="language-java">message C_Login_Packet {
+	required string username = 1;
+	required string password = 2;
+}
+
+C_Login_Packet 部分代码
+    // required string username = 1;
+    boolean hasUsername();
+    String getUsername();
+    
+    // required string password = 2;
+    boolean hasPassword();
+    String getPassword();
+</code></pre>
+
+<p>分析Opcode可使用Protobuf所生成的Java的API读取客户端传来的数据</p>
+
+<pre><code class="language-java">    byte[] data = Rpc协议里的context;
+    C_Login_Packet packet = C_Login_Packet.parseFrom(data);
+    String username = packet.getUsername();
+    String password = packet.getPassword();
+</code></pre>
+
+<h5>Required是必须的</h5>
+
+<p>在用required修饰符时一定要谨慎，一但被required修饰，该值就必须要进行传递，在版本升级或兼容时可能存在问题；</p>
+
+<p>每个字段属性都有唯一的标识(id) (1-2^29)</p>
+
+<p><strong>注</strong>：不可以使用其中的[19000－19999]的标识号， Protobuf协议实现中对这些进行了预留。</p>
+
+<p>变量采用的是可变长的编码方式</p>
+
+<p>[1,15]之内的标识号在编码的时候会占用一个字节。</p>
+
+<p>[16,2047]之内的标识号则占用2个字节。应该为那些频繁出现的消息元素保留[1,15]之内的标识号。</p>
+
+<h5>Optional是可选项</h5>
+
+<pre><code>[default = value] -&gt; 为该属性设置一个默认值 （默认值是不需编码的）
+如：optional int32 gender = 2[default = true];
+</code></pre>
+
+<pre><code>[deprecated =false/true]-&gt;标识该域是否已经被弃用
+如：optional int32 old_field = 6[deprecated=true];
+</code></pre>
+
+<h5>Required 数组</h5>
+
+<pre><code>required bytes context = 4;//内容
+[packed =false / true]-&gt;采用更紧凑的编码方式
+如：repeated int32 test = 4[packed=true];
+</code></pre>
+
+<p>模拟上面客户端所发的封包</p>
+
+<pre><code class="language-java">//申明一个登录协议，有一个用户名和一个密码
+C_Login_Packet.Builder login = C_Login_Packet.newBuilder();
+login.setUsername(&quot;username&quot;).setPassword(&quot;password&quot;);
+
+
+//发送时由此包装，假如登录协议的Opcode为0x01
+//这里没有设计加密和压缩等校验属性，由此可体验Protobuf的可选属性的优点
+GatewayMessage.Builder msg = GatewayMessage.newBuilder();
+msg.setOpcode(0x01);
+msg.setContext(login.build().toByteString());
+//最后真正要发的数据
+byte[] bs = msg.build().toByteArray();
+</code></pre>
+
+<h4>封包数据分析</h4>
+
+<p>使用封包拦截工具可以获得如下数据</p>
+
+<pre><code>08 01 2A 14 0A 08 75 73 65 72 6E 61 6D 65 12 08 70 61 73 73 77 6F 72 64
+</code></pre>
+
+<h5>属性字段计算方式 (field_number &lt;&lt; 3) | wire_type</h5>
+
+<p>分析如下：</p>
+
+<pre><code>08 //网关消息中的第一个field_number
+01 //opcode值
+2A //网关消息中的内容field_number
+14 //内容是数组，所以这里是数组长度，注意这里的14是十六进制的，所以是20个长度
+0A //第一个field_number
+08 //属性长度
+75 73 65 72 6E 61 6D 65 //username
+12 //第二个field_number 
+08 //属性长度
+70 61 73 73 77 6F 72 64//password
+</code></pre>
+
+<p><strong>由此可以看出网关其实只解析了部分数据，所以他的优势就出来了</strong></p>
+
+<p>封装好包装类库，以后的开发只需关注业务逻辑协议，此协议可以自定义：比如现在需要一个创建角色协议</p>
+
+<pre><code class="language-java">message C_Create_Role_Packet {
+	required string name = 1;
+}
+message S_Create_Role_Packet {
+	required int32 retCode = 1;
+}
+
+如果现在需求改了，创建角色时，需要选择性别
+只需要添加一行代码 
+message C_Create_Role_Packet {
+	required string name = 1;
+	optional bool gender = 2 [default = true];
+}
+message S_Create_Role_Packet {
+	required int32 retCode = 1;
+}
+</code></pre>
+
+<p>此协议可兼容以前的协议，</p>
+
+<ul>
+<li>如果客户端和服务器协议都是新的 或都是 旧的，没有问题<br /></li>
+<li>如果客户端协议为新的，服务器为旧的，此时创建角色时，服务器会按以前的处理<br /></li>
+<li>如果客户端协议为旧的，服务器为新的，此时创建角色的性别会是新协议的默认值<br />
+<br /></li>
+</ul>
+
+<p><strong>注意：</strong><br />
+在使用Protobuf定义协议时，一定要注意message的兼容性是首要的，只有在非常必要时，才使用required关键词；</p>
+
+<p><strong>建议：</strong><br />
+对于常用的值可以选择域为1－15的标识号，根据可能出现的期望值选择合适的数据类型；如果明确是数字，就不要用String，如果明确是有负数的，可以考虑sint32或sint64<br />
+如果已发布版本后，可能会想要改进Protobuf的定义。如果你想新的数据结构向后兼容，而你的旧数据可以向前兼容，那么你还是需要遵守有些规则。</p>
+
+<h5>在新版本的Protobuf中：</h5>
+
+<ul>
+<li>必须不可以改变已经存在的属性标识Id。<br /></li>
+<li>必须不可以增加或删除(required)属性。<br /></li>
+<li>可以删除可选(optional)或重复(repeated) 属性。<br /></li>
+<li>可以添加新的可选或重复字段，但是必须使用新的标签数字，必须是之前的字段所没有用过的。<br />
+<br /></li>
+</ul>
+
+<p>如果你遵从这些规则，旧代码会很容易的读取新的消息，并简单的忽略新加的字段。而对旧的被删除的可选字段也会简单的使用他们的缺省值，被删除的重复字段会自动为空。新的代码也会透明的读取旧的消息。然而，需要注意的是新的可选消息不会在旧的消息中显示，所以你需要使用 has_ 严格的检查他们是否存在，或者在 .proto 文件中提供一个缺省值。如果没有缺省值，就会有一个类型相关的默认缺省值：对于字符串就是空字符串；对于布尔型则是false；对于数字类型默认为0。</p>
+
+<p>详细的Protobuf编码请看下面链接<br />
+<a href="https://developers.google.com/protocol-buffers/docs/encoding?hl=zh-CN">https://developers.google.com/protocol-buffers/docs/encoding?hl=zh-CN</a></p>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2013/1/14/protobuf%e4%b9%8b%e9%80%9a%e4%bf%a1%e5%8d%8f%e8%ae%ae/">http://blog.noark.xyz/article/2013/1/14/protobuf之通信协议/</a>
+            </p>
+
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2013-01-14</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/%e6%9c%8d%e5%8a%a1%e5%99%a8">服务器</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Protobuf">Protobuf</a>&nbsp;
+                    
+                    <a href="/tag/%e5%8d%8f%e8%ae%ae">协议</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>
