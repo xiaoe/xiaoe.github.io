@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="Linux,Mongodb" />
+    <meta name="description" content="&lt;p&gt;事由：台湾停服，需要把数据仓库拉回来备用，运维大大执行了备份操作，不久MongoDB进程就不见了&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;由于数据有36G，决定先把服务拉起来继续备份然后再查问题，&lt;/p&gt;
+
+&lt;p&gt;启不来了。。。。&lt;/p&gt;
+
+&lt;p&gt;查看日志发现 Detected unclean shutdown - /data/mongodb/db/mongod.lock is not empty&lt;/p&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>Mongodb无法启动解决办法mongod.lock_is_not_empty</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/Noark2%e5%85%a5%e9%97%a8">
+                    Noark2入门
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">
+                    游戏安全
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">
+                    游戏开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">
+                    职业技能
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">
+                    运维知识
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>Mongodb无法启动解决办法mongod.lock_is_not_empty
+            </h3>
+        </div>
+        <div class="post-content" id="content">
+
+            <p>事由：台湾停服，需要把数据仓库拉回来备用，运维大大执行了备份操作，不久MongoDB进程就不见了&hellip;</p>
+
+<p>由于数据有36G，决定先把服务拉起来继续备份然后再查问题，</p>
+
+<p>启不来了。。。。</p>
+
+<p>查看日志发现 Detected unclean shutdown - /data/mongodb/db/mongod.lock is not empty</p>
+
+<h5>应该是意外退出时数据被锁定了，解决办法：</h5>
+
+<p>1.删除锁文件</p>
+
+<pre><code>rm /data/mongodb/db/mongod.lock
+</code></pre>
+
+<p>2.修复数据文件</p>
+
+<pre><code>mongod --dbpath /data/mongodb/db/ --repair  
+</code></pre>
+
+<p>3.重启mongo</p>
+
+<pre><code>mongod -f /data/mongodb/shardsvr.conf
+</code></pre>
+
+<h5>过程问题记录</h5>
+
+<p>修复过程出现其他异常情况</p>
+
+<pre><code>WiredTiger (24) [1497255674:874095][5319:0x7f905a1a3c80], file:WiredTiger.wt, metadata-ckpt: /data/mongodb/db//WiredTiger.turtle: handle-open: open: Too many open files
+
+</code></pre>
+
+<p>调整参数 ulimit -n 65535 继续跑修复指令</p>
+
+<p>修复数据所用时间与数据大小成正比，跑了一夜还没完&hellip;</p>
+
+<p>但愿后续能正常进行&hellip;</p>
+
+<h5>意外退出会锁数据，不能Kill -9 或让运维直接停机，要正确关闭服务后再操作</h5>
+
+<p>正确的关闭姿势：</p>
+
+<ol>
+<li><br />
+<code>
+kill -2 PID 或者 kill PID
+</code><br /></li>
+<li><br />
+<code>
+use  admin
+db.shutdownServer();
+</code><br /></li>
+</ol>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2017/6/13/mongodb%e6%97%a0%e6%b3%95%e5%90%af%e5%8a%a8%e8%a7%a3%e5%86%b3%e5%8a%9e%e6%b3%95mongod.lock_is_not_empty/">http://blog.noark.xyz/article/2017/6/13/mongodb无法启动解决办法mongod.lock_is_not_empty/</a>
+            </p>
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2017-06-13</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Linux">Linux</a>&nbsp;
+                    
+                    <a href="/tag/Mongodb">Mongodb</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment_container post">
+        <div id="SOHUCS" sid="5ee227a4a91ebef36a92feb487988be5" ></div>
+        <script type="text/javascript">
+            (function(){
+                window._config = { showScore: true };
+                var appid = 'cyt2AtDUF';
+                var conf = 'prod_846a5c8dcfd89035373fc1690cd74124';
+                var width = window.innerWidth || document.documentElement.clientWidth;
+                if (width < 960) {
+                    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+
+        </script>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>
