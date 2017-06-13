@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="导表工具,CSV,Excel" />
+    <meta name="description" content="&lt;p&gt;游戏设计中，很多数据来源策划的设定，一般研发团队，都会使用Excel来配置，当然我也见过手写XML，Json，还有CSV。&lt;/p&gt;
+
+&lt;p&gt;我相信策划的最爱还是Excel，Excel是可以保存颜色和间距以及记忆。&lt;/p&gt;
+
+&lt;p&gt;然后再用一个程序去解析Excel生成程序所用的格式文件。这个过程称之为导表，解析程序就是导表工具。&lt;/p&gt;
+
+&lt;p&gt;一个稳定好用的导表工具，可降低策划上手难度和日常工作烦恼。&lt;/p&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>聊一聊策划配置表问题</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/Noark2%e5%85%a5%e9%97%a8">
+                    Noark2入门
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">
+                    游戏安全
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">
+                    游戏开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">
+                    职业技能
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">
+                    运维知识
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>聊一聊策划配置表问题
+            </h3>
+        </div>
+        <div class="post-content" id="content">
+
+            <p>游戏设计中，很多数据来源策划的设定，一般研发团队，都会使用Excel来配置，当然我也见过手写XML，Json，还有CSV。</p>
+
+<p>我相信策划的最爱还是Excel，Excel是可以保存颜色和间距以及记忆。</p>
+
+<p>然后再用一个程序去解析Excel生成程序所用的格式文件。这个过程称之为导表，解析程序就是导表工具。</p>
+
+<p>一个稳定好用的导表工具，可降低策划上手难度和日常工作烦恼。</p>
+
+<h3>先来聊一下生成的格式</h3>
+
+<p>标准CSV会是一个不错的选择</p>
+
+<ol>
+<li>相比PB、AMF3等二进制格式的文件可读性好<br /></li>
+<li>相比XML、Json等文件格式冗余字符少很多，文件就小<br /></li>
+<li>可以直接使用Excel打开，方便排查<br /></li>
+<li>各种语言都会有开源类库，方便使用<br />
+<br />
+<br /></li>
+</ol>
+
+<h3>再聊一下工具实现</h3>
+
+<p>需求：</p>
+
+<pre><code>Sheet名用来生成文件名来使用，非以.ptl结束的作为策划自用Sheet，例 item.ptl
+1. 第一行，标题行，定义此列功能名称（英文名），注意此行修改必需通知程序修改代码.
+2. 第二行，注释行，用来描述此列作用的说明文字，可随意修改，主要为策划能个直观的理解此列作用
+3. 第三行（包含）以后的作为数据行，用来配置相关模板数据的区域
+
+高级功能：
+- 整个Sheet支持公式，颜色,间距，字体大小等功能的使用
+- 数据区域，可以使用空行或空列来分隔，也可以在不写标题的列输入策划的小九九内容。
+- 如果有不想删除的数据，可以在此行第一列使用//来注掉此行数据
+</code></pre>
+
+<p>语言选择：</p>
+
+<p><strong>Golang用来写写这种工具绝对首选</strong></p>
+
+<ol>
+<li>拥有第三方开源类库<br /></li>
+<li>不要依赖其他运行环境<br /></li>
+<li>最好是一个独立的程序<br />
+<br /></li>
+</ol>
+
+<h3>关于是否生成程序代码</h3>
+
+<p>我认为生成代码是个鸡肋的功能，首先他会入侵策划的配置表，需要添加一行类型列（我也见过有独立写XML做关联的方案），对策划来说就是个负担</p>
+
+<p>如果你非说策划连类这都不懂 他就不是一个好程序，那我们就没得聊了，不要总让脚趾去干大脑做的事嘛~</p>
+
+<p>只要有关联配置，不管是程序还是程序谁改了 大家都要改，那又何必省这几分钟呢？</p>
+
+<p>我发现有好多程序更本不知道策划配置了什么，只知道生成代码引用，功能完成后，维护过程会改出一堆Bug</p>
+
+<p>我还想吐嘈下那些生成父类，自己写子类实现解析的设计，何必呢&hellip;</p>
+
+<h3>开源项目</h3>
+
+<p>传送 &gt;&gt; <a href="http://git.oschina.net/xiaoe/exporter">导表工具</a></p>
+
+<h3>使用</h3>
+
+<pre><code class="language-java">// 加载全部数据
+List&lt;ItemTemplate&gt; itemplates = templateLoader.loadAll(ItemTemplate.class);
+
+// 返回Map类型的结果
+Map&lt;Integer, ItemTemplate&gt; itemplates = templateLoader.loadAll(ItemTemplate.class, ItemTemplate::getId);
+Map&lt;String, ItemTemplate&gt; itemplates = templateLoader.loadAll(ItemTemplate.class, ItemTemplate::getName);
+ 
+</code></pre>
+
+<p>此加载方式为Noark2中模板加载功能，Java解析CSV的简单封装</p>
+
+<p>程序简洁，策划开心，数值大爷点赞 0.0</p>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2017/6/13/%e8%81%8a%e4%b8%80%e8%81%8a%e7%ad%96%e5%88%92%e9%85%8d%e7%bd%ae%e8%a1%a8%e9%97%ae%e9%a2%98/">http://blog.noark.xyz/article/2017/6/13/聊一聊策划配置表问题/</a>
+            </p>
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2017-06-13</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">游戏开发</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/%e5%af%bc%e8%a1%a8%e5%b7%a5%e5%85%b7">导表工具</a>&nbsp;
+                    
+                    <a href="/tag/CSV">CSV</a>&nbsp;
+                    
+                    <a href="/tag/Excel">Excel</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment_container post">
+        <div id="SOHUCS" sid="1c8d84066e0e71c6acdea93889d14efa" ></div>
+        <script type="text/javascript">
+            (function(){
+                window._config = { showScore: true };
+                var appid = 'cyt2AtDUF';
+                var conf = 'prod_846a5c8dcfd89035373fc1690cd74124';
+                var width = window.innerWidth || document.documentElement.clientWidth;
+                if (width < 960) {
+                    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+
+        </script>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>
