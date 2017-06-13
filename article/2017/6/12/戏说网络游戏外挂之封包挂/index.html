@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="WPE,外挂,封包" />
+    <meta name="description" content="&lt;h4&gt;什么是游戏封包？&lt;/h4&gt;
+
+&lt;p&gt;网络游戏中，服务器与客户端相互通信所传输的那个二进制数据，就是我们要说的游戏封包。&lt;/p&gt;
+
+&lt;h4&gt;工具准备&lt;/h4&gt;
+
+&lt;p&gt;WPE（Winsock Packet Editor） 中文名称是：网络封包编辑器。&lt;/p&gt;
+
+&lt;p&gt;该软件功能强大，此软件可以让使用者享受外挂的乐趣，体验游戏的全新外挂玩法。&lt;/p&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>戏说网络游戏外挂之封包挂</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/Noark2%e5%85%a5%e9%97%a8">
+                    Noark2入门
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">
+                    游戏安全
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">
+                    游戏开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">
+                    职业技能
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">
+                    运维知识
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>戏说网络游戏外挂之封包挂
+            </h3>
+        </div>
+        <div class="post-content" id="content">
+
+            <h4>什么是游戏封包？</h4>
+
+<p>网络游戏中，服务器与客户端相互通信所传输的那个二进制数据，就是我们要说的游戏封包。</p>
+
+<h4>工具准备</h4>
+
+<p>WPE（Winsock Packet Editor） 中文名称是：网络封包编辑器。</p>
+
+<p>该软件功能强大，此软件可以让使用者享受外挂的乐趣，体验游戏的全新外挂玩法。</p>
+
+<h4>数据采样</h4>
+
+<p>进入游戏后，使用WPE对游戏进程进行截获封包，按照程序界的惯例，我们先来个Hello World。<br />
+（找个没人的地方，聊天界面上扣字测试，新服频繁的扣123，绝对不是什么好人哈&hellip;）</p>
+
+<pre><code>    // 111111
+    00 00 00 0E 00 08 00 00 10 01 1A 06 31 31 31 31 31 31 
+    // 222222
+    00 00 00 0E 00 08 00 00 10 01 1A 06 32 32 32 32 32 32 
+    // 333333
+    00 00 00 0E 00 08 00 00 10 01 1A 06 33 33 33 33 33 33 
+</code></pre>
+
+<h4>数据分析</h4>
+
+<p>各种协议编码请自行学习，不懂的直接看结论。</p>
+
+<pre><code>    00 00 00 0E // 包长 14
+    00 08 00 00 // 协议编号
+    10 // PB 2号位
+    01 // 数值 1
+    1A // PB 3号位
+    06 31 31 31 31 31 31 // 内容 111111
+</code></pre>
+
+<p>这个游戏协议相对简单，应该是包长加PB协议，没有自增校验位，没有Checksum&hellip;.</p>
+
+<h4>复制封包</h4>
+
+<p>由于没有自增校验位，我们只需要把此封包的字节再次发送给游戏服务器，简单的自动喊话功能就实现了</p>
+
+<h4>篡改封包</h4>
+
+<p>由于没有Checksum，比如修改频道的值1-&gt;2，就完成了当前切换为世界聊天了，当然我们想改聊天内容也是可以的，但要注意内容编码前在长度为PB的int32</p>
+
+<h4>脱机挂</h4>
+
+<p>模拟游戏客户端向服务器发送封包进行正常玩家行为，<strong>外挂中的战斗机，游戏的终结者</strong>。</p>
+
+<hr />
+
+<h4>游戏封包应该如何设计</h4>
+
+<p><strong>封包是否设计是否合理，有助力于系统的稳定，他能唬得住中国玩家，防得住刷钱工作室，减少因安全而流失的玩家，为正常运营和大推保驾护航</strong></p>
+
+<ol>
+<li>防止复制封包<br /></li>
+<li>防止篡改封包<br /></li>
+<li>动态加密封包<br />
+<br /></li>
+</ol>
+
+<p>如：</p>
+
+<pre><code>封包长度(int32)    封包编码后的数据长度，不包含本身编码长度，使用Protobuf的int32方式编码                            
+自增位(byte)       客户端发送给服务器的协议，每个协议都要写入一个自增编号，用于解决复制封包                            
+Opcode(int32)     协议编号，约定以16进制显示0x0011，前两位为模块编码，后两位为自增使用                            
+校验位(byte)      协议内容编码后的一种Checksum值，以防封包数据被WPE等工具的篡改                         
+协议内容(message)  协议内容则为一个完整的Protobuf对象                            
+</code></pre>
+
+<h4>再看一个手机游戏的协议设计</h4>
+
+<p>采集的样本</p>
+
+<pre><code>// 111111
+00 00 00 83 08 34 00 00 00 00 00 01 A5 E1 01 5C 10 45 84 1C 00 60 5D 78 29 1A 95 45 69 39 69 42 6A 45 78 4D 54 45 78 4D 53 41 49 47 67 62 6D 6E 62 44 6B 76 4B 59 4B 47 78 49 52 4F 54 63 34 4D 54 4D 32 4E 54 4D 77 4F 54 4D 30 4D 54 63 77 4D 6A 55 4B 42 6A 45 77 4F 44 41 77 4D 51 6F 62 45 68 45 35 4E 7A 6B 33 4D 54 45 34 4D 6A 59 31 4D 44 55 79 4D 7A 63 30 4E 41 6F 47 4D 54 41 34 4D 44 41 78 
+// 222222
+00 00 00 83 08 34 00 00 00 00 00 01 A5 E1 01 5C 10 45 84 1C 00 60 5E 51 09 EA 58 45 69 39 69 42 6A 49 79 4D 6A 49 79 4D 69 41 49 47 67 62 6D 6E 62 44 6B 76 4B 59 4B 47 78 49 52 4F 54 63 34 4D 54 4D 32 4E 54 4D 77 4F 54 4D 30 4D 54 63 77 4D 6A 55 4B 42 6A 45 77 4F 44 41 77 4D 51 6F 62 45 68 45 35 4E 7A 6B 33 4D 54 45 34 4D 6A 59 31 4D 44 55 79 4D 7A 63 30 4E 41 6F 47 4D 54 41 34 4D 44 41 78 
+// 333333
+00 00 00 83 08 34 00 00 00 00 00 01 A5 E1 01 5C 10 45 84 1C 00 60 5F 65 62 61 9A 45 69 39 69 42 6A 4D 7A 4D 7A 4D 7A 4D 79 41 49 47 67 62 6D 6E 62 44 6B 76 4B 59 4B 47 78 49 52 4F 54 63 34 4D 54 4D 32 4E 54 4D 77 4F 54 4D 30 4D 54 63 77 4D 6A 55 4B 42 6A 45 77 4F 44 41 77 4D 51 6F 62 45 68 45 35 4E 7A 6B 33 4D 54 45 34 4D 6A 59 31 4D 44 55 79 4D 7A 63 30 4E 41 6F 47 4D 54 41 34 4D 44 41 78 
+// 123456
+00 00 00 83 08 34 00 00 00 00 00 01 A5 E1 01 5C 10 45 84 1C 00 60 61 D2 00 24 49 45 69 39 69 42 6A 45 79 4D 7A 51 31 4E 69 41 49 47 67 62 6D 6E 62 44 6B 76 4B 59 4B 47 78 49 52 4F 54 63 34 4D 54 4D 32 4E 54 4D 77 4F 54 4D 30 4D 54 63 77 4D 6A 55 4B 42 6A 45 77 4F 44 41 77 4D 51 6F 62 45 68 45 35 4E 7A 6B 33 4D 54 45 34 4D 6A 59 31 4D 44 55 79 4D 7A 63 30 4E 41 6F 47 4D 54 41 34 4D 44 41 78 
+// 12345
+00 00 00 83 08 34 00 00 00 00 00 01 A5 E1 01 5C 10 45 84 1C 00 60 94 18 28 EF E2 45 69 35 69 42 54 45 79 4D 7A 51 31 49 41 67 61 42 75 61 64 73 4F 53 38 70 67 6F 62 45 68 45 35 4E 7A 67 78 4D 7A 59 31 4D 7A 41 35 4D 7A 51 78 4E 7A 41 79 4E 51 6F 47 4D 54 41 34 4D 44 41 78 43 68 73 53 45 54 6B 33 4F 54 63 78 4D 54 67 79 4E 6A 55 77 4E 54 49 7A 4E 7A 51 30 43 67 59 78 4D 44 67 77 4D 44 45 3D 
+</code></pre>
+
+<p>共性：这个尾部太像Base64编码了，测试结果他也确是Base64编码</p>
+
+<pre><code>00 00 00 83 // 包长，包含包头138个字节
+08 34 00 00 00 00 00 01 A5 E1 01 5C 10 45 84 1C 00 60 61 D2 00 24 49 // 头部信息
+ 
+//Base64编码的包体
+45 69 39 69 42 6A 45 79 4D 7A 51 31 4E 69 41 49 47 67 62 6D 6E 62 44 6B 76 4B 59 4B 47 78 49 52 4F 54 63 34 4D 54 4D 32 4E 54 4D 77 4F 54 4D 30 4D 54 63 77 4D 6A 55 4B 42 6A 45 77 4F 44 41 77 4D 51 6F 62 45 68 45 35 4E 7A 6B 33 4D 54 45 34 4D 6A 59 31 4D 44 55 79 4D 7A 63 30 4E 41 6F 47 4D 54 41 34 4D 44 41 78 
+// 解码后的内容
+18, 47, 98, 6, 49, 50, 51, 52, 53, 54, 32, 8, 26, 6, -26, -99, -80, -28, -68, -90, 10, 27, 18, 17, 57, 55, 56, 49, 51, 54, 53, 51, 48, 57, 51, 52, 49, 55, 48, 50, 53, 10, 6, 49, 48, 56, 48, 48, 49, 10, 27, 18, 17, 57, 55, 57, 55, 49, 49, 56, 50, 54, 53, 48, 53, 50, 51, 55, 52, 52, 10, 6, 49, 48, 56, 48, 48, 49
+
+
+18, 47, 98, 
+6, 49, 50, 51, 52, 53, 54,//内容123456
+32, 8, 26, 
+6, -26, -99, -80, -28, -68, -90, //UTF8编码的中文&quot;杰伦&quot;（这是什么鬼????）
+10, 27, 18, 
+17, 57, 55, 56, 49, 51, 54, 53, 51, 48, 57, 51, 52, 49, 55, 48, 50, 53, //97813653093417025(可能是自己的角色ID)
+10, 
+6, 49, 48, 56, 48, 48, 49, //108001（区服编号）
+10, 27, 18, 
+17, 57, 55, 57, 55, 49, 49, 56, 50, 54, 53, 48, 53, 50, 51, 55, 52, 52, //97971182650523744(可能是私聊对象的角色ID)
+10, 
+6, 49, 48, 56, 48, 48, 49//108001
+</code></pre>
+
+<p>// 出售装备</p>
+
+<pre><code>00 00 00 73 04 B2 00 00 00 00 00 01 A5 E1 01 5C 10 45 84 1C 00 60 4C B2 F4 8F 7F 
+
+4B 41 45 67 41 52 67 41 43 68 73 53 45 54 6B 33 4F 54 63 78 4D 54 67 79 4E 6A 55 77 4E 54 49 7A 4E 7A 51 30 43 67 59 78 4D 44 67 77 4D 44 45 53 47 78 49 52 4F 54 63 35 4E 7A 45 7A 4D 44 63 32 4E 54 55 32 4E 6A 59 77 4E 7A 6B 4B 42 6A 45 78 4D 54 41 77 4D 51 3D 3D 
+
+KAEgARgAChsSETk3OTcxMTgyNjUwNTIzNzQ0CgYxMDgwMDESGxIROTc5NzEzMDc2NTU2NjYwNzkKBjExMTAwMQ==
+
+40, 1, 32, 1, 24, 0, 
+10, 27, 18, 
+17, 57, 55, 57, 55, 49, 49, 56, 50, 54, 53, 48, 53, 50, 51, 55, 52, 52, //97971182650523744(这才是自己的角色ID)
+10, 
+6, 49, 48, 56, 48, 48, 49, //108001
+18, 27, 18, 
+17, 57, 55, 57, 55, 49, 51, 48, 55, 54, 53, 53, 54, 54, 54, 48, 55, 57, //97971307655666079这个可能是装备ID
+10, 
+6, 49, 49, 49, 48, 48, 49 //111001
+
+</code></pre>
+
+<p><strong>结论</strong>：</p>
+
+<ol>
+<li>复制封包发送正常，但样本中明显有自增校验位的编码，应该是服务器测试过程中未开启检验。<br /></li>
+<li>自增校验位方式就是简单的加1处理，过于简单，对高手来说这个就是<strong>形同虚设</strong>（本篇不介绍伪装封包，欺骗校验位的实现）<br /></li>
+<li>由于不清楚为什么使用Base64编码，不作过度解读（可能是为了调试可读字符，也可能理解成简单加密）<br /></li>
+<li>由于可以复制封包，发现此游戏普攻是没有CD的，服务器竟然真的没有实现内置CD&hellip;&hellip;<br /></li>
+</ol>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2017/6/12/%e6%88%8f%e8%af%b4%e7%bd%91%e7%bb%9c%e6%b8%b8%e6%88%8f%e5%a4%96%e6%8c%82%e4%b9%8b%e5%b0%81%e5%8c%85%e6%8c%82/">http://blog.noark.xyz/article/2017/6/12/戏说网络游戏外挂之封包挂/</a>
+            </p>
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2017-06-12</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">游戏开发</a>&nbsp;
+                    
+                    <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">游戏安全</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/WPE">WPE</a>&nbsp;
+                    
+                    <a href="/tag/%e5%a4%96%e6%8c%82">外挂</a>&nbsp;
+                    
+                    <a href="/tag/%e5%b0%81%e5%8c%85">封包</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment_container post">
+        <div id="SOHUCS" sid="9c9c23b2574301faf9998bbfd1f04025" ></div>
+        <script type="text/javascript">
+            (function(){
+                window._config = { showScore: true };
+                var appid = 'cyt2AtDUF';
+                var conf = 'prod_846a5c8dcfd89035373fc1690cd74124';
+                var width = window.innerWidth || document.documentElement.clientWidth;
+                if (width < 960) {
+                    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+
+        </script>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>
