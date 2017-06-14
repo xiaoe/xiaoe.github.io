@@ -5,22 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="Protobuf,封包,协议" />
-    <meta name="description" content="&lt;h3&gt;Protocol Buffers简介&lt;/h3&gt;
+    <meta name="keywords" content="Linux" />
+    <meta name="description" content="&lt;p&gt;查看当前目录下一级子文件和子目录占用的磁盘容量。&lt;/p&gt;
 
-&lt;p&gt;这个玩意就是Google定义的一种序列化的协议格式，具有语言无关性、平台无关性、可扩展性等优点，类似于XML或Json，下面简称为Protobuf。&lt;/p&gt;
-
-&lt;h3&gt;Protbuf的适用场景&lt;/h3&gt;
-
-&lt;p&gt;先看个例子&lt;/p&gt;
-
-&lt;p&gt;一个角色对象拥有2个属性，Id和name&lt;/p&gt;" />
+&lt;p&gt;[root@localhost home]# du -h --max-depth=1 .&lt;br /&gt;
+696M    ./zhoumingkai&lt;br /&gt;
+322M    ./log&lt;br /&gt;
+227M    ./sgame&lt;br /&gt;
+8.3M    ./collector&lt;br /&gt;
+1.3G    .&lt;br /&gt;
+[root@localhost home]#&lt;/p&gt;" />
 
     <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
     <link href="/assets/css/basic.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
-    <title>小流氓简介</title>
+    <title>Linux查看当前目录大小</title>
 </head>
 <style type="text/css">
     h1,h2,h3 {
@@ -130,29 +130,35 @@
             <div class="post-page">
     <div class="post animated fadeInDown">
         <div class="post-title">
-            <h3>
+            <h3>Linux查看当前目录大小
             </h3>
         </div>
         <div class="post-content" id="content">
 
-            <h1>关于我</h1>
+            <p>查看当前目录下一级子文件和子目录占用的磁盘容量。</p>
 
-<p>江湖人称“<strong>小流氓</strong>”<br />
-专注于<strong>网络游戏</strong>相关技术<br />
-我的目标：做一款<strong>赚钱</strong>的游戏<br />
-热爱游戏事业, 正在努力为实现自我价值而奋斗中&hellip;</p>
+<pre><code>[root@localhost home]# du -h --max-depth=1 .
+696M    ./zhoumingkai
+322M    ./log
+227M    ./sgame
+8.3M    ./collector
+1.3G    .
+[root@localhost home]# 
+</code></pre>
 
-<p>欢迎相关领域的朋友一起交流，与大家一起分享经验，共享资源。<br />
-欢迎感兴趣的同行加入QQ群(50329551)进行在线交流与咨询，期望大家参与！</p>
-
-<h3>微信公众号:</h3>
-
-<p><img src="http://blog.noark.xyz/assets/images/weixin.jpg" alt="公众号" title="公众号" /></p>
+<p>du常用的选项：<br />
+　　-h：以人类可读的方式显示<br />
+　　-a：显示目录占用的磁盘空间大小，还要显示其下目录和文件占用磁盘空间的大小<br />
+　　-s：显示目录占用的磁盘空间大小，不要显示其下子目录和文件占用的磁盘空间大小<br />
+　　-c：显示几个目录或文件占用的磁盘空间大小，还要统计它们的总和<br />
+　　--apparent-size：显示目录或文件自身的大小<br />
+　　-l ：统计硬链接占用磁盘空间的大小<br />
+　　-L：统计符号链接所指向的文件占用的磁盘空间大小</p>
 
 
             <p>
                 <code>转载请注明原地址:</code>
-                <a href="http://blog.noark.xyz">http://blog.noark.xyz</a>
+                <a href="http://blog.noark.xyz/article/2016/7/7/linux%e6%9f%a5%e7%9c%8b%e5%bd%93%e5%89%8d%e7%9b%ae%e5%bd%95%e5%a4%a7%e5%b0%8f/">http://blog.noark.xyz/article/2016/7/7/linux查看当前目录大小/</a>
             </p>
         </div>
 
@@ -160,12 +166,16 @@
             <div class="meta">
                 <div class="info">
                     <i class="fa fa-calendar"></i>
-                    <span class="date">2017-06-14</span>
+                    <span class="date">2016-07-07</span>
                     &nbsp;&nbsp;
                     <i class="fa fa-folder-open"></i>
                     
+                    <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                    
                     &nbsp;&nbsp;
                     <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Linux">Linux</a>&nbsp;
                     
                 </div>
             </div>
@@ -173,7 +183,7 @@
     </div>
 
     <div class="comment_container post">
-        <div id="SOHUCS" sid="d41d8cd98f00b204e9800998ecf8427e" ></div>
+        <div id="SOHUCS" sid="6761d44a382615f0aa2c9a85eafbfa1f" ></div>
         <script type="text/javascript">
             (function(){
                 window._config = { showScore: true };
