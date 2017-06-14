@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="Flash,安全沙箱" />
+    <meta name="description" content="&lt;p&gt;做页游的同学都知道，Flash有安全沙箱问题。就是在Flash发起Socket链接时，会向服务端获取安全策略，如果得不到服务端返回的策略或策略不允许的情况，Flash将无法正常工作并向你抛出一个安全沙箱异常。&lt;/p&gt;
+
+&lt;h3&gt;什么是Flash安全沙箱？&lt;/h3&gt;
+
+&lt;p&gt;Flash安全沙箱是Flash使用Socket的一种安全策略，为避免任意Flash与目标服务器建立Socket链接，以授权端口，域名方式限定连接。&lt;/p&gt;
+
+&lt;h3&gt;Flash如何获取Socket策略？&lt;/h3&gt;
+
+&lt;p&gt;Flash发起Socket链接请求的时，会先连接服务器端的843端口来请求Socket策略。&lt;/p&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>Flash安全沙箱问题</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/Noark2%e5%85%a5%e9%97%a8">
+                    Noark2入门
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">
+                    游戏安全
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">
+                    游戏开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">
+                    职业技能
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">
+                    运维知识
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>Flash安全沙箱问题
+            </h3>
+        </div>
+        <div class="post-content" id="content">
+
+            <p>做页游的同学都知道，Flash有安全沙箱问题。就是在Flash发起Socket链接时，会向服务端获取安全策略，如果得不到服务端返回的策略或策略不允许的情况，Flash将无法正常工作并向你抛出一个安全沙箱异常。</p>
+
+<h3>什么是Flash安全沙箱？</h3>
+
+<p>Flash安全沙箱是Flash使用Socket的一种安全策略，为避免任意Flash与目标服务器建立Socket链接，以授权端口，域名方式限定连接。</p>
+
+<h3>Flash如何获取Socket策略？</h3>
+
+<p>Flash发起Socket链接请求的时，会先连接服务器端的843端口来请求Socket策略。</p>
+
+<p>当服务器没有开启843端口的时候（3秒超时），Flash会检查发起请求的flash程序中有没有使用Security.loadPolicyFile来加载Socket策略，如果还是没有就会看这个发起请求的连接的目标端口有没有Socket策略。</p>
+
+<p>如果都没有，那么Flash将触发连接失败的Socket事件，即SecurityErrorEvent.SECURITY_ERROR。</p>
+
+<h3>请求信息（暗号）</h3>
+
+<p>Flash发起Socket连接请求会向服务端发23字节的字符数据：</p>
+
+<pre><code>&lt;policy-file-request/&gt;\0
+</code></pre>
+
+<p>注意：最后的\0，为什么会有这个\0请自行研究那个年代的字符串编码</p>
+
+<p><strong>对服务器来说请求策略是额外的链接</strong></p>
+
+<p>服务器处理响应时，不管策略是由843还是目标端口发送的，发完记得主动断开，不然Flash依然会傻傻的等3秒</p>
+
+<h3>Socket策略文件的格式</h3>
+
+<p>1、简单的Socket策略，不做任何限制：</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;cross-domain-policy&gt;
+    &lt;allow-access-from domain=&quot;*&quot; to-ports=&quot;*&quot;/&gt;
+&lt;/cross-domain-policy&gt;
+</code></pre>
+
+<p>2、要限制某个域名或者IP：</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;cross-domain-policy&gt;
+    &lt;allow-access-from domain=&quot;*.noark.xyz&quot; /&gt;
+    &lt;allow-access-from domain=&quot;192.168.0.92&quot; /&gt;
+&lt;/cross-domain-policy&gt;
+</code></pre>
+
+<p>3、限制端口：</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;cross-domain-policy&gt; 
+   &lt;allow-access-from domain=&quot;*&quot; to-ports=&quot;12580&quot; /&gt; 
+   &lt;allow-access-from domain=&quot;*.noark.xyz&quot; to-ports=&quot;10010,10086&quot; /&gt; 
+   &lt;allow-access-from domain=&quot;*.noark.xyz&quot; to-ports=&quot;10010-10086&quot; /&gt; 
+   &lt;allow-access-from domain=&quot;www.noark.xyz&quot; to-ports=&quot;10000,10010-10086&quot; /&gt; 
+&lt;/cross-domain-policy&gt;
+</code></pre>
+
+<p><strong>服务器响应时也要记得那个\0</strong></p>
+
+<h3>跨域请求时的安全策略文件</h3>
+
+<p>除了Socket的策略还要说一下跨域请求时的安全策略文件，crossdomain.xml</p>
+
+<p>位于A域中的SWF文件要访问B域的文件时，SWF首先会检查B域服务器目录下是否有crossdomain.xml文件，如果没有，则访问不成功；<br />
+若crossdomain.xml文件存在，且里边设置了允许A域访问，那么通信正常。</p>
+
+<p>一个通用的跨域文件：</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;cross-domain-policy&gt;
+    &lt;allow-access-from domain=&quot;*&quot; /&gt;
+&lt;/cross-domain-policy&gt; 
+</code></pre>
+
+<p>很多时候，我们都直接使用了无限制的配置文件，能用就不管了，其实这是一个很不好的习惯，你的一个无意将会导致严重的安全隐患，会被有心之人利用</p>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2013/4/1/flash%e5%ae%89%e5%85%a8%e6%b2%99%e7%ae%b1%e9%97%ae%e9%a2%98/">http://blog.noark.xyz/article/2013/4/1/flash安全沙箱问题/</a>
+            </p>
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2013-04-01</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">游戏开发</a>&nbsp;
+                    
+                    <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">游戏安全</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Flash">Flash</a>&nbsp;
+                    
+                    <a href="/tag/%e5%ae%89%e5%85%a8%e6%b2%99%e7%ae%b1">安全沙箱</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment_container post">
+        <div id="SOHUCS" sid="e6565b3da0af717b66776ca09ec1cddf" ></div>
+        <script type="text/javascript">
+            (function(){
+                window._config = { showScore: true };
+                var appid = 'cyt2AtDUF';
+                var conf = 'prod_846a5c8dcfd89035373fc1690cd74124';
+                var width = window.innerWidth || document.documentElement.clientWidth;
+                if (width < 960) {
+                    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+
+        </script>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>
