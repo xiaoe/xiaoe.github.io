@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="Datatables" />
+    <meta name="description" content="&lt;p&gt;Datatables是一款jquery表格插件。它是一个高度灵活的工具，可以将任何HTML表格添加高级的交互功能。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;分页，即时搜索和排序&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;几乎支持任何数据源：DOM， javascript， Ajax 和 服务器处理&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;支持不同主题 DataTables, jQuery UI, Bootstrap, Foundation&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;各式各样的扩展: Editor, TableTools, FixedColumns ……&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;丰富多样的option和强大的API&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;支持国际化&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;超过2900&#43;个单元测试&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>Datatables配置汇总</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/Noark2%e5%85%a5%e9%97%a8">
+                    Noark2入门
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">
+                    后台开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">
+                    游戏安全
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">
+                    游戏开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">
+                    职业技能
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">
+                    运维知识
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>Datatables配置汇总
+            </h3>
+        </div>
+        <div class="post-content" id="content">
+
+            <p>Datatables是一款jquery表格插件。它是一个高度灵活的工具，可以将任何HTML表格添加高级的交互功能。</p>
+
+<ul>
+<li>分页，即时搜索和排序<br /></li>
+<li>几乎支持任何数据源：DOM， javascript， Ajax 和 服务器处理<br /></li>
+<li>支持不同主题 DataTables, jQuery UI, Bootstrap, Foundation<br /></li>
+<li>各式各样的扩展: Editor, TableTools, FixedColumns ……<br /></li>
+<li>丰富多样的option和强大的API<br /></li>
+<li>支持国际化<br /></li>
+<li>超过2900+个单元测试<br /></li>
+<li>免费开源 （<a href="http://datatables.net/license/mit">MIT license</a>）！ <a href="http://datatables.net/support">商业支持</a><br /></li>
+<li>更多特性请到<a href="https://datatables.net/">官网查看</a><br />
+<br /></li>
+</ul>
+
+<h3>为什么要使用Datatables</h3>
+
+<p>运营大爷不喜欢服务器端的分页显示，可以接受3-5秒的查询时间，喜欢无条件式的模糊搜索日志等</p>
+
+<h3>样式选择Bootstrap</h3>
+
+<pre><code class="language-js">//code.jquery.com/jquery-1.12.4.js
+https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js
+https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js
+</code></pre>
+
+<pre><code class="language-css">//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css
+https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css
+</code></pre>
+
+<h3>国际化显示</h3>
+
+<p>Datatables支持国际化，你可以把语言定义在文件中，使用language.url选项来初始化</p>
+
+<pre><code class="language-js">$(document).ready(function() {
+    $('#example').dataTable({
+        &quot;language&quot;: {
+            &quot;url&quot;: &quot;../resources/zh_CN.json&quot;
+        }
+    });
+});
+</code></pre>
+
+<p>zh_CN.json</p>
+
+<pre><code class="language-json">{
+    &quot;sProcessing&quot;:   &quot;处理中...&quot;,
+	&quot;sLengthMenu&quot;:   &quot;显示 _MENU_ 项结果&quot;,
+	&quot;sZeroRecords&quot;:  &quot;没有匹配结果&quot;,
+	&quot;sInfo&quot;:         &quot;第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项&quot;,
+	&quot;sInfoEmpty&quot;:    &quot;第 0 至 0 项结果，共 0 项&quot;,
+	&quot;sInfoFiltered&quot;: &quot;(由 _MAX_ 项结果过滤)&quot;,
+	&quot;sInfoPostFix&quot;:  &quot;&quot;,
+	&quot;sSearch&quot;:       &quot;搜索:&quot;,
+	&quot;sUrl&quot;:          &quot;&quot;,
+	&quot;sEmptyTable&quot;:     &quot;表中数据为空&quot;,
+	&quot;sLoadingRecords&quot;: &quot;载入中...&quot;,
+	&quot;sInfoThousands&quot;:  &quot;,&quot;,
+	&quot;oPaginate&quot;: {
+		&quot;sFirst&quot;:    &quot;首页&quot;,
+		&quot;sPrevious&quot;: &quot;上一页&quot;,
+		&quot;sNext&quot;:     &quot;下一页&quot;,
+		&quot;sLast&quot;:     &quot;末页&quot;
+	},
+	&quot;oAria&quot;: {
+		&quot;sSortAscending&quot;:  &quot;: 以升序排列此列&quot;,
+		&quot;sSortDescending&quot;: &quot;: 以降序排列此列&quot;
+	}
+}
+</code></pre>
+
+<h3>保存状态</h3>
+
+<p>Datatables设置 stateSave选项后，可以保存最后一次分页信息、排序信息，当页面刷新，或者重新进入这个页面，恢复上次的状态。</p>
+
+<p>这个状态的保存用了html5的本地储存和session储存，这样更加有效率。如果你的数据是异步获取的，你可以使用 stateSaveCallback和 stateLoadCallback选项.</p>
+
+<p>需要注意的是，这个特性不支持ie6、ie7</p>
+
+<p>默认情况下，这个状态会保存2小时，如果你希望设置的时间更长，通过设置参数 stateDuration来初始化表格</p>
+
+<p>这个参数值也可以控制是本地储存(0~更大)还是session储存(-1)</p>
+
+<p>下面的例子展示了Datatables设置 stateSave选项初始化后，实现的状态保存</p>
+
+<pre><code class="language-js">$(document).ready(function() {
+  $('#example').dataTable( {
+    stateSave: true
+  });
+});
+</code></pre>
+
+<h3>DOM定位</h3>
+
+<p>datatables默认会打开部分特性，比如搜索框，分页显示等等，或许你不喜欢datatables这样去布局，可能你想把分页按钮放在底部的中间，搜索框放在顶部的左上角，不用担心datatables考虑到这个问题，使用dom选项就可以灵活配置各个特性的位置</p>
+
+<p>datatables定义了10个字符表示不同的组件</p>
+
+<ul>
+<li>l - Length changing 每页显示多少条数据选项<br /></li>
+<li>f - Filtering input 搜索框<br /></li>
+<li>t - The Table 表格<br /></li>
+<li>i - Information 表格信息<br /></li>
+<li>p - Pagination 分页按钮<br /></li>
+<li>r - pRocessing 加载等待显示信息<br /></li>
+<li>&lt; and &gt; - div elements 一个div元素<br /></li>
+<li>&lt;&ldquo;#id&rdquo; and &gt; - div with an id 指定id的div元素<br /></li>
+<li>&lt;&ldquo;class&rdquo; and &gt; - div with a class 指定样式名的div元素<br /></li>
+<li>&lt;&ldquo;#id.class&rdquo; and &gt; - div with an id and class 指定id和样式的div元素<br />
+<br />
+<br /></li>
+</ul>
+
+<pre><code class="language-js">$(document).ready(function() {
+    $('#example').dataTable( {
+        &quot;dom&quot;: '&lt;&quot;top&quot;i&gt;rt&lt;&quot;bottom&quot;flp&gt;&lt;&quot;clear&quot;&gt;'
+    });
+});
+</code></pre>
+
+<h3>按钮+导出Excel</h3>
+
+<p>按钮可以通过 buttonsOption ，使用 domOption 指定按钮：</p>
+
+<pre><code class="language-js">$('#myTable').DataTable({
+    dom: 'Bfrtip',
+    buttons: ['copy', 'excel', 'print']
+});
+</code></pre>
+
+<p>导出功能可由H5或Flash实现，我所使用的为H5，需要添加JS</p>
+
+<pre><code>//code.jquery.com/jquery-1.12.4.js(必选)
+https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js(必选)
+https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js(必选)
+//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js(必选)
+//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js(Excel)
+//cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js(打印)
+</code></pre>
+
+<p><strong>这里没有选择CSV和PDF功能 是因为他对中文支持不友好，有乱码</strong></p>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2017/6/15/datatables%e9%85%8d%e7%bd%ae%e6%b1%87%e6%80%bb/">http://blog.noark.xyz/article/2017/6/15/datatables配置汇总/</a>
+            </p>
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2017-06-15</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">后台开发</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Datatables">Datatables</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment_container post">
+        <div id="SOHUCS" sid="39402936793f3819778b8cc5ac69a7e7" ></div>
+        <script type="text/javascript">
+            (function(){
+                window._config = { showScore: true };
+                var appid = 'cyt2AtDUF';
+                var conf = 'prod_846a5c8dcfd89035373fc1690cd74124';
+                var width = window.innerWidth || document.documentElement.clientWidth;
+                if (width < 960) {
+                    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+
+        </script>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>
