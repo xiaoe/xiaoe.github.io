@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="网易云跟贴,畅言" />
+    <meta name="description" content="&lt;p&gt;话说有一天，我发现了一个Golang写的静态博客工具(Chca)，我的故事就这样开始了&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;工具使用相对比较简单，我也是我喜欢他的原因，所有都调通以后，开始注册我的畅言&lt;/p&gt;
+
+&lt;p&gt;由于域名没有备案 我发现畅言的评论功能只能用15天&lt;/p&gt;
+
+&lt;p&gt;畅言--又爱又恨啊，需要域名备案，真烦人，备案就需要主机，流程也比较复杂和漫长&lt;/p&gt;
+
+&lt;p&gt;然后选择了阿里云备案，流程他帮跑，邮寄背景布，拍卖，上传，慢慢等时间&lt;/p&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>静态博客的评论工具--网易云跟贴</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/Noark2%e5%85%a5%e9%97%a8">
+                    Noark2入门
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">
+                    后台开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">
+                    游戏安全
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">
+                    游戏开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">
+                    职业技能
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">
+                    运维知识
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>静态博客的评论工具--网易云跟贴
+            </h3>
+        </div>
+        <div class="post-content" id="content">
+
+            <p>话说有一天，我发现了一个Golang写的静态博客工具(Chca)，我的故事就这样开始了&hellip;</p>
+
+<p>工具使用相对比较简单，我也是我喜欢他的原因，所有都调通以后，开始注册我的畅言</p>
+
+<p>由于域名没有备案 我发现畅言的评论功能只能用15天</p>
+
+<p>畅言--又爱又恨啊，需要域名备案，真烦人，备案就需要主机，流程也比较复杂和漫长</p>
+
+<p>然后选择了阿里云备案，流程他帮跑，邮寄背景布，拍卖，上传，慢慢等时间</p>
+
+<p>买了一年的主机，填写资料，身份证与手机归属地不一样</p>
+
+<ol>
+<li>以江苏为地址，就需要江苏的手机号 24小时开机，虽然买个小米卡很便宜<br /></li>
+<li>以上海为地址申请，但不是上海户口就要居住证<br />
+<br /></li>
+</ol>
+
+<p>好吧，我现在在办居住证的路上</p>
+
+<p>申请居住证需要劳动合同原件，身份证原件，近6个月社保清单，寄宿证明或者租赁备案</p>
+
+<p>在这里强烈建议想在上海混的小朋友们，有时间先去把居住证给办了，不就是花点钱嘛~</p>
+
+<p>居住证申请需要30天左右（前10天为审核期）</p>
+
+<p>拿到证后再去备案，走一遍流程基本又是一个月，祝我好运~</p>
+
+<p>这里提醒一下拿到证1周后 才可以申请积分</p>
+
+<p>我的故事还没有结束，慢慢等吧~</p>
+
+<p>今天的主角是网易云跟贴，他不要域名备案号</p>
+
+<p>与之相同的产品还有多说，不过多说已关闭服务了。多说甩下的锅,畅言来稳稳地接（这个广告真好~~）</p>
+
+<p><a href="https://gentie.163.com/index.html">网易云跟贴的官方站点</a></p>
+
+<p>注册-&gt;填写信息-&gt;把通用代码复制到博客里-&gt;发布</p>
+
+<p>好吧，太简单了，看看下面的评论就知道了</p>
+
+<p>网易云跟贴在非注册域名下不会显示的，这个有区别于畅言，直接发布上去就可以了&hellip;</p>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2017/6/29/%e9%9d%99%e6%80%81%e5%8d%9a%e5%ae%a2%e7%9a%84%e8%af%84%e8%ae%ba%e5%b7%a5%e5%85%b7--%e7%bd%91%e6%98%93%e4%ba%91%e8%b7%9f%e8%b4%b4/">http://blog.noark.xyz/article/2017/6/29/静态博客的评论工具--网易云跟贴/</a>
+            </p>
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2017-06-29</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">职业技能</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/%e7%bd%91%e6%98%93%e4%ba%91%e8%b7%9f%e8%b4%b4">网易云跟贴</a>&nbsp;
+                    
+                    <a href="/tag/%e7%95%85%e8%a8%80">畅言</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment_container post">
+        <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+		<script>
+		  var cloudTieConfig = {
+		    url: document.location.href, 
+		    sourceId: "",
+		    productKey: "018f9d459b9e44eb9b559aecd7d5c08c",
+		    target: "cloud-tie-wrapper"
+		  };
+		</script>
+		<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>
