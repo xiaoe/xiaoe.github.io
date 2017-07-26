@@ -584,6 +584,8 @@ var Laya=window.Laya=(function(window,document){
 			this._y=0;
 			this._titleX=0;
 			this._titleY=0;
+			this._camp=0;
+			this._type=0;
 			this._id=parseInt(data["ID"]);
 			this._name=data["Name"];
 			this._icon=data["ICON"];
@@ -591,6 +593,8 @@ var Laya=window.Laya=(function(window,document){
 			this._y=parseInt(data["Y"]);
 			this._titleX=parseInt(data["TitleX"]);
 			this._titleY=parseInt(data["TitleY"]);
+			this._camp=parseInt(data["Camp"]);
+			this._type=parseInt(data["Type"]);
 		}
 
 		__class(CityTemplate,'template.CityTemplate');
@@ -601,22 +605,26 @@ var Laya=window.Laya=(function(window,document){
 			this._id=value;
 		});
 
-		__getset(0,__proto,'icon',function(){
-			return this._icon;
-			},function(value){
-			this._icon=value;
-		});
-
 		__getset(0,__proto,'titleY',function(){
 			return this._titleY;
 			},function(value){
 			this._titleY=value;
 		});
 
+		__getset(0,__proto,'icon',function(){
+			return this._icon;
+			},function(value){
+			this._icon=value;
+		});
+
 		__getset(0,__proto,'titleX',function(){
 			return this._titleX;
 			},function(value){
 			this._titleX=value;
+		});
+
+		__getset(0,__proto,'camp',function(){
+			return this._camp;
 		});
 
 		__getset(0,__proto,'y',function(){
@@ -637,7 +645,37 @@ var Laya=window.Laya=(function(window,document){
 			this._name=value;
 		});
 
+		__getset(0,__proto,'type',function(){
+			return this._type;
+		});
+
 		return CityTemplate;
+	})()
+
+
+	//class utilx.ColorUtils
+	var ColorUtils=(function(){
+		function ColorUtils(){};
+		__class(ColorUtils,'utilx.ColorUtils');
+		__static(ColorUtils,
+		['color',function(){return this.color={
+				1:"#FF4500",
+				2:"#00FF00",
+				3:"#0000FF",
+				4:"#A0522D",
+				5:"#FFA500",
+				6:"#ADFF2F",
+				7:"#00BFFF",
+				8:"#6495ED",
+				9:"#0000CD",
+				10:"#4B0082",
+				11:"#8B008B",
+				12:"#FF1493",
+				13:"#FF69B4"
+		};}
+
+		]);
+		return ColorUtils;
 	})()
 
 
@@ -1606,6 +1644,162 @@ var Laya=window.Laya=(function(window,document){
 		['_tempMatrix',function(){return this._tempMatrix=new Matrix();},'_initMatrix',function(){return this._initMatrix=new Matrix();}
 		]);
 		return Graphics;
+	})()
+
+
+	//class laya.debug.tools.ColorTool
+	var ColorTool=(function(){
+		function ColorTool(){
+			this.red=NaN;
+			this.green=NaN;
+			this.blue=NaN;
+		}
+
+		__class(ColorTool,'laya.debug.tools.ColorTool');
+		ColorTool.toHexColor=function(color){
+			return Utils.toHexColor(color);
+		}
+
+		ColorTool.getRGBByRGBStr=function(str){
+			str.charAt(0)=='#' && (str=str.substr(1));
+			var color=parseInt(str,16);
+			var flag=(str.length==8);
+			var _color;
+			_color=[((0x00FF0000 & color)>> 16),((0x0000FF00 & color)>> 8),(0x000000FF & color)];
+			return _color;
+		}
+
+		ColorTool.getColorBit=function(value){
+			var rst;
+			rst=Math.floor(value).toString(16);
+			rst=rst.length > 1 ? rst :"0"+rst;
+			return rst;
+		}
+
+		ColorTool.getRGBStr=function(rgb){
+			return "#"+ColorTool.getColorBit(rgb[0])+ColorTool.getColorBit(rgb[1])+ColorTool.getColorBit(rgb[2]);
+		}
+
+		ColorTool.traseHSB=function(hsb){
+			console.log("hsb:",hsb[0],hsb[1],hsb[2]);
+		}
+
+		ColorTool.rgb2hsb=function(rgbR,rgbG,rgbB){
+			var rgb=[rgbR,rgbG,rgbB];
+			rgb.sort(MathTools.sortNumSmallFirst);
+			var max=rgb[2];
+			var min=rgb[0];
+			var hsbB=max / 255.0;
+			var hsbS=max==0 ? 0 :(max-min)/ max;
+			var hsbH=0;
+			if(max==min){
+				hsbH=1;
+			}
+			else
+			if (rgbR==0 && rgbG==0&&rgbB==0){
+			}else
+			if (max==rgbR && rgbG >=rgbB){
+				hsbH=(rgbG-rgbB)*60 / (max-min)+0;
+			}
+			else if (max==rgbR && rgbG < rgbB){
+				hsbH=(rgbG-rgbB)*60 / (max-min)+360;
+			}
+			else if (max==rgbG){
+				hsbH=(rgbB-rgbR)*60 / (max-min)+120;
+			}
+			else if (max==rgbB){
+				hsbH=(rgbR-rgbG)*60 / (max-min)+240;
+			}
+			return [hsbH,hsbS,hsbB];
+		}
+
+		ColorTool.hsb2rgb=function(h,s,v){
+			var r=0,g=0,b=0;
+			var i=Math.floor((h / 60)% 6);
+			var f=(h / 60)-i;
+			var p=v *(1-s);
+			var q=v *(1-f *s);
+			var t=v *(1-(1-f)*s);
+			switch (i){
+				case 0:
+					r=v;
+					g=t;
+					b=p;
+					break ;
+				case 1:
+					r=q;
+					g=v;
+					b=p;
+					break ;
+				case 2:
+					r=p;
+					g=v;
+					b=t;
+					break ;
+				case 3:
+					r=p;
+					g=q;
+					b=v;
+					break ;
+				case 4:
+					r=t;
+					g=p;
+					b=v;
+					break ;
+				case 5:
+					r=v;
+					g=p;
+					b=q;
+					break ;
+				default :
+					break ;
+				}
+			return [Math.floor(r *255.0),Math.floor(g *255.0),Math.floor(b *255.0)];
+		}
+
+		return ColorTool;
+	})()
+
+
+	//class laya.debug.tools.MathTools
+	var MathTools=(function(){
+		function MathTools(){}
+		__class(MathTools,'laya.debug.tools.MathTools');
+		MathTools.sortBigFirst=function(a,b){
+			if (a==b)
+				return 0;
+			return b > a ? 1 :-1;
+		}
+
+		MathTools.sortSmallFirst=function(a,b){
+			if (a==b)
+				return 0;
+			return b > a ?-1 :1;
+		}
+
+		MathTools.sortNumBigFirst=function(a,b){
+			return parseFloat(b)-parseFloat(a);
+		}
+
+		MathTools.sortNumSmallFirst=function(a,b){
+			return parseFloat(a)-parseFloat(b);
+		}
+
+		MathTools.sortByKey=function(key,bigFirst,forceNum){
+			(bigFirst===void 0)&& (bigFirst=false);
+			(forceNum===void 0)&& (forceNum=true);
+			var _sortFun;
+			if (bigFirst){
+				_sortFun=forceNum ? MathTools.sortNumBigFirst :MathTools.sortBigFirst;
+				}else {
+				_sortFun=forceNum ? MathTools.sortNumSmallFirst :MathTools.sortSmallFirst;
+			}
+			return function (a,b){
+				return _sortFun(a[key],b[key]);
+			};
+		}
+
+		return MathTools;
 	})()
 
 
@@ -21189,8 +21383,6 @@ var Laya=window.Laya=(function(window,document){
 			this.pos(template.x,template.y);
 			this.bg.loadImage(template.icon);
 			this.addChild(this.bg);
-			this.roleAni=new Animation$1();
-			this.roleAni.loadAtlas("res/map/xxx/flag.atlas",Handler.create(this,this.onLoaded));
 			this.bg.on("mouseover",this,this.onApePress);
 			this.bg.on("mouseout",this,this.onOutPress);
 			var title=new Sprite();
@@ -21205,16 +21397,93 @@ var Laya=window.Laya=(function(window,document){
 			this.text.text=template.name;
 			title.addChild(this.text);
 			this.addChild(title);
+			if(template.type==1){
+				Laya.loader.load("res/atlas/flag/XXL.json",Handler.create(this,this.onAssetLoaded),null,"atlas");
+				}else if(template.type==2){
+				Laya.loader.load("res/atlas/flag/XL.json",Handler.create(this,this.onAssetLoadedXL),null,"atlas");
+				}else {
+				Laya.loader.load("res/atlas/flag/L.json",Handler.create(this,this.onAssetLoadedL),null,"atlas");
+			}
+			this.mouseEnabled=true;
 		}
 
 		__class(City,'map.City',_super);
 		var __proto=City.prototype;
-		//this.on(Event.MOUSE_DOWN,this,onStartDrag);
-		__proto.onLoaded=function(){
-			this.roleAni.pos(10,100);
+		__proto.onAssetLoadedL=function(){
+			var ani=new Animation$1();
+			ani.loadAnimation('FlagL.ani');
+			ani.pos(6,6);
+			var redMat=
+			[
+			1,0,0,0,0,
+			0,0,0,0,0,
+			0,0,0,0,0,
+			0,0,0,1,0,];
+			var redFilter=new ColorFilter(redMat);
+			ani.filters=[redFilter];
+			this.addChild(ani);
+			ani.play(0,true);
+			var text=new Text();
+			text.overflow=Text.HIDDEN;
+			text.color="#FFFFFF";
+			text.font="Impact";
+			text.fontSize=12;
+			text.x=28;
+			text.y=22;
+			text.text="汉";
+			this.addChild(text);
 		}
 
-		//roleAni.play();
+		__proto.onAssetLoadedXL=function(){
+			var ani=new Animation$1();
+			ani.loadAnimation('FlagXL.ani');
+			ani.pos(20,30);
+			var redMat=
+			[
+			1,0,0,0,0,
+			0,0,0,0,0,
+			0,0,0,0,0,
+			0,0,0,1,0,];
+			var redFilter=new ColorFilter(redMat);
+			ani.filters=[redFilter];
+			this.addChild(ani);
+			ani.play(0,true);
+			var text=new Text();
+			text.overflow=Text.HIDDEN;
+			text.color="#FFFFFF";
+			text.font="Impact";
+			text.fontSize=14;
+			text.x=38;
+			text.y=42;
+			text.text="汉";
+			this.addChild(text);
+		}
+
+		__proto.onAssetLoaded=function(){
+			var ani=new Animation$1();
+			ani.loadAnimation('FlagXXL.ani');
+			ani.pos(-10,20);
+			var redMat=
+			[
+			1,0,0,0,0,
+			0,0,0,0,0,
+			0,0,0,0,0,
+			0,0,0,1,0,];
+			var redFilter=new ColorFilter(redMat);
+			ani.filters=[redFilter];
+			this.addChild(ani);
+			ani.play(0,true);
+			var text=new Text();
+			text.overflow=Text.HIDDEN;
+			text.color="#FFFFFF";
+			text.font="Impact";
+			text.fontSize=16;
+			text.x=46;
+			text.y=58;
+			text.text="汉";
+			this.addChild(text);
+		}
+
 		__proto.onStartDrag=function(e){
 			this.startDrag(null,false,100,300,null,true);
 			this.text.text=this.tpl.name+"(x="+this.x+",y="+this.y;
@@ -21233,6 +21502,36 @@ var Laya=window.Laya=(function(window,document){
 	})(Sprite)
 
 
+	//class map.SmallMap extends laya.display.Sprite
+	var SmallMap=(function(_super){
+		function SmallMap(){
+			this.citySp=null;
+			SmallMap.__super.call(this);
+			this.viewSp=new Sprite();
+			var bg=new Sprite();
+			bg.loadImage("res/images/SmallMapBg.png",60,75,245,175);
+			this.addChild(bg);
+			var mapBg=new Sprite();
+			mapBg.loadImage("res/map/image_504.png");
+			this.addChild(mapBg);
+			this.citySp=new Sprite();
+			this.addChild(this.citySp);
+			this.addChild(this.viewSp);
+			bg.on("mousedown",this,this.mouseHandler);
+		}
+
+		__class(SmallMap,'map.SmallMap',_super);
+		var __proto=SmallMap.prototype;
+		__proto.mouseHandler=function(){
+			console.log("\n————————\n左键按下");
+			console.log(this.mouseX);
+			console.log(this.mouseY);
+		}
+
+		return SmallMap;
+	})(Sprite)
+
+
 	//class map.WorldMap extends laya.display.Sprite
 	var WorldMap=(function(_super){
 		function WorldMap(){
@@ -21242,6 +21541,7 @@ var Laya=window.Laya=(function(window,document){
 			WorldMap.__super.call(this);
 			this.mapLayer=new Sprite();
 			this.cityLayer=new Sprite();
+			this.sm=new SmallMap();
 			Laya.loader.load("res/excel/data/city.tpl",Handler.create(this,this.onAssetLoaded));
 		}
 
@@ -21252,7 +21552,9 @@ var Laya=window.Laya=(function(window,document){
 			var a;
 			for(var $each_a in array){
 				a=array[$each_a];
-				this.cityLayer.addChild(new City(new CityTemplate(a)));
+				var t=new CityTemplate(a);
+				this.cityLayer.addChild(new City(t));
+				this.sm.citySp.graphics.drawCircle(t.x / 34+65,t.y / 27+75,3,ColorUtils.color[t.camp],"#000000",1);
 			}
 			this.addChild(this.mapLayer);
 			this.addChild(this.cityLayer);
@@ -21260,6 +21562,8 @@ var Laya=window.Laya=(function(window,document){
 			this.updateViewPort();
 			this.on("mousedown",this,this.mouseDown);
 			this.on("mouseup",this,this.mouseUp);
+			this.sm.pos(Laya.stage.width-310,0);
+			Laya.stage.addChild(this.sm);
 		}
 
 		//鼠标按下拖动地图
@@ -21275,8 +21579,7 @@ var Laya=window.Laya=(function(window,document){
 			var xxx=this.x-xx;
 			if(xxx > 0){
 				xxx=0;
-			}
-			console.log("x="+xxx+",y="+yyy)
+			};
 			var maxX=(16 *500+268)-Laya.stage.width;
 			if(xxx <-maxX){
 				xxx=-maxX;
@@ -21344,6 +21647,10 @@ var Laya=window.Laya=(function(window,document){
 			var yc=Laya.stage.height / 300+1;
 			var startX=Math.floor(-this.x / 500);
 			var startY=Math.floor(-this.y / 300);
+			this.sm.viewSp.graphics.clear();
+			var viewX=-this.x / 34+65;
+			var viewY=-this.y / 27+75;
+			this.sm.viewSp.graphics.drawRect(viewX,viewY,Laya.stage.width / 34,Laya.stage.height / 27,null,"#FF0000",2);
 			var newHashmap={};
 			for(var y=startY;y < startY+xc;y++){
 				for(var x=startX;x < startX+yc;x++){
@@ -30842,6 +31149,48 @@ var Laya=window.Laya=(function(window,document){
 	})(Box)
 
 
+	//class laya.ui.CheckBox extends laya.ui.Button
+	var CheckBox=(function(_super){
+		/**
+		*创建一个新的 <code>CheckBox</code> 组件实例。
+		*@param skin 皮肤资源地址。
+		*@param label 文本标签的内容。
+		*/
+		function CheckBox(skin,label){
+			(label===void 0)&& (label="");
+			CheckBox.__super.call(this,skin,label);
+		}
+
+		__class(CheckBox,'laya.ui.CheckBox',_super);
+		var __proto=CheckBox.prototype;
+		/**@inheritDoc */
+		__proto.preinitialize=function(){
+			laya.ui.Component.prototype.preinitialize.call(this);
+			this.toggle=true;
+			this._autoSize=false;
+		}
+
+		/**@inheritDoc */
+		__proto.initialize=function(){
+			_super.prototype.initialize.call(this);
+			this.createText();
+			this._text.align="left";
+			this._text.valign="top";
+			this._text.width=0;
+		}
+
+		/**@inheritDoc */
+		__getset(0,__proto,'dataSource',_super.prototype._$get_dataSource,function(value){
+			this._dataSource=value;
+			if ((typeof value=='boolean'))this.selected=value;
+			else if ((typeof value=='string'))this.selected=value==="true";
+			else _super.prototype._$set_dataSource.call(this,value);
+		});
+
+		return CheckBox;
+	})(Button)
+
+
 	//class laya.ui.Panel extends laya.ui.Box
 	var Panel=(function(_super){
 		function Panel(){
@@ -31154,48 +31503,6 @@ var Laya=window.Laya=(function(window,document){
 
 		return Panel;
 	})(Box)
-
-
-	//class laya.ui.CheckBox extends laya.ui.Button
-	var CheckBox=(function(_super){
-		/**
-		*创建一个新的 <code>CheckBox</code> 组件实例。
-		*@param skin 皮肤资源地址。
-		*@param label 文本标签的内容。
-		*/
-		function CheckBox(skin,label){
-			(label===void 0)&& (label="");
-			CheckBox.__super.call(this,skin,label);
-		}
-
-		__class(CheckBox,'laya.ui.CheckBox',_super);
-		var __proto=CheckBox.prototype;
-		/**@inheritDoc */
-		__proto.preinitialize=function(){
-			laya.ui.Component.prototype.preinitialize.call(this);
-			this.toggle=true;
-			this._autoSize=false;
-		}
-
-		/**@inheritDoc */
-		__proto.initialize=function(){
-			_super.prototype.initialize.call(this);
-			this.createText();
-			this._text.align="left";
-			this._text.valign="top";
-			this._text.width=0;
-		}
-
-		/**@inheritDoc */
-		__getset(0,__proto,'dataSource',_super.prototype._$get_dataSource,function(value){
-			this._dataSource=value;
-			if ((typeof value=='boolean'))this.selected=value;
-			else if ((typeof value=='string'))this.selected=value==="true";
-			else _super.prototype._$set_dataSource.call(this,value);
-		});
-
-		return CheckBox;
-	})(Button)
 
 
 	//class laya.ui.UIGroup extends laya.ui.Box
