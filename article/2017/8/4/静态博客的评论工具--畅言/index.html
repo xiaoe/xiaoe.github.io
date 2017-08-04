@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="畅言,CHCA" />
+    <meta name="description" content="&lt;h3&gt;畅言&lt;/h3&gt;
+
+&lt;p&gt;第三方的评论工具，简约而不简单&amp;hellip;&lt;/p&gt;
+
+&lt;h3&gt;安装&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;申请账号(&lt;a href=&#34;http://changyan.kuaizhan.com/&#34;&gt;官方网站&lt;/a&gt;)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;进入后台&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;创建应用&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;获取代码&lt;br /&gt;
+&lt;div id=&#34;SOHUCS&#34; sid=&#34;请将此处替换为配置SourceID的语句&#34; &gt;&lt;/div&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>静态博客的评论工具--畅言</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/Noark2%e5%85%a5%e9%97%a8">
+                    Noark2入门
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">
+                    后台开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">
+                    游戏安全
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">
+                    游戏开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">
+                    职业技能
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">
+                    运维知识
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>静态博客的评论工具--畅言
+            </h3>
+        </div>
+        <div class="post-content" id="content">
+
+            <h3>畅言</h3>
+
+<p>第三方的评论工具，简约而不简单&hellip;</p>
+
+<h3>安装</h3>
+
+<ol>
+<li>申请账号(<a href="http://changyan.kuaizhan.com/">官方网站</a>)<br /></li>
+<li>进入后台<br /></li>
+<li>创建应用<br /></li>
+<li>获取代码<br />
+<code>
+&lt;div id=&quot;SOHUCS&quot; sid=&quot;请将此处替换为配置SourceID的语句&quot; &gt;&lt;/div&gt; 
+&lt;script type=&quot;text/javascript&quot;&gt; 
+(function(){ 
+var appid = '1234567890'; 
+var conf = 'prod_0000000000000000000000000000'; 
+var width = window.innerWidth || document.documentElement.clientWidth; 
+if (width &lt; 960) { 
+window.document.write('&lt;script id=&quot;changyan_mobile_js&quot; charset=&quot;utf-8&quot; type=&quot;text/javascript&quot; src=&quot;https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&amp;conf=' + conf + '&quot;&gt;&lt;\/script&gt;'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName(&quot;head&quot;)[0]||document.head||document.documentElement;var b=document.createElement(&quot;script&quot;);b.setAttribute(&quot;type&quot;,&quot;text/javascript&quot;);b.setAttribute(&quot;charset&quot;,&quot;UTF-8&quot;);b.setAttribute(&quot;src&quot;,d);if(typeof a===&quot;function&quot;){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e===&quot;loaded&quot;||e===&quot;complete&quot;){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs(&quot;https://changyan.sohu.com/upload/changyan.js&quot;,function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); &lt;/script&gt;
+</code><br />
+复制以上代码，并粘贴到您网页源代码的<body>与</body>之间想要出现畅言评论框的位置。如果您的网站使用了模板，请将代码粘贴到模板代码中。<br />
+<br /></li>
+</ol>
+
+<h3>域名备案</h3>
+
+<p>没有备案的域名，此工具只能使用15就无法使用了</p>
+
+<p>备案建议使用阿里云，方便快捷，备案城市与手机不一致，是需要居住证的，记得提前准备</p>
+
+<p>备案成功后，畅言对备案号的审核应该有延迟，目测缓存24小时才会更新</p>
+
+<h3>域名白名单</h3>
+
+<p>建议设计域名白名单，不然别人复制你的代码也可以使用了，这样就会出现评论错乱的情况</p>
+
+<h3>高级配置</h3>
+
+<p>设计评论提醒邮件 系统设置 &gt;&gt; 通用设置 &gt;&gt; 高级设置 &gt;&gt; 评论提醒</p>
+
+<p>选择每条新回复都提醒我，填写邮件</p>
+
+<p>审核与灌水就自己试试吧~</p>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2017/8/4/%e9%9d%99%e6%80%81%e5%8d%9a%e5%ae%a2%e7%9a%84%e8%af%84%e8%ae%ba%e5%b7%a5%e5%85%b7--%e7%95%85%e8%a8%80/">http://blog.noark.xyz/article/2017/8/4/静态博客的评论工具--畅言/</a>
+            </p>
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2017-08-04</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">职业技能</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/%e7%95%85%e8%a8%80">畅言</a>&nbsp;
+                    
+                    <a href="/tag/CHCA">CHCA</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment_container post">
+        <div id="SOHUCS" sid="a632f1958e5be01fb37afad914f573e9"></div>
+		<script type="text/javascript"> 
+		(function(){ 
+		var appid = 'cyt2AtDUF'; 
+		var conf = 'prod_846a5c8dcfd89035373fc1690cd74124'; 
+		var width = window.innerWidth || document.documentElement.clientWidth; 
+		if (width < 960) { 
+		window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>
