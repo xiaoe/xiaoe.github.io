@@ -131,6 +131,136 @@
 
 <div class="post animated fadeInDown">
     <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2017/8/10/mysql5.7%e5%ae%89%e8%a3%85%e5%b0%8f%e8%ae%b0/">MYSQL5.7安装小记</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>yum install mysql-server</p>
+
+<p>MySQL5.7 安装成功，为了加强安全性，会自动为root用户生成了一个随机密码<br />
+grep &ldquo;password&rdquo; /var/log/mysqld.log</p>
+
+<p>随机密码<br />
+2017-08-09T04:20:43.628747Z 1 [Note] A temporary password is generated for root@localhost: HcchE4-y*vV6</p>
+
+<p>首次登录提示</p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2017-08-10</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Linux">Linux</a>&nbsp;
+                
+                <a href="/tag/Mysql">Mysql</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2017/8/10/%e8%85%be%e8%ae%af%e4%ba%91tomcat%e5%90%af%e5%8a%a8%e5%a4%aa%e6%85%a2%e7%9a%84%e6%83%85%e5%86%b5/">腾讯云Tomcat启动太慢的情况</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>今天拿到一台新的腾讯云机器，准备部署WEB服务</p>
+
+<p>安装JDK，安装Tomcat，启服，访问，浏览器一直在转，查看安全组配置，没有问题，本地访问，依然是在等待中&hellip;</p>
+
+<p>查看Tomcat日志，好像没有成功启动，像是卡在哪里了，结束，重启，还是这鬼样&hellip;</p>
+
+<p>正在查找问题的同时，意外发现Tomcat启来了，也能访问，重启又是这鸟样</p>
+
+<p>分析日志，启动时间太久 大概要4分钟</p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2017-08-10</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Linux">Linux</a>&nbsp;
+                
+                <a href="/tag/Tomcat">Tomcat</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2017/8/10/redis4%e5%ae%89%e8%a3%85%e5%b0%8f%e8%ae%b0/">REDIS4安装小记</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <h4>安装</h4>
+
+<p>下载，解压，编译:<br />
+$ wget <a href="http://download.redis.io/releases/redis-4.0.1.tar.gz">http://download.redis.io/releases/redis-4.0.1.tar.gz</a><br />
+$ tar xzf redis-4.0.1.tar.gz<br />
+$ cd redis-4.0.1<br />
+$ make</p>
+
+<p>Make后查看日志提示<br />
+make[3]: gcc: Command not found</p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2017-08-10</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Linux">Linux</a>&nbsp;
+                
+                <a href="/tag/Redis">Redis</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
         <h3><a style="color: #FF6600" href="/article/2017/8/4/%e9%9d%99%e6%80%81%e5%8d%9a%e5%ae%a2%e7%9a%84%e8%af%84%e8%ae%ba%e5%b7%a5%e5%85%b7--%e7%95%85%e8%a8%80/">静态博客的评论工具--畅言</a>
         </h3>
     </div>
@@ -424,135 +554,6 @@
                 <a href="/tag/CSV">CSV</a>&nbsp;
                 
                 <a href="/tag/Excel">Excel</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/6/12/%e6%88%8f%e8%af%b4%e7%bd%91%e7%bb%9c%e6%b8%b8%e6%88%8f%e5%a4%96%e6%8c%82%e4%b9%8b%e5%b0%81%e5%8c%85%e6%8c%82/">戏说网络游戏外挂之封包挂</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <h4>什么是游戏封包？</h4>
-
-<p>网络游戏中，服务器与客户端相互通信所传输的那个二进制数据，就是我们要说的游戏封包。</p>
-
-<h4>工具准备</h4>
-
-<p>WPE（Winsock Packet Editor） 中文名称是：网络封包编辑器。</p>
-
-<p>该软件功能强大，此软件可以让使用者享受外挂的乐趣，体验游戏的全新外挂玩法。</p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-06-12</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">游戏开发</a>&nbsp;
-                
-                <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">游戏安全</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/WPE">WPE</a>&nbsp;
-                
-                <a href="/tag/%e5%a4%96%e6%8c%82">外挂</a>&nbsp;
-                
-                <a href="/tag/%e5%b0%81%e5%8c%85">封包</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/6/6/%e6%88%8f%e8%af%b4%e7%bd%91%e7%bb%9c%e6%b8%b8%e6%88%8f%e5%a4%96%e6%8c%82%e4%b9%8b%e5%86%85%e5%ad%98%e6%8c%82/">戏说网络游戏外挂之内存挂</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <p>很多游戏开发者一直以为网络游戏的数据是在服务器上的。你怎么改都无济于事，修改客户端内存只是修改了显示，自己骗自己呢。</p>
-
-<p>事实上打钱工作室的兄弟调试游戏经验 都可写一本《外挂入门之内存修改》，序就写着的，掩耳盗铃。</p>
-
-<h4>掩耳盗铃</h4>
-
-<p>原为掩耳盗钟。掩：遮盖；盗：偷。把耳朵捂住偷铃铛，以为自己听不见别人也会听不见，比喻自欺欺人。</p>
-
-<p>《吕氏春秋·自知》：“范氏之亡也,百姓有得钟者.欲负而走,则钟大不可负；以椎毁之,钟况然有音.恐人闻之而夺己也,遽掩其耳.恶人闻之,可也；恶己自闻之,悖矣。”</p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-06-06</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">游戏开发</a>&nbsp;
-                
-                <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">游戏安全</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/CE">CE</a>&nbsp;
-                
-                <a href="/tag/%e5%a4%96%e6%8c%82">外挂</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/6/6/linux%e4%b8%8b%e7%bb%9f%e8%ae%a1%e5%bd%93%e5%89%8d%e6%96%87%e4%bb%b6%e5%a4%b9%e4%b8%8b%e7%9a%84%e6%96%87%e4%bb%b6%e6%80%bb%e6%95%b0/">Linux下统计当前文件夹下的文件总数</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <p>统计当前目录包含子目录里的文件总数量</p>
-
-<p>[root@localhost ~]# find -type f |wc -l<br />
-3255<br />
-[root@localhost ~]#</p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-06-06</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/Linux">Linux</a>&nbsp;
                 
 
             </div>

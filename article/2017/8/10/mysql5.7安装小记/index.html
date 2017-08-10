@@ -5,22 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="Protobuf,封包,协议" />
-    <meta name="description" content="&lt;h3&gt;Protocol Buffers简介&lt;/h3&gt;
+    <meta name="keywords" content="Linux,Mysql" />
+    <meta name="description" content="&lt;p&gt;yum install mysql-server&lt;/p&gt;
 
-&lt;p&gt;这个玩意就是Google定义的一种序列化的协议格式，具有语言无关性、平台无关性、可扩展性等优点，类似于XML或Json，下面简称为Protobuf。&lt;/p&gt;
+&lt;p&gt;MySQL5.7 安装成功，为了加强安全性，会自动为root用户生成了一个随机密码&lt;br /&gt;
+grep &amp;ldquo;password&amp;rdquo; /var/log/mysqld.log&lt;/p&gt;
 
-&lt;h3&gt;Protbuf的适用场景&lt;/h3&gt;
+&lt;p&gt;随机密码&lt;br /&gt;
+2017-08-09T04:20:43.628747Z 1 [Note] A temporary password is generated for root@localhost: HcchE4-y*vV6&lt;/p&gt;
 
-&lt;p&gt;先看个例子&lt;/p&gt;
-
-&lt;p&gt;一个角色对象拥有2个属性，Id和name&lt;/p&gt;" />
+&lt;p&gt;首次登录提示&lt;/p&gt;" />
 
     <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
     <link href="/assets/css/basic.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
-    <title>小流氓简介</title>
+    <title>MYSQL5.7安装小记</title>
 </head>
 <style type="text/css">
     h1,h2,h3 {
@@ -138,29 +138,56 @@
             <div class="post-page">
     <div class="post animated fadeInDown">
         <div class="post-title">
-            <h3>
+            <h3>MYSQL5.7安装小记
             </h3>
         </div>
         <div class="post-content" id="content">
 
-            <h1>关于我</h1>
+            <pre><code>yum install mysql-server 
+</code></pre>
 
-<p>江湖人称“<strong>小流氓</strong>”<br />
-专注于<strong>网络游戏</strong>相关技术<br />
-我的目标：做一款<strong>赚钱</strong>的游戏<br />
-热爱游戏事业, 正在努力为实现自我价值而奋斗中&hellip;</p>
+<p>MySQL5.7 安装成功，为了加强安全性，会自动为root用户生成了一个随机密码</p>
 
-<p>欢迎相关领域的朋友一起交流，与大家一起分享经验，共享资源。<br />
-欢迎感兴趣的同行加入QQ群(50329551)进行在线交流与咨询，期望大家参与！</p>
+<pre><code>grep &quot;password&quot; /var/log/mysqld.log
+</code></pre>
 
-<h3>微信公众号:</h3>
+<p>随机密码</p>
 
-<p><img src="http://blog.noark.xyz/assets/images/weixin.jpg" alt="公众号" title="公众号" /></p>
+<pre><code>2017-08-09T04:20:43.628747Z 1 [Note] A temporary password is generated for root@localhost: HcchE4-y*vV6
+</code></pre>
+
+<p>首次登录提示</p>
+
+<pre><code>You must reset your password using ALTER USER statement before executing this statement.
+</code></pre>
+
+<p>大概意思就是让你换个密码</p>
+
+<p>修改三步曲</p>
+
+<pre><code>1: SET PASSWORD = PASSWORD('123456');
+
+2: ALTER USER 'root'@'localhost' PASSWORD EXPIRE NEVER;
+
+3: flush privileges;
+</code></pre>
+
+<p>第一步又有一个提示</p>
+
+<pre><code>ERROR 1819 (HY000): Your password does not satisfy the current policy requirements
+</code></pre>
+
+<p>密码太简单了，再换</p>
+
+<pre><code>SET PASSWORD = PASSWORD('Mokun.123');
+</code></pre>
+
+<p>搞定，如果你想用简单密码需要修改两个全局配置，请自行搜索实践</p>
 
 
             <p>
                 <code>转载请注明原地址:</code>
-                <a href="http://blog.noark.xyz">http://blog.noark.xyz</a>
+                <a href="http://blog.noark.xyz/article/2017/8/10/mysql5.7%e5%ae%89%e8%a3%85%e5%b0%8f%e8%ae%b0/">http://blog.noark.xyz/article/2017/8/10/mysql5.7安装小记/</a>
             </p>
         </div>
 
@@ -172,8 +199,14 @@
                     &nbsp;&nbsp;
                     <i class="fa fa-folder-open"></i>
                     
+                    <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                    
                     &nbsp;&nbsp;
                     <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Linux">Linux</a>&nbsp;
+                    
+                    <a href="/tag/Mysql">Mysql</a>&nbsp;
                     
                 </div>
             </div>
@@ -181,7 +214,7 @@
     </div>
 
     <div class="comment_container post">
-        <div id="SOHUCS" sid="d41d8cd98f00b204e9800998ecf8427e"></div>
+        <div id="SOHUCS" sid="bd2b446024dc8f960a336acb482f34df"></div>
 		<script type="text/javascript"> 
 		(function(){ 
 		var appid = 'cyt2AtDUF'; 

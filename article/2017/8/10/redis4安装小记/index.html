@@ -5,22 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="Protobuf,封包,协议" />
-    <meta name="description" content="&lt;h3&gt;Protocol Buffers简介&lt;/h3&gt;
+    <meta name="keywords" content="Linux,Redis" />
+    <meta name="description" content="&lt;h4&gt;安装&lt;/h4&gt;
 
-&lt;p&gt;这个玩意就是Google定义的一种序列化的协议格式，具有语言无关性、平台无关性、可扩展性等优点，类似于XML或Json，下面简称为Protobuf。&lt;/p&gt;
+&lt;p&gt;下载，解压，编译:&lt;br /&gt;
+$ wget &lt;a href=&#34;http://download.redis.io/releases/redis-4.0.1.tar.gz&#34;&gt;http://download.redis.io/releases/redis-4.0.1.tar.gz&lt;/a&gt;&lt;br /&gt;
+$ tar xzf redis-4.0.1.tar.gz&lt;br /&gt;
+$ cd redis-4.0.1&lt;br /&gt;
+$ make&lt;/p&gt;
 
-&lt;h3&gt;Protbuf的适用场景&lt;/h3&gt;
-
-&lt;p&gt;先看个例子&lt;/p&gt;
-
-&lt;p&gt;一个角色对象拥有2个属性，Id和name&lt;/p&gt;" />
+&lt;p&gt;Make后查看日志提示&lt;br /&gt;
+make[3]: gcc: Command not found&lt;/p&gt;" />
 
     <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
     <link href="/assets/css/basic.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
-    <title>文章分类</title>
+    <title>REDIS4安装小记</title>
 </head>
 <style type="text/css">
     h1,h2,h3 {
@@ -135,54 +136,91 @@
     <div class="autopagerize_page_element">
         <div class="content">
 
-            <div class="archive animated fadeInDown">
-    <div class="list-with-title">
-        
-        <div class="listing-title">
-            <a href="/category/Noark2%e5%85%a5%e9%97%a8">
-                Noark2入门(1)
-            </a>
-
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>REDIS4安装小记
+            </h3>
         </div>
-        
-        <div class="listing-title">
-            <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">
-                后台开发(2)
-            </a>
+        <div class="post-content" id="content">
 
-        </div>
-        
-        <div class="listing-title">
-            <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">
-                游戏安全(3)
-            </a>
+            <h4>安装</h4>
 
-        </div>
-        
-        <div class="listing-title">
-            <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">
-                游戏开发(8)
-            </a>
+<p>下载，解压，编译:</p>
 
-        </div>
-        
-        <div class="listing-title">
-            <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">
-                职业技能(5)
-            </a>
+<pre><code>$ wget http://download.redis.io/releases/redis-4.0.1.tar.gz
+$ tar xzf redis-4.0.1.tar.gz
+$ cd redis-4.0.1
+$ make
+</code></pre>
 
-        </div>
-        
-        <div class="listing-title">
-            <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">
-                运维知识(6)
-            </a>
+<p>Make后查看日志提示</p>
 
+<pre><code>make[3]: gcc: Command not found
+</code></pre>
+
+<p>新机器没有安装gcc环境，因此在进行编译时才会出现上面提示</p>
+
+<h4>安装gcc</h4>
+
+<pre><code>yum -y install gcc automake autoconf libtool make
+</code></pre>
+
+<p>安装完GCC后，再次Make文件缺失，建议重新解压编译，安装成功</p>
+
+<p>二进制文件是编译完成后在src目录下，配置文件在根目录，按需移动</p>
+
+<p>通过下面的命令启动Redis服务：</p>
+
+<pre><code>$ /usr/local/redis-4.0.1/bin/redis-server /usr/local/redis-4.0.1/etc/redis.conf
+</code></pre>
+
+<p>你可以使用内置的客户端命令redis-cli进行测试：</p>
+
+<pre><code>$ /usr/local/redis-4.0.1/bin/redis-cli -v
+redis-cli 4.0.1
+</code></pre>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2017/8/10/redis4%e5%ae%89%e8%a3%85%e5%b0%8f%e8%ae%b0/">http://blog.noark.xyz/article/2017/8/10/redis4安装小记/</a>
+            </p>
         </div>
-        
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2017-08-10</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Linux">Linux</a>&nbsp;
+                    
+                    <a href="/tag/Redis">Redis</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment_container post">
+        <div id="SOHUCS" sid="02f4eb7992ee7bed17cde7cb2c921d0f"></div>
+		<script type="text/javascript"> 
+		(function(){ 
+		var appid = 'cyt2AtDUF'; 
+		var conf = 'prod_846a5c8dcfd89035373fc1690cd74124'; 
+		var width = window.innerWidth || document.documentElement.clientWidth; 
+		if (width < 960) { 
+		window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
     </div>
 </div>
-
 
             <div class="pagination">
                 <ul class="clearfix">
