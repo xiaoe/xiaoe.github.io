@@ -5,22 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="Protobuf,封包,协议" />
-    <meta name="description" content="&lt;h3&gt;Protocol Buffers简介&lt;/h3&gt;
+    <meta name="keywords" content="Spring,JPA" />
+    <meta name="description" content="&lt;p&gt;在实现兑换码功能时，除了礼包配置表外还需要一个记录批次信息的表。&lt;/p&gt;
 
-&lt;p&gt;这个玩意就是Google定义的一种序列化的协议格式，具有语言无关性、平台无关性、可扩展性等优点，类似于XML或Json，下面简称为Protobuf。&lt;/p&gt;
+&lt;p&gt;但这个表比较特殊，他是有两个字段构成的主键，这就是今天要说复合主键，就是把两个字段先封装成一个对象后作为复合主键使用。&lt;/p&gt;
 
-&lt;h3&gt;Protbuf的适用场景&lt;/h3&gt;
+&lt;h4&gt;复合主键&lt;/h4&gt;
 
-&lt;p&gt;先看个例子&lt;/p&gt;
-
-&lt;p&gt;一个角色对象拥有2个属性，Id和name&lt;/p&gt;" />
+&lt;ol&gt;
+&lt;li&gt;需要标注@Embeddable注解&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;要有hashCode和equals实现.&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;实现Serializable接口&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;" />
 
     <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
     <link href="/assets/css/basic.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
-    <title>小流氓简介</title>
+    <title>JPA之复合主键</title>
 </head>
 <style type="text/css">
     h1,h2,h3 {
@@ -138,29 +140,105 @@
             <div class="post-page">
     <div class="post animated fadeInDown">
         <div class="post-title">
-            <h3>
+            <h3>JPA之复合主键
             </h3>
         </div>
         <div class="post-content" id="content">
 
-            <h1>关于我</h1>
+            <p>在实现兑换码功能时，除了礼包配置表外还需要一个记录批次信息的表。</p>
 
-<p>江湖人称“<strong>小流氓</strong>”<br />
-专注于<strong>网络游戏</strong>相关技术<br />
-我的目标：做一款<strong>赚钱</strong>的游戏<br />
-热爱游戏事业, 正在努力为实现自我价值而奋斗中&hellip;</p>
+<p>但这个表比较特殊，他是有两个字段构成的主键，这就是今天要说复合主键，就是把两个字段先封装成一个对象后作为复合主键使用。</p>
 
-<p>欢迎相关领域的朋友一起交流，与大家一起分享经验，共享资源。<br />
-欢迎感兴趣的同行加入QQ群(50329551)进行在线交流与咨询，期望大家参与！</p>
+<h4>复合主键</h4>
 
-<h3>微信公众号:</h3>
+<ol>
+<li>需要标注@Embeddable注解<br /></li>
+<li>要有hashCode和equals实现.<br /></li>
+<li>实现Serializable接口<br />
+<br /></li>
+</ol>
 
-<p><img src="http://blog.noark.xyz/assets/images/weixin.jpg" alt="公众号" title="公众号" /></p>
+<pre><code>/**
+ * 批次表的复合主键.
+ */
+@Embeddable
+public class CdkeyBatchPK implements Serializable {
+	@Column(name = &quot;pid&quot;, nullable = false)
+	private int pid;// 礼包ID.
+	@Column(name = &quot;bid&quot;, nullable = false)
+	private int bid;// 批次ID
+
+	... get set
+	... hashCode equals
+}
+</code></pre>
+
+<h4>实体类</h4>
+
+<ol>
+<li>不要使用@Id，而是使用@EmbeddedId<br /></li>
+<li>其他同普通单一主键配置<br />
+<br /></li>
+</ol>
+
+<pre><code>/**
+ * CDKEY批次表实体类.
+ */
+@Entity
+@Table(name = &quot;cdkey_batch&quot;)
+public class CdkeyBatch {
+	@EmbeddedId
+	private CdkeyBatchPK id;
+	
+	@Column(name = &quot;count&quot;, nullable = false)
+	private int count;// 本批次生成的数量
+	@Column(name = &quot;remaining&quot;, nullable = false)
+	private int remaining;// 剩余的数量
+	@Column(name = &quot;sync_time&quot;, nullable = false)
+	private Date syncTime;// 剩余的数量同步时间
+	
+	@Column(name = &quot;create_time&quot;, nullable = false)
+	private Date createTime;
+	@Column(name = &quot;modify_time&quot;, nullable = false)
+	private Date modifyTime;
+	
+	... get set
+}
+</code></pre>
+
+<h4>数据访问接口</h4>
+
+<ol>
+<li>本身就是一个接口<br /></li>
+<li>需要继承JpaRepository接口，参数Key就是复合主键类<br /></li>
+<li>复制主键单一查询 By后是实体类的中的主键字段再跟上复合主健中的字段<br />
+<br /></li>
+</ol>
+
+<pre><code>@Repository
+public interface CdkeyBatchRepository extends JpaRepository&lt;CdkeyBatch, CdkeyBatchPK&gt; {
+
+	// 在批次表中以礼包ID查询分页结果.
+	Page&lt;CdkeyBatch&gt; findAllByIdPId(int pid, Pageable page);
+}
+</code></pre>
+
+<h4>分页查询</h4>
+
+<ol>
+<li>以礼包ID为条件<br /></li>
+<li>一页显示12条<br /></li>
+<li>结果以创建时间倒序.<br />
+<br /></li>
+</ol>
+
+<pre><code>Page&lt;CdkeyBatch&gt; batchs = cdkeyBatchRepository.findAllByIdPId(pid, new PageRequest(page, PageConstant.MAX_SIZE, new Sort(Sort.Direction.DESC, &quot;createTime&quot;)));
+</code></pre>
 
 
             <p>
                 <code>转载请注明原地址:</code>
-                <a href="http://blog.noark.xyz">http://blog.noark.xyz</a>
+                <a href="http://blog.noark.xyz/article/2017/8/14/jpa%e4%b9%8b%e5%a4%8d%e5%90%88%e4%b8%bb%e9%94%ae/">http://blog.noark.xyz/article/2017/8/14/jpa之复合主键/</a>
             </p>
         </div>
 
@@ -172,8 +250,14 @@
                     &nbsp;&nbsp;
                     <i class="fa fa-folder-open"></i>
                     
+                    <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">后台开发</a>&nbsp;
+                    
                     &nbsp;&nbsp;
                     <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Spring">Spring</a>&nbsp;
+                    
+                    <a href="/tag/JPA">JPA</a>&nbsp;
                     
                 </div>
             </div>
@@ -181,7 +265,7 @@
     </div>
 
     <div class="comment_container post">
-        <div id="SOHUCS" sid="d41d8cd98f00b204e9800998ecf8427e"></div>
+        <div id="SOHUCS" sid="2a66169260e2897bfacf47ca81516572"></div>
 		<script type="text/javascript"> 
 		(function(){ 
 		var appid = 'cyt2AtDUF'; 

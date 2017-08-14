@@ -5,22 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="Protobuf,封包,协议" />
-    <meta name="description" content="&lt;h3&gt;Protocol Buffers简介&lt;/h3&gt;
+    <meta name="keywords" content="Spring,JPA" />
+    <meta name="description" content="&lt;p&gt;Spring Data JPA 只要定义好接口就能访问对应的数据了，非常的简洁，但在实际应用中，我们有复杂的 &lt;strong&gt;可选&lt;/strong&gt; 查询条件，还是需要动态查询，实际上就是手写Where查询。&lt;/p&gt;
 
-&lt;p&gt;这个玩意就是Google定义的一种序列化的协议格式，具有语言无关性、平台无关性、可扩展性等优点，类似于XML或Json，下面简称为Protobuf。&lt;/p&gt;
+&lt;p&gt;只要我们的Repo层继承JpaSpecificationExecutor接口就可以使用Specification进行动态查询了：&lt;/p&gt;
 
-&lt;h3&gt;Protbuf的适用场景&lt;/h3&gt;
+&lt;p&gt;@Repository&lt;br /&gt;
+public interface LogRepository extends JpaRepository&lt;Log, Long&gt;, JpaSpecificationExecutor&lt;Log&gt; {}&lt;/p&gt;
 
-&lt;p&gt;先看个例子&lt;/p&gt;
-
-&lt;p&gt;一个角色对象拥有2个属性，Id和name&lt;/p&gt;" />
+&lt;p&gt;后台的操作日志，查询条件:可能以操作者或IP或操作时间或操作类型等等条件来组合查询，直接上代码&lt;/p&gt;" />
 
     <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
     <link href="/assets/css/basic.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
-    <title>小流氓简介</title>
+    <title>JPA之动态查询</title>
 </head>
 <style type="text/css">
     h1,h2,h3 {
@@ -138,29 +137,67 @@
             <div class="post-page">
     <div class="post animated fadeInDown">
         <div class="post-title">
-            <h3>
+            <h3>JPA之动态查询
             </h3>
         </div>
         <div class="post-content" id="content">
 
-            <h1>关于我</h1>
+            <p>Spring Data JPA 只要定义好接口就能访问对应的数据了，非常的简洁，但在实际应用中，我们有复杂的 <strong>可选</strong> 查询条件，还是需要动态查询，实际上就是手写Where查询。</p>
 
-<p>江湖人称“<strong>小流氓</strong>”<br />
-专注于<strong>网络游戏</strong>相关技术<br />
-我的目标：做一款<strong>赚钱</strong>的游戏<br />
-热爱游戏事业, 正在努力为实现自我价值而奋斗中&hellip;</p>
+<p>只要我们的Repo层继承JpaSpecificationExecutor接口就可以使用Specification进行动态查询了：</p>
 
-<p>欢迎相关领域的朋友一起交流，与大家一起分享经验，共享资源。<br />
-欢迎感兴趣的同行加入QQ群(50329551)进行在线交流与咨询，期望大家参与！</p>
+<pre><code>@Repository
+public interface LogRepository extends JpaRepository&lt;Log, Long&gt;, JpaSpecificationExecutor&lt;Log&gt; {}
+</code></pre>
 
-<h3>微信公众号:</h3>
+<p>后台的操作日志，查询条件:可能以操作者或IP或操作时间或操作类型等等条件来组合查询，直接上代码</p>
 
-<p><img src="http://blog.noark.xyz/assets/images/weixin.jpg" alt="公众号" title="公众号" /></p>
+<pre><code>	/**
+	 * 查询日志
+	 */
+	public Page&lt;Log&gt; getLogs(String username, String operation, String ip, Date startTime, Date endTime, int page) {
+		return logRepository.findAll(where(username, operation, ip, startTime, endTime), new PageRequest(page, PageConstant.MAX_SIZE, new Sort(Sort.Direction.DESC, &quot;id&quot;)));
+	}
+
+	/**
+	 * 条件查询时动态组装条件
+	 */
+	Specification&lt;Log&gt; where(String username, String operation, String ip, Date startTime, Date endTime) {
+		return new Specification&lt;Log&gt;() {
+			@Override
+			public Predicate toPredicate(Root&lt;Log&gt; root, CriteriaQuery&lt;?&gt; query, CriteriaBuilder cb) {
+				List&lt;Predicate&gt; predicates = new ArrayList&lt;Predicate&gt;();
+				// 账号
+				if (!StringUtils.isEmpty(username)) {
+					predicates.add(cb.equal(root.&lt;String&gt; get(&quot;username&quot;), username));
+				}
+
+				// 操作类型
+				if (!StringUtils.isEmpty(operation)) {
+					final LogClassify classify = LogClassify.valueOf(operation);
+					predicates.add(cb.in(root.get(&quot;operation&quot;)).value(Arrays.stream(OperationType.values()).filter(v -&gt; v.getClassify() == classify).map(v -&gt; v.name()).collect(Collectors.toList())));
+				}
+
+				// IP
+				if (!StringUtils.isEmpty(ip)) {
+					predicates.add(cb.equal(root.&lt;String&gt; get(&quot;ip&quot;), ip));
+				}
+
+				// 日期
+				if (startTime != null &amp;&amp; endTime != null) {
+					predicates.add(cb.between(root.&lt;Date&gt; get(&quot;createTime&quot;), startTime, endTime));
+				}
+
+				return query.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
+			}
+		};
+	}
+</code></pre>
 
 
             <p>
                 <code>转载请注明原地址:</code>
-                <a href="http://blog.noark.xyz">http://blog.noark.xyz</a>
+                <a href="http://blog.noark.xyz/article/2017/8/14/jpa%e4%b9%8b%e5%8a%a8%e6%80%81%e6%9f%a5%e8%af%a2/">http://blog.noark.xyz/article/2017/8/14/jpa之动态查询/</a>
             </p>
         </div>
 
@@ -172,8 +209,14 @@
                     &nbsp;&nbsp;
                     <i class="fa fa-folder-open"></i>
                     
+                    <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">后台开发</a>&nbsp;
+                    
                     &nbsp;&nbsp;
                     <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Spring">Spring</a>&nbsp;
+                    
+                    <a href="/tag/JPA">JPA</a>&nbsp;
                     
                 </div>
             </div>
@@ -181,7 +224,7 @@
     </div>
 
     <div class="comment_container post">
-        <div id="SOHUCS" sid="d41d8cd98f00b204e9800998ecf8427e"></div>
+        <div id="SOHUCS" sid="5ba8e22f7a499cfdddce320871d729c7"></div>
 		<script type="text/javascript"> 
 		(function(){ 
 		var appid = 'cyt2AtDUF'; 

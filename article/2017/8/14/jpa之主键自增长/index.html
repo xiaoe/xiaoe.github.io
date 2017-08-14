@@ -5,22 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="Protobuf,封包,协议" />
-    <meta name="description" content="&lt;h3&gt;Protocol Buffers简介&lt;/h3&gt;
+    <meta name="keywords" content="Spring,JPA" />
+    <meta name="description" content="&lt;p&gt;在我们使用JPA时，需要数据库自增长主键，增加一个注解@GeneratedValue即可.&lt;/p&gt;
 
-&lt;p&gt;这个玩意就是Google定义的一种序列化的协议格式，具有语言无关性、平台无关性、可扩展性等优点，类似于XML或Json，下面简称为Protobuf。&lt;/p&gt;
+&lt;p&gt;正常在没有数据库移植时，建议写全参数指定使用哪种DB的增长方式.&lt;/p&gt;
 
-&lt;h3&gt;Protbuf的适用场景&lt;/h3&gt;
-
-&lt;p&gt;先看个例子&lt;/p&gt;
-
-&lt;p&gt;一个角色对象拥有2个属性，Id和name&lt;/p&gt;" />
+&lt;p&gt;@Entity&lt;br /&gt;
+@Table(name = &amp;ldquo;log&amp;rdquo;)&lt;br /&gt;
+public class Log {&lt;br /&gt;
+    @Id&lt;br /&gt;
+    @Column(name = &amp;ldquo;id&amp;rdquo;)&lt;/p&gt;" />
 
     <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
     <link href="/assets/css/basic.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
-    <title>小流氓简介</title>
+    <title>JPA之主键自增长</title>
 </head>
 <style type="text/css">
     h1,h2,h3 {
@@ -138,29 +138,39 @@
             <div class="post-page">
     <div class="post animated fadeInDown">
         <div class="post-title">
-            <h3>
+            <h3>JPA之主键自增长
             </h3>
         </div>
         <div class="post-content" id="content">
 
-            <h1>关于我</h1>
+            <p>在我们使用JPA时，需要数据库自增长主键，增加一个注解@GeneratedValue即可.</p>
 
-<p>江湖人称“<strong>小流氓</strong>”<br />
-专注于<strong>网络游戏</strong>相关技术<br />
-我的目标：做一款<strong>赚钱</strong>的游戏<br />
-热爱游戏事业, 正在努力为实现自我价值而奋斗中&hellip;</p>
+<p>正常在没有数据库移植时，建议写全参数指定使用哪种DB的增长方式.</p>
 
-<p>欢迎相关领域的朋友一起交流，与大家一起分享经验，共享资源。<br />
-欢迎感兴趣的同行加入QQ群(50329551)进行在线交流与咨询，期望大家参与！</p>
+<pre><code>@Entity
+@Table(name = &quot;log&quot;)
+public class Log {
+	@Id
+	@Column(name = &quot;id&quot;)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	
+	... get set
+}
+</code></pre>
 
-<h3>微信公众号:</h3>
+<p>每当插入新的日志时，这个ID就是由 123的方式向上自增&hellip;</p>
 
-<p><img src="http://blog.noark.xyz/assets/images/weixin.jpg" alt="公众号" title="公众号" /></p>
+<p>@GeneratedValue注解的strategy属性提供四种值：<br />
+– AUTO： 主键由程序控制，是默认选项，不设置即此项。<br />
+– IDENTITY：主键由数据库自动生成，即采用数据库ID自增长的方式，Oracle不支持这种方式。<br />
+– SEQUENCE：通过数据库的序列产生主键，通过@SequenceGenerator 注解指定序列名，mysql不支持这种方式。<br />
+– TABLE：通过特定的数据库表产生主键，使用该策略可以使应用更易于数据库移植。</p>
 
 
             <p>
                 <code>转载请注明原地址:</code>
-                <a href="http://blog.noark.xyz">http://blog.noark.xyz</a>
+                <a href="http://blog.noark.xyz/article/2017/8/14/jpa%e4%b9%8b%e4%b8%bb%e9%94%ae%e8%87%aa%e5%a2%9e%e9%95%bf/">http://blog.noark.xyz/article/2017/8/14/jpa之主键自增长/</a>
             </p>
         </div>
 
@@ -172,8 +182,14 @@
                     &nbsp;&nbsp;
                     <i class="fa fa-folder-open"></i>
                     
+                    <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">后台开发</a>&nbsp;
+                    
                     &nbsp;&nbsp;
                     <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Spring">Spring</a>&nbsp;
+                    
+                    <a href="/tag/JPA">JPA</a>&nbsp;
                     
                 </div>
             </div>
@@ -181,7 +197,7 @@
     </div>
 
     <div class="comment_container post">
-        <div id="SOHUCS" sid="d41d8cd98f00b204e9800998ecf8427e"></div>
+        <div id="SOHUCS" sid="607fa8c1f0b218f97970d59e03b7df42"></div>
 		<script type="text/javascript"> 
 		(function(){ 
 		var appid = 'cyt2AtDUF'; 

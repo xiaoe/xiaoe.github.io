@@ -131,20 +131,20 @@
 
 <div class="post animated fadeInDown">
     <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/8/10/mysql5.7%e5%ae%89%e8%a3%85%e5%b0%8f%e8%ae%b0/">MYSQL5.7安装小记</a>
+        <h3><a style="color: #FF6600" href="/article/2017/8/14/jpa%e4%b9%8b%e4%b8%bb%e9%94%ae%e8%87%aa%e5%a2%9e%e9%95%bf/">JPA之主键自增长</a>
         </h3>
     </div>
     <div class="post-content">
         <div class="p_part">
-            <p>yum install mysql-server</p>
+            <p>在我们使用JPA时，需要数据库自增长主键，增加一个注解@GeneratedValue即可.</p>
 
-<p>MySQL5.7 安装成功，为了加强安全性，会自动为root用户生成了一个随机密码<br />
-grep &ldquo;password&rdquo; /var/log/mysqld.log</p>
+<p>正常在没有数据库移植时，建议写全参数指定使用哪种DB的增长方式.</p>
 
-<p>随机密码<br />
-2017-08-09T04:20:43.628747Z 1 [Note] A temporary password is generated for root@localhost: HcchE4-y*vV6</p>
-
-<p>首次登录提示</p>
+<p>@Entity<br />
+@Table(name = &ldquo;log&rdquo;)<br />
+public class Log {<br />
+    @Id<br />
+    @Column(name = &ldquo;id&rdquo;)</p>
 
         </div>
     </div>
@@ -152,18 +152,105 @@ grep &ldquo;password&rdquo; /var/log/mysqld.log</p>
         <div class="meta">
             <div class="info">
                 <i class="fa fa-calendar"></i>
-                <span class="date">2017-08-10</span>
+                <span class="date">2017-08-14</span>
                 &nbsp;&nbsp;
                 <i class="fa fa-folder-open"></i>
                 
-                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">后台开发</a>&nbsp;
                 
                 &nbsp;&nbsp;
                 <i class="fa fa-tags"></i>
                 
-                <a href="/tag/Linux">Linux</a>&nbsp;
+                <a href="/tag/Spring">Spring</a>&nbsp;
                 
-                <a href="/tag/Mysql">Mysql</a>&nbsp;
+                <a href="/tag/JPA">JPA</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2017/8/14/jpa%e4%b9%8b%e5%8a%a8%e6%80%81%e6%9f%a5%e8%af%a2/">JPA之动态查询</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>Spring Data JPA 只要定义好接口就能访问对应的数据了，非常的简洁，但在实际应用中，我们有复杂的 <strong>可选</strong> 查询条件，还是需要动态查询，实际上就是手写Where查询。</p>
+
+<p>只要我们的Repo层继承JpaSpecificationExecutor接口就可以使用Specification进行动态查询了：</p>
+
+<p>@Repository<br />
+public interface LogRepository extends JpaRepository<Log, Long>, JpaSpecificationExecutor<Log> {}</p>
+
+<p>后台的操作日志，查询条件:可能以操作者或IP或操作时间或操作类型等等条件来组合查询，直接上代码</p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2017-08-14</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">后台开发</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Spring">Spring</a>&nbsp;
+                
+                <a href="/tag/JPA">JPA</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2017/8/14/jpa%e4%b9%8b%e5%a4%8d%e5%90%88%e4%b8%bb%e9%94%ae/">JPA之复合主键</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>在实现兑换码功能时，除了礼包配置表外还需要一个记录批次信息的表。</p>
+
+<p>但这个表比较特殊，他是有两个字段构成的主键，这就是今天要说复合主键，就是把两个字段先封装成一个对象后作为复合主键使用。</p>
+
+<h4>复合主键</h4>
+
+<ol>
+<li>需要标注@Embeddable注解<br /></li>
+<li>要有hashCode和equals实现.<br /></li>
+<li>实现Serializable接口<br /></li>
+</ol>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2017-08-14</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">后台开发</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Spring">Spring</a>&nbsp;
+                
+                <a href="/tag/JPA">JPA</a>&nbsp;
                 
 
             </div>
@@ -207,6 +294,49 @@ grep &ldquo;password&rdquo; /var/log/mysqld.log</p>
                 <a href="/tag/Linux">Linux</a>&nbsp;
                 
                 <a href="/tag/Tomcat">Tomcat</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2017/8/10/mysql5.7%e5%ae%89%e8%a3%85%e5%b0%8f%e8%ae%b0/">MYSQL5.7安装小记</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>yum install mysql-server</p>
+
+<p>MySQL5.7 安装成功，为了加强安全性，会自动为root用户生成了一个随机密码<br />
+grep &ldquo;password&rdquo; /var/log/mysqld.log</p>
+
+<p>随机密码<br />
+2017-08-09T04:20:43.628747Z 1 [Note] A temporary password is generated for root@localhost: HcchE4-y*vV6</p>
+
+<p>首次登录提示</p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2017-08-10</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Linux">Linux</a>&nbsp;
+                
+                <a href="/tag/Mysql">Mysql</a>&nbsp;
                 
 
             </div>
@@ -427,133 +557,6 @@ make[3]: gcc: Command not found</p>
                 <a href="/tag/%e8%a1%a8%e5%8d%95%e9%aa%8c%e8%af%81">表单验证</a>&nbsp;
                 
                 <a href="/tag/Easyform">Easyform</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/6/15/datatables%e9%85%8d%e7%bd%ae%e6%b1%87%e6%80%bb/">Datatables配置汇总</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <p>Datatables是一款jquery表格插件。它是一个高度灵活的工具，可以将任何HTML表格添加高级的交互功能。</p>
-
-<ul>
-<li>分页，即时搜索和排序<br /></li>
-<li>几乎支持任何数据源：DOM， javascript， Ajax 和 服务器处理<br /></li>
-<li>支持不同主题 DataTables, jQuery UI, Bootstrap, Foundation<br /></li>
-<li>各式各样的扩展: Editor, TableTools, FixedColumns ……<br /></li>
-<li>丰富多样的option和强大的API<br /></li>
-<li>支持国际化<br /></li>
-<li>超过2900+个单元测试<br /></li>
-</ul>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-06-15</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">后台开发</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/Datatables">Datatables</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/6/13/mongodb%e6%97%a0%e6%b3%95%e5%90%af%e5%8a%a8%e8%a7%a3%e5%86%b3%e5%8a%9e%e6%b3%95mongod.lock_is_not_empty/">Mongodb无法启动解决办法mongod.lock_is_not_empty</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <p>事由：台湾停服，需要把数据仓库拉回来备用，运维大大执行了备份操作，不久MongoDB进程就不见了&hellip;</p>
-
-<p>由于数据有36G，决定先把服务拉起来继续备份然后再查问题，</p>
-
-<p>启不来了。。。。</p>
-
-<p>查看日志发现 Detected unclean shutdown - /data/mongodb/db/mongod.lock is not empty</p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-06-13</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/Linux">Linux</a>&nbsp;
-                
-                <a href="/tag/Mongodb">Mongodb</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/6/13/%e8%81%8a%e4%b8%80%e8%81%8a%e7%ad%96%e5%88%92%e9%85%8d%e7%bd%ae%e8%a1%a8%e9%97%ae%e9%a2%98/">聊一聊策划配置表问题</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <p>游戏设计中，很多数据来源策划的设定，一般研发团队，都会使用Excel来配置，当然我也见过手写XML，Json，还有CSV。</p>
-
-<p>我相信策划的最爱还是Excel，Excel是可以保存颜色和间距以及记忆。</p>
-
-<p>然后再用一个程序去解析Excel生成程序所用的格式文件。这个过程称之为导表，解析程序就是导表工具。</p>
-
-<p>一个稳定好用的导表工具，可降低策划上手难度和日常工作烦恼。</p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-06-13</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">游戏开发</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/%e5%af%bc%e8%a1%a8%e5%b7%a5%e5%85%b7">导表工具</a>&nbsp;
-                
-                <a href="/tag/CSV">CSV</a>&nbsp;
-                
-                <a href="/tag/Excel">Excel</a>&nbsp;
                 
 
             </div>
