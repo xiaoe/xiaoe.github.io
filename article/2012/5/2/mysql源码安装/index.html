@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="Mysql,Linux" />
+    <meta name="description" content="&lt;h4&gt;下载源码包&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://dev.mysql.com/downloads/mysql/5.5.html#downloads&#34;&gt;http://dev.mysql.com/downloads/mysql/5.5.html#downloads&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4&gt;创建用户&lt;/h4&gt;
+
+&lt;p&gt;shell&amp;gt; groupadd mysql&lt;br /&gt;
+shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
+
+&lt;h4&gt;解开源码包&lt;/h4&gt;
+
+&lt;p&gt;shell&amp;gt; tar zxvf mysql-VERSION.tar.gz&lt;/p&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>Mysql源码安装</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/Noark2%e5%85%a5%e9%97%a8">
+                    Noark2入门
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">
+                    后台开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">
+                    游戏安全
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">
+                    游戏开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">
+                    职业技能
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">
+                    运维知识
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>Mysql源码安装
+            </h3>
+        </div>
+        <div class="post-content" id="content">
+
+            <h4>下载源码包</h4>
+
+<pre><code>http://dev.mysql.com/downloads/mysql/5.5.html#downloads
+</code></pre>
+
+<h4>创建用户</h4>
+
+<pre><code>shell&gt; groupadd mysql
+shell&gt; useradd -g mysql mysql
+</code></pre>
+
+<h4>解开源码包</h4>
+
+<pre><code>shell&gt; tar zxvf mysql-VERSION.tar.gz
+shell&gt; cd mysql-VERSION
+</code></pre>
+
+<h4>设计参数</h4>
+
+<pre><code>shell&gt; ./configure 
+--prefix=/usr/local/mysql
+--with-client-ldflags=-all-static 这两行不能加，具休的再学习一下
+--with-mysqld-ldflags=-all-static
+--enable-assembler
+--with-charset=utf8
+--without-debug
+--enable-thread-safe-client 
+--enable-profiling
+--with-mysqld-user=mysql
+--with-plugins=all
+--with-innodb
+</code></pre>
+
+<h4>编译</h4>
+
+<pre><code>shell&gt; make
+</code></pre>
+
+<h4>安装</h4>
+
+<pre><code>shell&gt; make install
+</code></pre>
+
+<h4>到这里设计一下目录权限</h4>
+
+<pre><code>shell&gt; cd /usr/local/mysql
+shell&gt; chown -R mysql .
+shell&gt; chgrp -R mysql .
+</code></pre>
+
+<h4>安装库</h4>
+
+<pre><code>shell&gt; bin/mysql_install_db --user=mysql
+shell&gt; chown -R root .
+shell&gt; chown -R mysql var
+</code></pre>
+
+<h4>复制文件</h4>
+
+<pre><code>shell&gt; cp support-files/my-medium.cnf /etc/my.cnf
+</code></pre>
+
+<h4>启动服务</h4>
+
+<pre><code>shell&gt; bin/mysqld_safe --user=mysql &amp;
+</code></pre>
+
+<h4>复制命令文件</h4>
+
+<pre><code>shell&gt; cp support-files/mysql.server /etc/init.d/mysql.server
+shell&gt; cp support-files/mysql.server /etc/init.d/mysql
+
+/etc/init.d/mysql start 权限不够
+</code></pre>
+
+<p>加个权限</p>
+
+<pre><code>chmod +x /etc/init.d/mysql
+</code></pre>
+
+<p>加到service里</p>
+
+<pre><code>cd /etc/init.d/
+chkconfig --add mysqld #将mysql加到启动服务列表里
+chkconfig mysqld on #让系统启动时自动打开mysql服务
+</code></pre>
+
+<pre><code>./configure --prefix=/usr/local/mysql/ --with-server-suffix=-junsansi-edition --enable-assembler --enable-local-infile --enable-thread-safe-client --with-big-tables --with-charset=utf8  --with-extra-charsets=gbk,gb2312,utf8,ascii  --with-readline --with-ssl --with-embedded-server --with-pthread --with-mysqld-user=mysql --with-mysqld-ldflags=-all-static --with-client-ldflags=-all-static --with-plugins=partition,innobase,innodb_plugin &gt; /home/jss/mysql_setuplogs_configure.log 2&gt;&amp;1
+</code></pre>
+
+<p>提示：configure支持的选项非常多，详细的参数及说明建议参考官方文档，也可以通过./configure --help查看，这里仅列出常用及推荐使用的选项。</p>
+
+<pre><code>    --prefix=PREFIX：指定程序安装路径；
+    --enable-assembler：使用汇编模式；
+    --enable-local-infile：启用对LOAD DATA LOCAL INFILE语法的支持(默认不支持)；
+    --enable-profiling：Build a version with query profiling code (req.community-features)
+    --enable-thread-safe-client：使用编译客户端；
+    --with-big-tables：启用32位平台对4G大表的支持；
+    --with-charset=CHARSET：指定字符集；
+    --with-collation=：默认collation；
+    --with-extra-charsets=CHARSET,CHARSET,...：指定附加的字符集；
+    --with-fast-mutexes：Compile with fast mutexes
+    --with-readline：
+    --with-ssl：启用SSL的支持；
+    --with-server-suffix=：添加字符串到版本信息；
+    --with-embedded-server：编译embedded-server；
+    --with-pthread：强制使用pthread类库；
+    --with-mysqld-user=：指定mysqld守护进程的用户；
+    --with-mysqld-ldflags=：静态编译MySQL服务器端；
+    --with-client-ldflags=：静态编译MySQL客户端；
+    --with-plugins=PLUGIN,PLUGIN,...：MySQL服务器端支持的组件(默认为空)，可选值较多：
+        partition：MySQL Partitioning Support；
+        daemon_example：This is an example plugin daemon；
+        ftexample：Simple full-text parser plugin；
+        archive：Archive Storage Engine；
+        blackhole：Basic Write-only Read-never tables；
+        csv：Stores tables in text CSV format，强制安装；
+        example：Example for Storage Engines for developers；
+        federated：Connects to tables on remote MySQL servers；
+        heap：Volatile memory based tables，强制安装；
+        ibmdb2i：IBM DB2 for i Storage Engine；
+        innobase：Transactional Tables using InnoDB；
+        innodb_plugin：Transactional Tables using InnoDB；
+        myisam：Traditional non-transactional MySQL tables，强制安装；
+        myisammrg：Merge multiple MySQL tables into one，强制安装；
+        ndbcluster：High Availability Clustered tables；
+    --with-plugin-PLUGIN：强制指定的插件链接至MySQL服务器；
+    --with-zlib-dir=：向MySQL提供一个自定义的压缩类库地址；
+    --without-server：仅安装MySQL客户端；
+    --without-query-cache：不要编译查询缓存；
+    --without-geometry：不要编译geometry-related部分；
+    --without-debug：编译为产品版，放弃debugging代码；
+    --without-ndb-debug：禁用special ndb debug特性；
+</code></pre>
+
+<p>提示：执行Configure时如果报bin/rm: cannot remove `libtoolt&rsquo;: No such file or directory错误，可按照下列步骤解决：</p>
+
+<ol>
+<li><p>确认libtool是否已经安装，如果没有安装的话，则先安装libtool</p>
+
+<pre><code># rpm -qa | grep libtool
+# yum -y install libtool
+</code></pre></li>
+
+<li><p>分别执行以下三条命令：</p>
+
+<pre><code># autoreconf --force --install
+# libtoolize --automake --force
+# automake --force --add-missing
+</code></pre>
+
+<p>再重新编译安装，问题解决！</p></li>
+</ol>
+
+<pre><code>error while loading shared libraries: libmysqlclient.so.16: cannot open shared object file: No such file or directory
+</code></pre>
+
+<p>在网上搜了下解决的方法：</p>
+
+<pre><code>在/etc/ld.so.conf里面加入下面2行：
+/usr/local/mysql/lib/mysql
+/usr/local/lib
+</code></pre>
+
+<p>或</p>
+
+<pre><code>ln -s /usr/local/mysql/lib/libmysqlclient.so.16 /usr/lib/libmysqlclient.so.16
+</code></pre>
+
+<p>然后用ldconfig重新加载下库文件</p>
+
+<p>使用备份库时两个注意点</p>
+
+<pre><code>一要用备份时的那个my.cnf
+二要用mysql.mysql加权限 #chown -R mysql.myssql .
+</code></pre>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2012/5/2/mysql%e6%ba%90%e7%a0%81%e5%ae%89%e8%a3%85/">http://blog.noark.xyz/article/2012/5/2/mysql源码安装/</a>
+            </p>
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2012-05-02</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Mysql">Mysql</a>&nbsp;
+                    
+                    <a href="/tag/Linux">Linux</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment_container post">
+        <div id="SOHUCS" sid="c1933211b5582a62cd289ec57e33ecc7"></div>
+		<script type="text/javascript"> 
+		(function(){ 
+		var appid = 'cyt2AtDUF'; 
+		var conf = 'prod_846a5c8dcfd89035373fc1690cd74124'; 
+		var width = window.innerWidth || document.documentElement.clientWidth; 
+		if (width < 960) { 
+		window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="Mysql,Linux" />
+    <meta name="description" content="&lt;p&gt;黄金国度俄罗斯Mysql配置调优&lt;/p&gt;
+
+&lt;h3&gt;连接数&lt;/h3&gt;
+
+&lt;p&gt;mysql&amp;gt; show variables like &amp;lsquo;max_connections&amp;rsquo;;&lt;br /&gt;
+&#43;-----------------&#43;-------&#43;&lt;br /&gt;
+| Variable_name | Value |&lt;br /&gt;
+&#43;-----------------&#43;-------&#43;&lt;br /&gt;
+| max_connections | 16384 |&lt;br /&gt;
+&#43;-----------------&#43;-------&#43;　　&lt;/p&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>俄罗斯Mysql配置调优</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/Noark2%e5%85%a5%e9%97%a8">
+                    Noark2入门
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">
+                    后台开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">
+                    游戏安全
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">
+                    游戏开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">
+                    职业技能
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">
+                    运维知识
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>俄罗斯Mysql配置调优
+            </h3>
+        </div>
+        <div class="post-content" id="content">
+
+            <p>黄金国度俄罗斯Mysql配置调优</p>
+
+<h3>连接数</h3>
+
+<pre><code>mysql&gt; show variables like 'max_connections'; 
++-----------------+-------+ 
+| Variable_name | Value | 
++-----------------+-------+ 
+| max_connections | 16384 | 
++-----------------+-------+　　
+mysql&gt; show global status like ‘Max_used_connections’;
+Max_used_connections 160
+</code></pre>
+
+<p>Max_used_connections / max_connections * 100% ≈ 85%</p>
+
+<p>最大连接数占上限连接数的85%左右，如果发现比例在10%以下，MySQL服务器连接数上限设置的过高了。</p>
+
+<p>建议修改</p>
+
+<pre><code>max_connections = 800 
+</code></pre>
+
+<h3>Open Table情况</h3>
+
+<pre><code>mysql&gt; show global status like 'open%tables%'; 
+Variable_name	Value
+Open_tables	64
+Opened_tables	118466
+</code></pre>
+
+<p>Open_tables表示打开表的数量，</p>
+
+<p>Opened_tables表示打开过的表数量</p>
+
+<p>如果Opened_tables数量过大，说明配置中table_open_cache值可能太小，我们查询一下服务器table_open_cache值：</p>
+
+<pre><code>mysql&gt; show variables like 'table_cache'; 
++---------------+-------+ 
+| Variable_name | Value | 
++---------------+-------+ 
+| table_open_cache | 64 | 
+</code></pre>
+
+<p>建议修改</p>
+
+<pre><code>table_open_cache=2048
+</code></pre>
+
+<h3>表扫描情况</h3>
+
+<pre><code>mysql&gt; show global status like 'handler_read%'; 
+Variable_name	Value
+Handler_read_first	474469
+Handler_read_key	13780308
+Handler_read_next	36029595
+Handler_read_prev	2945
+Handler_read_rnd	801894
+Handler_read_rnd_next	2087790735
+</code></pre>
+
+<p>调出服务器完成的查询请求次数：</p>
+
+<pre><code>mysql&gt; show global status like 'com_select'; 
++---------------+-----------+ 
+| Variable_name | Value | 
++---------------+-----------+ 
+| Com_select | 4537851 | 
++---------------+-----------+　　
+</code></pre>
+
+<p>计算表扫描率：</p>
+
+<p>表扫描率 = Handler_read_rnd_next / Com_select = 460</p>
+
+<p>如果表扫描率超过4000，说明进行了太多表扫描，很有可能索引没有建好，增加read_buffer_size值会有一些好处，但最好不要超过8MB。</p>
+
+<p>建议</p>
+
+<pre><code>read_buffer_size=8M
+</code></pre>
+
+<h3>进程使用情况</h3>
+
+<pre><code>mysql&gt; show global status like ‘Thread%’; 
+
+Variable_name	Value
+Threads_cached	0
+Threads_connected	86
+Threads_created	249
+Threads_running	1
+</code></pre>
+
+<p>Threads_created 表示创建过的线程数，如果发现Threads_created值过大的话，表明MySQL服务器一直在创建线程，</p>
+
+<p>这也是比较耗资源，可以适当增加配置文件中thread_cache_size值，查询服务器thread_cache_size配置：</p>
+
+<pre><code>mysql&gt; show variables like 'thread_cache_size'; 
++-------------------+-------+ 
+| Variable_name | Value | 
++-------------------+-------+ 
+| thread_cache_size | 0 | 
++-------------------+-------+　　
+</code></pre>
+
+<p>建议</p>
+
+<pre><code>thread_cache_size = 64
+</code></pre>
+
+<p>在多个cpu(或多核)的情况下，错误设置了thread_concurrency的值, 会导致mysql不能充分利用多cpu(或多核), 出现同一时刻只能一个cpu(或核)在工作的情况。</p>
+
+<p>thread_concurrency应设为CPU核数的2倍. 比如有一个双核的CPU, 那么thread_concurrency的应该为4; 2个双核的cpu, thread_concurrency的值应为8.</p>
+
+<p>大陆为4个双核CPU</p>
+
+<pre><code>thread_concurrency=32
+</code></pre>
+
+<h3>查询缓存(query cache)</h3>
+
+<pre><code>mysql&gt; show global status like 'qcache%'; 
++-------------------------+-----------+ 
+| Variable_name | Value | 
++-------------------------+-----------+ 
+Qcache_free_blocks	78112
+Qcache_free_memory	1782343960
+Qcache_hits	5153348
+Qcache_inserts	3987356
+Qcache_lowmem_prunes	0
+Qcache_not_cached	951427
+Qcache_queries_in_cache	186610
+Qcache_total_blocks	451886
++-------------------------+-----------+　　
+</code></pre>
+
+<p>Qcache_free_memory：缓存中的空闲内存。</p>
+
+<p>我们再查询一下服务器关于query_cache的配置：</p>
+
+<pre><code>mysql&gt; show variables like 'query_cache%'; 
++------------------------------+-----------+ 
+| Variable_name | Value | 
++------------------------------+-----------+ 
+query_cache_limit	16777216
+query_cache_min_res_unit	4096
+query_cache_size	2147483648
+query_cache_type	ON
+query_cache_wlock_invalidate	OFF
+ +——————————+———–+
+</code></pre>
+
+<p>查询缓存利用率 = (query_cache_size - Qcache_free_memory) / query_cache_size * 100% = 17%</p>
+
+<p>查询缓存利用率在25%以下的话说明query_cache_size设置的过大，可适当减小;</p>
+
+<p>建议</p>
+
+<pre><code>query_cache_size=512M
+</code></pre>
+
+<h3>临时表</h3>
+
+<pre><code>mysql&gt; show global status like 'created_tmp%'; 　
+Variable_name	Value
+Created_tmp_disk_tables	39944
+Created_tmp_files	5
+Created_tmp_tables	40200
+</code></pre>
+
+<p>每次创建临时表，Created_tmp_tables增加，如果是在磁盘上创建临时表，Created_tmp_disk_tables也增加</p>
+
+<p>Created_tmp_files表示MySQL服务创建的临时文件文件数，比较理想的配置是：</p>
+
+<pre><code>　　Created_tmp_disk_tables / Created_tmp_tables * 100% &lt;= 25% 
+</code></pre>
+
+<p>比如上面的服务器Created_tmp_disk_tables / Created_tmp_tables * 100% = 99%</p>
+
+<p>我们再看一下MySQL服务器对临时表的配置：</p>
+
+<pre><code>mysql&gt; show variables where Variable_name in ('tmp_table_size', 'max_heap_table_size'); 
+Variable_name	Value
+max_heap_table_size	1073741824
+tmp_table_size	1073741824
+</code></pre>
+
+<p>只有256MB以下的临时表才能全部放内存，超过的就会用到硬盘临时表。</p>
+
+<p>建议修改</p>
+
+<pre><code>max_heap_table_size=256M
+tmp_table_size=256M
+</code></pre>
+
+<h3>最终建议修改参数如下</h3>
+
+<pre><code>max_connections = 800 
+table_open_cache=2048
+read_buffer_size=8M
+thread_cache_size = 64
+thread_concurrency=32
+query_cache_size=512M
+max_heap_table_size=256M
+tmp_table_size=256M
+</code></pre>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2012/7/8/%e4%bf%84%e7%bd%97%e6%96%afmysql%e9%85%8d%e7%bd%ae%e8%b0%83%e4%bc%98/">http://blog.noark.xyz/article/2012/7/8/俄罗斯mysql配置调优/</a>
+            </p>
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2012-07-08</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Mysql">Mysql</a>&nbsp;
+                    
+                    <a href="/tag/Linux">Linux</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment_container post">
+        <div id="SOHUCS" sid="3de75ab9dae3af01e2b3aef4d832796c"></div>
+		<script type="text/javascript"> 
+		(function(){ 
+		var appid = 'cyt2AtDUF'; 
+		var conf = 'prod_846a5c8dcfd89035373fc1690cd74124'; 
+		var width = window.innerWidth || document.documentElement.clientWidth; 
+		if (width < 960) { 
+		window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>
