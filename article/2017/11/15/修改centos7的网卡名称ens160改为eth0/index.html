@@ -5,21 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="Linux,Mysql" />
-    <meta name="description" content="&lt;p&gt;CentOS7带有MariaDB而不是MySQL，如果要安装MySQL，首先添加mysql社区repo，版本参考官方地址&lt;br /&gt;
-&lt;a href=&#34;https://dev.mysql.com/downloads/repo/yum/&#34;&gt;https://dev.mysql.com/downloads/repo/yum/&lt;/a&gt;&lt;br /&gt;
-执行命令：&lt;br /&gt;
-[root@localhost ~]# sudo rpm -Uvh &lt;a href=&#34;https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm&#34;&gt;https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm&lt;/a&gt;&lt;br /&gt;
-然后安装Mysql，这里版本是5.7.20&lt;br /&gt;
-[root@localhost ~]# yum install mysql-server&lt;br /&gt;
-启动服务&lt;br /&gt;
-[root@localhost ~]# service mysqld start&lt;/p&gt;" />
+    <meta name="keywords" content="Linux" />
+    <meta name="description" content="&lt;h4&gt;1.修改网卡配置文件&lt;/h4&gt;
+
+&lt;p&gt;vim /etc/sysconfig/network-scripts/ifcfg-ens160&lt;br /&gt;
+修改下面两个配置项&lt;br /&gt;
+NAME=ens160&lt;br /&gt;
+DEVICE=ens160&lt;br /&gt;
+改为&lt;br /&gt;
+NAME=eth0&lt;br /&gt;
+DEVICE=eth0&lt;/p&gt;" />
 
     <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
     <link href="/assets/css/basic.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
-    <title>MYSQL5.7安装小记</title>
+    <title>修改Centos7的网卡名称ens160改为eth0</title>
 </head>
 <style type="text/css">
     h1,h2,h3 {
@@ -137,70 +138,66 @@
             <div class="post-page">
     <div class="post animated fadeInDown">
         <div class="post-title">
-            <h3>MYSQL5.7安装小记
+            <h3>修改Centos7的网卡名称ens160改为eth0
             </h3>
         </div>
         <div class="post-content" id="content">
 
-            <p>CentOS7带有MariaDB而不是MySQL，如果要安装MySQL，首先添加mysql社区repo，版本参考官方地址<br />
-<a href="https://dev.mysql.com/downloads/repo/yum/">https://dev.mysql.com/downloads/repo/yum/</a><br />
-执行命令：</p>
+            <h4>1.修改网卡配置文件</h4>
 
-<pre><code>[root@localhost ~]# sudo rpm -Uvh https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+<pre><code>vim /etc/sysconfig/network-scripts/ifcfg-ens160
 </code></pre>
 
-<p>然后安装Mysql，这里版本是5.7.20</p>
+<p>修改下面两个配置项</p>
 
-<pre><code>[root@localhost ~]# yum install mysql-server 
+<pre><code>NAME=ens160
+DEVICE=ens160
 </code></pre>
 
-<p>启动服务</p>
+<p>改为</p>
 
-<pre><code>[root@localhost ~]# service mysqld start
+<pre><code>NAME=eth0
+DEVICE=eth0
 </code></pre>
 
-<p>MySQL5.7 安装成功，为了加强安全性，会自动为root用户生成了一个随机密码</p>
+<h4>2.网卡配置文件重命名</h4>
 
-<pre><code>grep &quot;password&quot; /var/log/mysqld.log
+<pre><code>cd /etc/sysconfig/network-scripts/ifcfg-ens160
+mv ifcfg-ens160 ifcfg-eth0
 </code></pre>
 
-<p>随机密码</p>
+<h4>3.修改grub来禁用老的命名规则</h4>
 
-<pre><code>2017-08-09T04:20:43.628747Z 1 [Note] A temporary password is generated for root@localhost: HcchE4-y*vV6
+<pre><code>vim /etc/sysconfig/grub
 </code></pre>
 
-<p>首次登录提示</p>
+<p>在GRUB_CMDLINE_LINUX末尾加入配置：net.ifnames=0 biosdevname=0</p>
 
-<pre><code>You must reset your password using ALTER USER statement before executing this statement.
+<pre><code>GRUB_CMDLINE_LINUX=&quot;crashkernel=auto rd.lvm.lv=cl/root rd.lvm.lv=cl/swap rhgb quiet net.ifnames=0 biosdevname=0&quot;
 </code></pre>
 
-<p>大概意思就是让你换个密码</p>
+<h4>4.重新生成grub配置并更新内核参数</h4>
 
-<p>修改三步曲</p>
-
-<pre><code>1: SET PASSWORD = PASSWORD('123456');
-
-2: ALTER USER 'root'@'localhost' PASSWORD EXPIRE NEVER;
-
-3: flush privileges;
+<pre><code>grub2-mkconfig -o /boot/grub2/grub.cfg
 </code></pre>
 
-<p>第一步又有一个提示</p>
+<h4>5.添加udev的规则</h4>
 
-<pre><code>ERROR 1819 (HY000): Your password does not satisfy the current policy requirements
+<p>在文件夹/etc/udev/rules.d中创建网卡规则文件：70-persistent-net.rules，并写入内容：</p>
+
+<pre><code>cd /etc/udev/rules.d
+vim 70-persistent-net.rules
+UBSYSTEM==&quot;net&quot;,ACTION==&quot;add&quot;,DRIVERS==&quot;?*&quot;,ATTR{address}==&quot;00:0c:29:0c:22:79&quot;,ATTR{type}==&quot;1&quot; ,KERNEL==&quot;eth*&quot;,NAME=&quot;eth0&quot;
 </code></pre>
 
-<p>密码太简单了，再换</p>
+<p>网卡MAC地址00:0c:29:0c:22:79填写你的网卡MAC地址，是通过ip addr或ifconfig获取的。</p>
 
-<pre><code>SET PASSWORD = PASSWORD('Mokun.123');
-</code></pre>
-
-<p>搞定，如果你想用简单密码需要修改两个全局配置，请自行搜索实践</p>
+<h4>6.重启reboot</h4>
 
 
             <p>
                 <code>转载请注明原地址:</code>
-                <a href="http://blog.noark.xyz/article/2017/8/10/mysql5.7%e5%ae%89%e8%a3%85%e5%b0%8f%e8%ae%b0/">http://blog.noark.xyz/article/2017/8/10/mysql5.7安装小记/</a>
+                <a href="http://blog.noark.xyz/article/2017/11/15/%e4%bf%ae%e6%94%b9centos7%e7%9a%84%e7%bd%91%e5%8d%a1%e5%90%8d%e7%a7%b0ens160%e6%94%b9%e4%b8%baeth0/">http://blog.noark.xyz/article/2017/11/15/修改centos7的网卡名称ens160改为eth0/</a>
             </p>
         </div>
 
@@ -208,7 +205,7 @@
             <div class="meta">
                 <div class="info">
                     <i class="fa fa-calendar"></i>
-                    <span class="date">2017-08-10</span>
+                    <span class="date">2017-11-15</span>
                     &nbsp;&nbsp;
                     <i class="fa fa-folder-open"></i>
                     
@@ -219,15 +216,13 @@
                     
                     <a href="/tag/Linux">Linux</a>&nbsp;
                     
-                    <a href="/tag/Mysql">Mysql</a>&nbsp;
-                    
                 </div>
             </div>
         </div>
     </div>
 
     <div class="comment_container post">
-        <div id="SOHUCS" sid="bd2b446024dc8f960a336acb482f34df"></div>
+        <div id="SOHUCS" sid="bfb51aea696c3b70594c0e8d145c10e1"></div>
 		<script type="text/javascript"> 
 		(function(){ 
 		var appid = 'cyt2AtDUF'; 

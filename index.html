@@ -131,6 +131,133 @@
 
 <div class="post animated fadeInDown">
     <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2017/11/15/%e4%bf%ae%e6%94%b9centos7%e7%9a%84%e7%bd%91%e5%8d%a1%e5%90%8d%e7%a7%b0ens160%e6%94%b9%e4%b8%baeth0/">修改Centos7的网卡名称ens160改为eth0</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <h4>1.修改网卡配置文件</h4>
+
+<p>vim /etc/sysconfig/network-scripts/ifcfg-ens160<br />
+修改下面两个配置项<br />
+NAME=ens160<br />
+DEVICE=ens160<br />
+改为<br />
+NAME=eth0<br />
+DEVICE=eth0</p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2017-11-15</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Linux">Linux</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2017/11/15/yum%e6%ba%90%e6%9b%b4%e6%8d%a2%e4%b8%ba%e9%98%bf%e9%87%8c%e7%9a%84%e6%ba%90/">Yum源更换为阿里的源</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>1、备份自己信息<br />
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</p>
+
+<p>2、下载新的CentOS-Base.repo 到/etc/yum.repos.d/<br />
+CentOS 7<br />
+wget -O /etc/yum.repos.d/CentOS-Base.repo <a href="http://mirrors.aliyun.com/repo/Centos-7.repo">http://mirrors.aliyun.com/repo/Centos-7.repo</a></p>
+
+<p>CentOS 6<br />
+wget -O /etc/yum.repos.d/CentOS-Base.repo <a href="http://mirrors.aliyun.com/repo/Centos-6.repo">http://mirrors.aliyun.com/repo/Centos-6.repo</a></p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2017-11-15</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Linux">Linux</a>&nbsp;
+                
+                <a href="/tag/Yum">Yum</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2017/10/31/centos%e5%ae%89%e8%a3%85rz%e5%92%8csz%e5%91%bd%e4%bb%a4/">CentOS安装rz和sz命令</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>lrzsz在linux里可代替ftp上传和下载。</p>
+
+<h4>首先安装lrzsz</h4>
+
+<h1>yum -y install lrzsz</h1>
+
+<h4>上传文件</h4>
+
+<p>执行命令rz，会跳出文件选择窗口，选择好文件，点击确认即可。</p>
+
+<h1>rz</h1>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2017-10-31</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Linux">Linux</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
         <h3><a style="color: #FF6600" href="/article/2017/8/14/jpa%e4%b9%8b%e4%b8%bb%e9%94%ae%e8%87%aa%e5%a2%9e%e9%95%bf/">JPA之主键自增长</a>
         </h3>
     </div>
@@ -261,6 +388,48 @@ public interface LogRepository extends JpaRepository<Log, Long>, JpaSpecificatio
 
 <div class="post animated fadeInDown">
     <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2017/8/10/mysql5.7%e5%ae%89%e8%a3%85%e5%b0%8f%e8%ae%b0/">MYSQL5.7安装小记</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>CentOS7带有MariaDB而不是MySQL，如果要安装MySQL，首先添加mysql社区repo，版本参考官方地址<br />
+<a href="https://dev.mysql.com/downloads/repo/yum/">https://dev.mysql.com/downloads/repo/yum/</a><br />
+执行命令：<br />
+[root@localhost ~]# sudo rpm -Uvh <a href="https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm">https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm</a><br />
+然后安装Mysql，这里版本是5.7.20<br />
+[root@localhost ~]# yum install mysql-server<br />
+启动服务<br />
+[root@localhost ~]# service mysqld start</p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2017-08-10</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Linux">Linux</a>&nbsp;
+                
+                <a href="/tag/Mysql">Mysql</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
         <h3><a style="color: #FF6600" href="/article/2017/8/10/%e8%85%be%e8%ae%af%e4%ba%91tomcat%e5%90%af%e5%8a%a8%e5%a4%aa%e6%85%a2%e7%9a%84%e6%83%85%e5%86%b5/">腾讯云Tomcat启动太慢的情况</a>
         </h3>
     </div>
@@ -294,49 +463,6 @@ public interface LogRepository extends JpaRepository<Log, Long>, JpaSpecificatio
                 <a href="/tag/Linux">Linux</a>&nbsp;
                 
                 <a href="/tag/Tomcat">Tomcat</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/8/10/mysql5.7%e5%ae%89%e8%a3%85%e5%b0%8f%e8%ae%b0/">MYSQL5.7安装小记</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <p>yum install mysql-server</p>
-
-<p>MySQL5.7 安装成功，为了加强安全性，会自动为root用户生成了一个随机密码<br />
-grep &ldquo;password&rdquo; /var/log/mysqld.log</p>
-
-<p>随机密码<br />
-2017-08-09T04:20:43.628747Z 1 [Note] A temporary password is generated for root@localhost: HcchE4-y*vV6</p>
-
-<p>首次登录提示</p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-08-10</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/Linux">Linux</a>&nbsp;
-                
-                <a href="/tag/Mysql">Mysql</a>&nbsp;
                 
 
             </div>
@@ -428,135 +554,6 @@ make[3]: gcc: Command not found</p>
                 <a href="/tag/%e7%95%85%e8%a8%80">畅言</a>&nbsp;
                 
                 <a href="/tag/CHCA">CHCA</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/7/6/%e5%8f%af%e7%88%b1%e5%8f%af%e6%81%a8%e5%8f%af%e6%80%9c%e7%9a%84%e7%bd%91%e6%98%93%e4%ba%91%e8%b7%9f%e8%b4%b4/">可爱可恨可怜的网易云跟贴</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <h3>网易云跟贴停止服务公告</h3>
-
-<p>亲爱的朋友们：</p>
-
-<p>因公司业务发展需要，我们不得不遗憾地通知大家，云跟贴产品将于2017年8月1日停止服务。在此之前可以通过后台的数据导出功能导出自己站点的跟贴数据。感谢大家一直以来对云跟贴的支持与厚爱，对于此次产品关停给您带来的不便我们深表歉意，希望在网易其他产品与业务上，我们能继续为您服务！</p>
-
-<p>网易云跟贴</p>
-
-<p>2017年7月6日</p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-07-06</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">职业技能</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/%e7%bd%91%e6%98%93%e4%ba%91%e8%b7%9f%e8%b4%b4">网易云跟贴</a>&nbsp;
-                
-                <a href="/tag/%e7%95%85%e8%a8%80">畅言</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/6/29/%e9%9d%99%e6%80%81%e5%8d%9a%e5%ae%a2%e7%9a%84%e8%af%84%e8%ae%ba%e5%b7%a5%e5%85%b7--%e7%bd%91%e6%98%93%e4%ba%91%e8%b7%9f%e8%b4%b4/">静态博客的评论工具--网易云跟贴</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <p>话说有一天，我发现了一个Golang写的静态博客工具(Chca)，我的故事就这样开始了&hellip;</p>
-
-<p>工具使用相对比较简单，我也是我喜欢他的原因，所有都调通以后，开始注册我的畅言</p>
-
-<p>由于域名没有备案 我发现畅言的评论功能只能用15天</p>
-
-<p>畅言--又爱又恨啊，需要域名备案，真烦人，备案就需要主机，流程也比较复杂和漫长</p>
-
-<p>然后选择了阿里云备案，流程他帮跑，邮寄背景布，拍卖，上传，慢慢等时间</p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-06-29</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">职业技能</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/%e7%bd%91%e6%98%93%e4%ba%91%e8%b7%9f%e8%b4%b4">网易云跟贴</a>&nbsp;
-                
-                <a href="/tag/%e7%95%85%e8%a8%80">畅言</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/6/21/easyform%e7%9a%84%e4%bd%bf%e7%94%a8/">Easyform的使用</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <p>最近在搞后台方面的功能，都是手工写表单验证逻辑，哎，一个服务器端研发人员在写JS，想想都醉了&hellip;</p>
-
-<p>表单验证插件不少，今天来介绍一下Easyform插件</p>
-
-<p><a href="http://thesmallcar.github.io/jQuery.easyform/">&gt;&gt;官方网站&lt;&lt;</a></p>
-
-<h4>Easyform简介</h4>
-
-<p>Easyform 是一个基于JQuery的表单验证插件，支持复杂的表单验证规则，但使用却很简单。只要一行JS搞定全部。</p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-06-21</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">后台开发</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/%e8%a1%a8%e5%8d%95%e9%aa%8c%e8%af%81">表单验证</a>&nbsp;
-                
-                <a href="/tag/Easyform">Easyform</a>&nbsp;
                 
 
             </div>
