@@ -131,6 +131,48 @@
 
 <div class="post animated fadeInDown">
     <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2017/12/4/%e9%98%bf%e9%87%8c%e4%ba%91centos7%e6%8c%82%e8%bd%bd%e4%ba%91%e7%9b%98/">阿里云CentOS7挂载云盘</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>刚买的阿里云机器，是不会自动挂载高效云盘的，需要手工处理.</p>
+
+<h3>1.查看云盘</h3>
+
+<p>[root@xxx ~]# fdisk -l</p>
+
+<p>Disk /dev/vda: 53.7 GB, 53687091200 bytes, 104857600 sectors<br />
+Units = sectors of 1 * 512 = 512 bytes<br />
+Sector size (logical/physical): 512 bytes / 512 bytes<br />
+I/O size (minimum/optimal): 512 bytes / 512 bytes</p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2017-12-04</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Linux">Linux</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
         <h3><a style="color: #FF6600" href="/article/2017/11/15/%e4%bf%ae%e6%94%b9centos7%e7%9a%84%e7%bd%91%e5%8d%a1%e5%90%8d%e7%a7%b0ens160%e6%94%b9%e4%b8%baeth0/">修改Centos7的网卡名称ens160改为eth0</a>
         </h3>
     </div>
@@ -258,6 +300,51 @@ wget -O /etc/yum.repos.d/CentOS-Base.repo <a href="http://mirrors.aliyun.com/rep
 
 <div class="post animated fadeInDown">
     <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2017/8/14/jpa%e4%b9%8b%e5%a4%8d%e5%90%88%e4%b8%bb%e9%94%ae/">JPA之复合主键</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>在实现兑换码功能时，除了礼包配置表外还需要一个记录批次信息的表。</p>
+
+<p>但这个表比较特殊，他是有两个字段构成的主键，这就是今天要说复合主键，就是把两个字段先封装成一个对象后作为复合主键使用。</p>
+
+<h4>复合主键</h4>
+
+<ol>
+<li>需要标注@Embeddable注解<br /></li>
+<li>要有hashCode和equals实现.<br /></li>
+<li>实现Serializable接口<br /></li>
+</ol>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2017-08-14</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">后台开发</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Spring">Spring</a>&nbsp;
+                
+                <a href="/tag/JPA">JPA</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
         <h3><a style="color: #FF6600" href="/article/2017/8/14/jpa%e4%b9%8b%e4%b8%bb%e9%94%ae%e8%87%aa%e5%a2%9e%e9%95%bf/">JPA之主键自增长</a>
         </h3>
     </div>
@@ -314,51 +401,6 @@ public class Log {<br />
 public interface LogRepository extends JpaRepository<Log, Long>, JpaSpecificationExecutor<Log> {}</p>
 
 <p>后台的操作日志，查询条件:可能以操作者或IP或操作时间或操作类型等等条件来组合查询，直接上代码</p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-08-14</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">后台开发</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/Spring">Spring</a>&nbsp;
-                
-                <a href="/tag/JPA">JPA</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/8/14/jpa%e4%b9%8b%e5%a4%8d%e5%90%88%e4%b8%bb%e9%94%ae/">JPA之复合主键</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <p>在实现兑换码功能时，除了礼包配置表外还需要一个记录批次信息的表。</p>
-
-<p>但这个表比较特殊，他是有两个字段构成的主键，这就是今天要说复合主键，就是把两个字段先封装成一个对象后作为复合主键使用。</p>
-
-<h4>复合主键</h4>
-
-<ol>
-<li>需要标注@Embeddable注解<br /></li>
-<li>要有hashCode和equals实现.<br /></li>
-<li>实现Serializable接口<br /></li>
-</ol>
 
         </div>
     </div>
@@ -507,53 +549,6 @@ make[3]: gcc: Command not found</p>
                 <a href="/tag/Linux">Linux</a>&nbsp;
                 
                 <a href="/tag/Redis">Redis</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/8/4/%e9%9d%99%e6%80%81%e5%8d%9a%e5%ae%a2%e7%9a%84%e8%af%84%e8%ae%ba%e5%b7%a5%e5%85%b7--%e7%95%85%e8%a8%80/">静态博客的评论工具--畅言</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <h3>畅言</h3>
-
-<p>第三方的评论工具，简约而不简单&hellip;</p>
-
-<h3>安装</h3>
-
-<ol>
-<li>申请账号(<a href="http://changyan.kuaizhan.com/">官方网站</a>)<br /></li>
-<li>进入后台<br /></li>
-<li>创建应用<br /></li>
-<li>获取代码<br />
-<div id="SOHUCS" sid="请将此处替换为配置SourceID的语句" ></div><br /></li>
-</ol>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-08-04</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">职业技能</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/%e7%95%85%e8%a8%80">畅言</a>&nbsp;
-                
-                <a href="/tag/CHCA">CHCA</a>&nbsp;
                 
 
             </div>
