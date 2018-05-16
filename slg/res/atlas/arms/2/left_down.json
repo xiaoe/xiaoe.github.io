@@ -1,0 +1,176 @@
+{
+    "frames": {
+        "1.png": {
+            "frame": {
+                "h": 60,
+                "idx": 0,
+                "w": 47,
+                "x": 149,
+                "y": 61
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 60,
+                "w": 47
+            },
+            "spriteSourceSize": {
+                "h": 60,
+                "w": 47,
+                "x": 0,
+                "y": 0
+            },
+            "trimmed": false
+        },
+        "2.png": {
+            "frame": {
+                "h": 62,
+                "idx": 0,
+                "w": 48,
+                "x": 100,
+                "y": 0
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 62,
+                "w": 48
+            },
+            "spriteSourceSize": {
+                "h": 62,
+                "w": 48,
+                "x": 0,
+                "y": 0
+            },
+            "trimmed": false
+        },
+        "3.png": {
+            "frame": {
+                "h": 63,
+                "idx": 0,
+                "w": 47,
+                "x": 101,
+                "y": 63
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 63,
+                "w": 47
+            },
+            "spriteSourceSize": {
+                "h": 63,
+                "w": 47,
+                "x": 0,
+                "y": 0
+            },
+            "trimmed": false
+        },
+        "4.png": {
+            "frame": {
+                "h": 63,
+                "idx": 0,
+                "w": 48,
+                "x": 51,
+                "y": 0
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 63,
+                "w": 48
+            },
+            "spriteSourceSize": {
+                "h": 63,
+                "w": 48,
+                "x": 0,
+                "y": 0
+            },
+            "trimmed": false
+        },
+        "5.png": {
+            "frame": {
+                "h": 60,
+                "idx": 0,
+                "w": 49,
+                "x": 149,
+                "y": 0
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 60,
+                "w": 49
+            },
+            "spriteSourceSize": {
+                "h": 60,
+                "w": 49,
+                "x": 0,
+                "y": 0
+            },
+            "trimmed": false
+        },
+        "6.png": {
+            "frame": {
+                "h": 61,
+                "idx": 0,
+                "w": 49,
+                "x": 51,
+                "y": 64
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 61,
+                "w": 49
+            },
+            "spriteSourceSize": {
+                "h": 61,
+                "w": 49,
+                "x": 0,
+                "y": 0
+            },
+            "trimmed": false
+        },
+        "7.png": {
+            "frame": {
+                "h": 61,
+                "idx": 0,
+                "w": 50,
+                "x": 0,
+                "y": 63
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 61,
+                "w": 50
+            },
+            "spriteSourceSize": {
+                "h": 61,
+                "w": 50,
+                "x": 0,
+                "y": 0
+            },
+            "trimmed": false
+        },
+        "8.png": {
+            "frame": {
+                "h": 62,
+                "idx": 0,
+                "w": 50,
+                "x": 0,
+                "y": 0
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 62,
+                "w": 50
+            },
+            "spriteSourceSize": {
+                "h": 62,
+                "w": 50,
+                "x": 0,
+                "y": 0
+            },
+            "trimmed": false
+        }
+    },
+    "meta": {
+        "image": "left_down.png",
+        "prefix": "arms/2/left_down/"
+    }
+}
