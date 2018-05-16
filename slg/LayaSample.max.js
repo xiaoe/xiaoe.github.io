@@ -461,7 +461,7 @@ var LayaSample=(function(){
 		this.loading=null;
 		this.step=0;
 		Laya.init(1136,560,WebGL);
-		Laya.stage.scaleMode="noborder";
+		Laya.stage.scaleMode="full";
 		Laya.stage.screenMode="horizontal";
 		Stat.show();
 		Common.ui.initialize();
