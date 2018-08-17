@@ -13,7 +13,7 @@
 然后安装Mysql，这里版本是5.7.20&lt;br /&gt;
 [root@localhost ~]# yum install mysql-server&lt;br /&gt;
 启动服务&lt;br /&gt;
-[root@localhost ~]# service mysqld start&lt;/p&gt;" />
+[root@localhost ~]# systemctl start mysqld.service&lt;/p&gt;" />
 
     <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
@@ -60,8 +60,8 @@
         
 
             <span>
-                <a href="/category/Noark2%e5%85%a5%e9%97%a8">
-                    Noark2入门
+                <a href="/category/Noark%e5%85%a5%e9%97%a8">
+                    Noark入门
                 </a>&nbsp;
             </span>
 
@@ -156,7 +156,7 @@
 
 <p>启动服务</p>
 
-<pre><code>[root@localhost ~]# service mysqld start
+<pre><code>[root@localhost ~]# systemctl start mysqld.service
 </code></pre>
 
 <p>MySQL5.7 安装成功，为了加强安全性，会自动为root用户生成了一个随机密码</p>
@@ -196,6 +196,13 @@
 </code></pre>
 
 <p>搞定，如果你想用简单密码需要修改两个全局配置，请自行搜索实践</p>
+
+<p>本地账号没有问题后，在研发环境要添加远程访问账号，账号密码不变再加个</p>
+
+<pre><code>grant all privileges on *.* to 'root'@'%'identified by 'Mokun.123' with grant option;
+
+flush privileges;
+</code></pre>
 
 
             <p>
