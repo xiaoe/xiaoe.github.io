@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="Java,Noark" />
+    <meta name="description" content="&lt;h3&gt;0x00消息控制器&lt;/h3&gt;
+
+&lt;p&gt;消息控制器，主要作用就是为每个模块提供消息处理的入口.&lt;/p&gt;
+
+&lt;p&gt;这里的消息不仅仅是协议，还有内部指令，事件等等逻辑入口，这也是为了响应线程模型作出的一种支撑，只要入口在此消息控制器内，那必然走期望的线程调度。&lt;/p&gt;
+
+&lt;p&gt;@Controller用于标识一个类为当前模块的消息控制器入口.&lt;br /&gt;
+@Controller(threadGroup = ExecThreadGroup.PlayerThreadGroup)&lt;br /&gt;
+public class MailController {&lt;/p&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>Noark入门之协议映射</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/Noark%e5%85%a5%e9%97%a8">
+                    Noark入门
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">
+                    后台开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">
+                    游戏安全
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">
+                    游戏开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">
+                    职业技能
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">
+                    运维知识
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>Noark入门之协议映射
+            </h3>
+        </div>
+        <div class="post-content" id="content">
+
+            <h3>0x00消息控制器</h3>
+
+<p>消息控制器，主要作用就是为每个模块提供消息处理的入口.</p>
+
+<p>这里的消息不仅仅是协议，还有内部指令，事件等等逻辑入口，这也是为了响应线程模型作出的一种支撑，只要入口在此消息控制器内，那必然走期望的线程调度。</p>
+
+<p>@Controller用于标识一个类为当前模块的消息控制器入口.</p>
+
+<pre><code>@Controller(threadGroup = ExecThreadGroup.PlayerThreadGroup)
+public class MailController {
+}
+</code></pre>
+
+<p>参数threadGroup标识此入口是按玩家线程组划分的，每个玩家之前的逻辑互不影响.</p>
+
+<pre><code>@Controller(threadGroup = ExecThreadGroup.ModuleThreadGroup)
+public class LoginController {
+}
+</code></pre>
+
+<p>这个就是以模块为单位划分的，就是说这个模块的所有逻辑都是以串型的方式在执行.</p>
+
+<h3>0x01协议映射</h3>
+
+<p>@PacketMapping注解用来标识一个封包映射到一个处理方法</p>
+
+<pre><code>@PacketMapping(opcode = 1001, state = State.CONNECTED)
+public void loginGame(Session session, LoginGameReq request) {
+}
+</code></pre>
+
+<p>参数opcode表示协议编号<br />
+参数state表示当前状态才可以调用的执行</p>
+
+<p>如果Session的状态在刚刚链接的情况下接受到1001协议才可以执行此方法</p>
+
+<p>如果正常执行完一个逻辑则会有一行日志</p>
+
+<pre><code>2018-09-04 15:58:32.868 [business-1] INFO AsyncTask.java:59 - handle protocal(opcode=1001),delay=0.15324 ms,exe=3.608036 ms
+</code></pre>
+
+<p>PacketMapping还有个参数</p>
+
+<p>printLog    是否需要打印协议相关的日志，默认值是true , 如果不想要日志输入 则可以设计为false</p>
+
+<p>比如心跳协议，则不需要输出日志，状态也是不管他登录未登录&hellip;</p>
+
+<pre><code>@PacketMapping(opcode = MsgType.KeepalivedReq_VALUE, printLog = false, state = State.ALL)
+public void keepalived(Session session, KeepalivedReq request) {
+	session.send(MsgType.KeepalivedAck_VALUE, KeepalivedAck.newBuilder().setNow(System.currentTimeMillis()).build());
+}
+</code></pre>
+
+<p>是不是找到了当年SpringMvc的感觉了，那就对了&hellip; 熟悉的才是最美好的回忆</p>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2018/5/20/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e5%8d%8f%e8%ae%ae%e6%98%a0%e5%b0%84/">http://blog.noark.xyz/article/2018/5/20/noark入门之协议映射/</a>
+            </p>
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2018-05-20</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Java">Java</a>&nbsp;
+                    
+                    <a href="/tag/Noark">Noark</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment_container post">
+        <div id="SOHUCS" sid="11097e3212957874c389165fe2b7bfc7"></div>
+		<script type="text/javascript"> 
+		(function(){ 
+		var appid = 'cyt2AtDUF'; 
+		var conf = 'prod_846a5c8dcfd89035373fc1690cd74124'; 
+		var width = window.innerWidth || document.documentElement.clientWidth; 
+		if (width < 960) { 
+		window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -131,6 +131,49 @@
 
 <div class="post animated fadeInDown">
     <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2018/5/20/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e5%8d%8f%e8%ae%ae%e6%98%a0%e5%b0%84/">Noark入门之协议映射</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <h3>0x00消息控制器</h3>
+
+<p>消息控制器，主要作用就是为每个模块提供消息处理的入口.</p>
+
+<p>这里的消息不仅仅是协议，还有内部指令，事件等等逻辑入口，这也是为了响应线程模型作出的一种支撑，只要入口在此消息控制器内，那必然走期望的线程调度。</p>
+
+<p>@Controller用于标识一个类为当前模块的消息控制器入口.<br />
+@Controller(threadGroup = ExecThreadGroup.PlayerThreadGroup)<br />
+public class MailController {</p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2018-05-20</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Java">Java</a>&nbsp;
+                
+                <a href="/tag/Noark">Noark</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
         <h3><a style="color: #FF6600" href="/article/2018/5/1/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e7%ba%bf%e7%a8%8b%e6%a8%a1%e5%9e%8b/">Noark入门之线程模型</a>
         </h3>
     </div>
@@ -386,6 +429,51 @@ DEVICE=eth0</p>
 
 <div class="post animated fadeInDown">
     <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2017/8/14/jpa%e4%b9%8b%e5%a4%8d%e5%90%88%e4%b8%bb%e9%94%ae/">JPA之复合主键</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>在实现兑换码功能时，除了礼包配置表外还需要一个记录批次信息的表。</p>
+
+<p>但这个表比较特殊，他是有两个字段构成的主键，这就是今天要说复合主键，就是把两个字段先封装成一个对象后作为复合主键使用。</p>
+
+<h4>复合主键</h4>
+
+<ol>
+<li>需要标注@Embeddable注解<br /></li>
+<li>要有hashCode和equals实现.<br /></li>
+<li>实现Serializable接口<br /></li>
+</ol>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2017-08-14</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">后台开发</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Spring">Spring</a>&nbsp;
+                
+                <a href="/tag/JPA">JPA</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
         <h3><a style="color: #FF6600" href="/article/2017/8/14/jpa%e4%b9%8b%e4%b8%bb%e9%94%ae%e8%87%aa%e5%a2%9e%e9%95%bf/">JPA之主键自增长</a>
         </h3>
     </div>
@@ -461,95 +549,6 @@ public interface LogRepository extends JpaRepository<Log, Long>, JpaSpecificatio
                 <a href="/tag/Spring">Spring</a>&nbsp;
                 
                 <a href="/tag/JPA">JPA</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/8/14/jpa%e4%b9%8b%e5%a4%8d%e5%90%88%e4%b8%bb%e9%94%ae/">JPA之复合主键</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <p>在实现兑换码功能时，除了礼包配置表外还需要一个记录批次信息的表。</p>
-
-<p>但这个表比较特殊，他是有两个字段构成的主键，这就是今天要说复合主键，就是把两个字段先封装成一个对象后作为复合主键使用。</p>
-
-<h4>复合主键</h4>
-
-<ol>
-<li>需要标注@Embeddable注解<br /></li>
-<li>要有hashCode和equals实现.<br /></li>
-<li>实现Serializable接口<br /></li>
-</ol>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-08-14</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">后台开发</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/Spring">Spring</a>&nbsp;
-                
-                <a href="/tag/JPA">JPA</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/8/10/redis4%e5%ae%89%e8%a3%85%e5%b0%8f%e8%ae%b0/">REDIS4安装小记</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <h4>安装</h4>
-
-<p>下载，解压，编译:<br />
-$ wget <a href="http://download.redis.io/releases/redis-4.0.1.tar.gz">http://download.redis.io/releases/redis-4.0.1.tar.gz</a><br />
-$ tar xzf redis-4.0.1.tar.gz<br />
-$ cd redis-4.0.1<br />
-$ make</p>
-
-<p>Make后查看日志提示<br />
-make[3]: gcc: Command not found</p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-08-10</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/Linux">Linux</a>&nbsp;
-                
-                <a href="/tag/Redis">Redis</a>&nbsp;
                 
 
             </div>

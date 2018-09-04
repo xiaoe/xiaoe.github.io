@@ -168,7 +168,7 @@ Noark也是从业多年的经验积累而产生的游戏服务器端框架，实
 
 <p>引入Noark，按照历史惯例，先来一个Hello Kitty&hellip;</p>
 
-<h3>Hello Kitty</h3>
+<h3>0x01Hello Kitty</h3>
 
 <p>第一个游戏服务器Demo，来开始我们的ABC三步走</p>
 
@@ -237,7 +237,7 @@ U| |\  |u.-,_| |_| | / ___ \   |  _ &lt;  U/| . \\u  ___) |
 
 <p>源码<a href="https://gitee.com/xiaoe/noark-learning/tree/master/chapter-1">下载</a></p>
 
-<h4>协议映射</h4>
+<h3>0x02协议映射</h3>
 
 <p>负责完成协议请求到控制器的映射功能。</p>
 
@@ -336,7 +336,7 @@ public class SocketTest {
 
 <p>源码<a href="https://gitee.com/xiaoe/noark-learning/tree/master/chapter-2">下载</a></p>
 
-<h4>配置文件</h4>
+<h3>0x03配置文件</h3>
 
 <p>上面网络已跑通了，但要修改端口等配置呢？</p>
 
@@ -354,7 +354,7 @@ network.port=10001
 
 <p>服务器端口已切换到10001了, 其他Noark系统默认的配置请参考Noark默认配置清单</p>
 
-<h4>模板加载</h4>
+<h3>0x04模板加载</h3>
 
 <p>载入策划配置的模板数据了，Noark内置了一种CSV格式的模板解析器，简单方便，让我们来看个稀奇</p>
 
@@ -441,7 +441,7 @@ public class ChatTemplateManager extends AbstractTemplateManager {
 
 <p>为什么要选择CSV作为模板文件，请参考<a href="http://blog.noark.xyz/article/2017/6/13/%E8%81%8A%E4%B8%80%E8%81%8A%E7%AD%96%E5%88%92%E9%85%8D%E7%BD%AE%E8%A1%A8%E9%97%AE%E9%A2%98/">聊一聊策划配置表问题</a></p>
 
-<h4>数据存储</h4>
+<h3>0x05数据存储</h3>
 
 <p>数据存储，Noark采用了JPA风格的编码方式.</p>
 
@@ -597,7 +597,7 @@ PRIMARY KEY (`username`)
 
 <p>源码<a href="https://gitee.com/xiaoe/noark-learning/tree/master/chapter-5">下载</a></p>
 
-<h4>异步事件</h4>
+<h3>0x06异步事件</h3>
 
 <p>用于多模块解耦功能，当完成一个动作时，向外抛出一个事件，由关心的模块自己监听处理.</p>
 
@@ -626,7 +626,7 @@ public void handleOnlineEvent(OnlineEvent event) {
 
 <p>源码<a href="https://gitee.com/xiaoe/noark-learning/tree/master/chapter-6">下载</a></p>
 
-<h4>延迟任务</h4>
+<h3>0x07延迟任务</h3>
 
 <p>Noark也提供了一套延迟执行的任务，就是带有延迟功能的事件，统一了API</p>
 
