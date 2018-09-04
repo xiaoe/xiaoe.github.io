@@ -5,25 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="Mysql,Linux" />
-    <meta name="description" content="&lt;h4&gt;下载源码包&lt;/h4&gt;
+    <meta name="keywords" content="Java,Noark" />
+    <meta name="description" content="&lt;h3&gt;0x00单线程&lt;/h3&gt;
 
-&lt;p&gt;&lt;a href=&#34;http://dev.mysql.com/downloads/mysql/5.5.html#downloads&#34;&gt;http://dev.mysql.com/downloads/mysql/5.5.html#downloads&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;多进程单线程与单进程多线程的目的都是想尽可能的利用CPU，减少CPU的空闲时间，特别是多核环境，今天咱不做深度解读，跳过&amp;hellip;&lt;/p&gt;
 
-&lt;h4&gt;创建用户&lt;/h4&gt;
+&lt;h3&gt;0x01线程池&#43;锁&lt;/h3&gt;
 
-&lt;p&gt;shell&amp;gt; groupadd mysql&lt;br /&gt;
-shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
+&lt;p&gt;最早的一部分游戏服务器是采用线程池的方式来处理玩家的业务请求，以达最大限度的利用多核优势来提高处理业务能力。&lt;/p&gt;
 
-&lt;h4&gt;解开源码包&lt;/h4&gt;
-
-&lt;p&gt;shell&amp;gt; tar zxvf mysql-VERSION.tar.gz&lt;/p&gt;" />
+&lt;p&gt;但线程池同时也带来了并发问题，为了解决同一玩家多个业务请求不被并发，引入了锁的方式，每个Session一把锁，锁住业务处理逻辑，从而解决同步问题&lt;/p&gt;" />
 
     <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
     <link href="/assets/css/basic.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
-    <title>小流氓简介</title>
+    <title>Noark入门之线程模型</title>
 </head>
 <style type="text/css">
     h1,h2,h3 {
@@ -141,29 +138,60 @@ shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
             <div class="post-page">
     <div class="post animated fadeInDown">
         <div class="post-title">
-            <h3>
+            <h3>Noark入门之线程模型
             </h3>
         </div>
         <div class="post-content" id="content">
 
-            <h1>关于我</h1>
+            <h3>0x00单线程</h3>
 
-<p>江湖人称“<strong>小流氓</strong>”<br />
-专注于<strong>网络游戏</strong>相关技术<br />
-我的目标：做一款<strong>赚钱</strong>的游戏<br />
-热爱游戏事业, 正在努力为实现自我价值而奋斗中&hellip;</p>
+<p>多进程单线程与单进程多线程的目的都是想尽可能的利用CPU，减少CPU的空闲时间，特别是多核环境，今天咱不做深度解读，跳过&hellip;</p>
 
-<p>欢迎相关领域的朋友一起交流，与大家一起分享经验，共享资源。<br />
-欢迎感兴趣的同行加入QQ群(50329551)进行在线交流与咨询，期望大家参与！</p>
+<h3>0x01线程池+锁</h3>
 
-<h3>微信公众号:</h3>
+<p>最早的一部分游戏服务器是采用线程池的方式来处理玩家的业务请求，以达最大限度的利用多核优势来提高处理业务能力。</p>
 
-<p><img src="http://blog.noark.xyz/assets/images/weixin.jpg" alt="公众号" title="公众号" /></p>
+<p>但线程池同时也带来了并发问题，为了解决同一玩家多个业务请求不被并发，引入了锁的方式，每个Session一把锁，锁住业务处理逻辑，从而解决同步问题</p>
+
+<h3>0x02串行化设计</h3>
+
+<p>借鉴了Netty的串行化设计理念，业务线程池也采用了串行化设计，这就意外着整个流程如同单线程一下顺序执行，也不会进行线程上下文的切换，数据也不会面临被并发修改的风险</p>
+
+<p>那如何实现玩家与线程绑定关系呢？</p>
+
+<p>我们只要简单的取模运算，映射到固定的线程上执行即可，比如我们有N个业务线程</p>
+
+<pre><code>public Executor balanceExecutor(long playerId) {
+	return executors[playerId % N];
+}
+</code></pre>
+
+<p>以前上线的游戏都是基于串行化的方式，在大量数据统计下，玩家ID或场景ID以及模块划分都不能作为负载均衡的条件，在活动期，是很不均衡，虽然能满足日常运营活动体验.</p>
+
+<h3>0x03抽象的Actor模型</h3>
+
+<p>服务器游戏需要什么？指定逻辑有序执行&hellip;</p>
+
+<p>可以把服务抽象为玩家队列，模块队列等等，一个队列就是一个Actor的Mailbox，从而进行有序的执行指定业务逻辑&hellip;</p>
+
+<p>Noark内置了@Controller注解，threadGroup为玩家线程组所有逻辑则以玩家ID来分组执行，如果是模块线程组则以模块名来分组执行&hellip;</p>
+
+<p>A玩家请求1，2，3协议，则会以先后顺序进行有序执行&hellip;<br />
+B玩家的请求也会有序执行，只要线程池有空闲线程，就不会受到A玩家的延迟影响&hellip;</p>
+
+<p>同理，各模块划分都是独立的，互不影响，就这解决了串行化设计中模块Hash定位不受控制问题.</p>
+
+<p>有序执行的功能请参考</p>
+
+<pre><code>xyz.noark.core.thread.TaskQueue.complete()
+</code></pre>
+
+<p>小结：多线程处理多队列，有序而已&hellip;</p>
 
 
             <p>
                 <code>转载请注明原地址:</code>
-                <a href="http://blog.noark.xyz">http://blog.noark.xyz</a>
+                <a href="http://blog.noark.xyz/article/2018/5/1/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e7%ba%bf%e7%a8%8b%e6%a8%a1%e5%9e%8b/">http://blog.noark.xyz/article/2018/5/1/noark入门之线程模型/</a>
             </p>
         </div>
 
@@ -171,12 +199,18 @@ shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
             <div class="meta">
                 <div class="info">
                     <i class="fa fa-calendar"></i>
-                    <span class="date">2018-09-04</span>
+                    <span class="date">2018-05-01</span>
                     &nbsp;&nbsp;
                     <i class="fa fa-folder-open"></i>
                     
+                    <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
+                    
                     &nbsp;&nbsp;
                     <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Java">Java</a>&nbsp;
+                    
+                    <a href="/tag/Noark">Noark</a>&nbsp;
                     
                 </div>
             </div>
@@ -184,7 +218,7 @@ shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
     </div>
 
     <div class="comment_container post">
-        <div id="SOHUCS" sid="d41d8cd98f00b204e9800998ecf8427e"></div>
+        <div id="SOHUCS" sid="e11256d9e7f78dcf4320840b95b5de09"></div>
 		<script type="text/javascript"> 
 		(function(){ 
 		var appid = 'cyt2AtDUF'; 

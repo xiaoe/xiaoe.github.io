@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="Java,Noark" />
+    <meta name="description" content="&lt;p&gt;官方网站 &lt;a href=&#34;http://www.noark.xyz&#34;&gt;www.noark.xyz&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;简介&lt;/h3&gt;
+
+&lt;p&gt;Noark是一个游戏服务器端框架，可快速开发出一个易维护、易扩展且稳定高能的游戏服务器，让开发者专注于逻辑功能的开发。&lt;br /&gt;
+Noark也是从业多年的经验积累而产生的游戏服务器端框架，实现了协议映射，业务处理，模板加载，数据存储，异步事件，延迟任务，内部指令等功能模块，从而达到了松散耦合的效果，提高了系统的可重用性、可维护性以及可扩展性。&lt;br /&gt;
+精心设计过的它大大简化了网络编程和多线程编程，还有很多改良版的工具类库，他就是为了解决开发中那些重复劳动而产生的框架。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;优点：&lt;/strong&gt;&lt;/p&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>Noark入门之极速体验</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/Noark%e5%85%a5%e9%97%a8">
+                    Noark入门
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">
+                    后台开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">
+                    游戏安全
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">
+                    游戏开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">
+                    职业技能
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">
+                    运维知识
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>Noark入门之极速体验
+            </h3>
+        </div>
+        <div class="post-content" id="content">
+
+            <p>官方网站 <a href="http://www.noark.xyz">www.noark.xyz</a></p>
+
+<h3>简介</h3>
+
+<p>Noark是一个游戏服务器端框架，可快速开发出一个易维护、易扩展且稳定高能的游戏服务器，让开发者专注于逻辑功能的开发。<br />
+Noark也是从业多年的经验积累而产生的游戏服务器端框架，实现了协议映射，业务处理，模板加载，数据存储，异步事件，延迟任务，内部指令等功能模块，从而达到了松散耦合的效果，提高了系统的可重用性、可维护性以及可扩展性。<br />
+精心设计过的它大大简化了网络编程和多线程编程，还有很多改良版的工具类库，他就是为了解决开发中那些重复劳动而产生的框架。</p>
+
+<p><strong>优点：</strong></p>
+
+<p>使用简单，学习成本低<br />
+功能强大，很容易写出性能优秀的服务<br />
+十分灵活，并且可与常用技术无缝衔接</p>
+
+<h3>安装</h3>
+
+<p>Gradle</p>
+
+<pre><code>implementation &quot;xyz.noark:noark-game:3.1.12.Final&quot;
+</code></pre>
+
+<p>当前需要Jdk1.8，Noark版本最新已是3.1.12了</p>
+
+<p>引入Noark，按照历史惯例，先来一个Hello Kitty&hellip;</p>
+
+<h3>Hello Kitty</h3>
+
+<p>第一个游戏服务器Demo，来开始我们的ABC三步走</p>
+
+<h4>A、Application应用启动入口</h4>
+
+<p>在【com.company.slg】包下创建一个入口类</p>
+
+<pre><code>package com.company.slg;
+import xyz.noark.game.Noark;
+public class GameServerApplication {
+	public static void main(String[] args) {
+		Noark.run(GameServerBootstrap.class, args);
+	}
+}
+</code></pre>
+
+<h4>B、Bootstrap启动引导入口</h4>
+
+<p>在【com.company.slg】包下创建一个引导启动类，继承BaseServerBootstrap</p>
+
+<pre><code>package com.company.slg;
+import xyz.noark.game.bootstrap.BaseServerBootstrap;
+public class GameServerBootstrap extends BaseServerBootstrap {
+	@Override protected String getServerName() {
+		return &quot;game-server&quot;;
+	}
+}
+</code></pre>
+
+<h4>C、Configuration配置中心</h4>
+
+<p>这个不是必选项，用于配置第三方服务类</p>
+
+<pre><code>package com.company.slg;
+import xyz.noark.core.annotation.Configuration;
+@Configuration
+public class GameServerConfiguration {}
+</code></pre>
+
+<h4>启动游戏服务器</h4>
+
+<p>直接运行main方法，一个简单的游戏服务器就跑起来了</p>
+
+<pre><code>2018-08-16 18:23:38.178 [main] INFO AbstractServerBootstrap.java:62 - starting game-server service...
+2018-08-16 18:23:38.181 [main] DEBUG NoarkIoc.java:47 - init ioc, packages=com.company.slg
+2018-08-16 18:23:38.504 [main] INFO ReloadManager.java:41 - loading template data. checkValidity=true
+2018-08-16 18:23:38.504 [main] INFO ReloadManager.java:47 - load template data success.
+2018-08-16 18:23:38.504 [main] INFO ReloadManager.java:50 - check template data...
+2018-08-16 18:23:38.505 [main] INFO ReloadManager.java:52 - check template success.
+2018-08-16 18:23:38.505 [delay-event] INFO DelayEventThread.java:41 - 延迟任务调度线程开始啦...
+2018-08-16 18:23:38.505 [main] INFO HttpServer.java:72 - game http server start on 8080
+2018-08-16 18:23:38.606 [main] INFO HttpServer.java:93 - game http server start is success.
+2018-08-16 18:23:38.606 [main] INFO NettyServer.java:119 - game tcp server start on 9527
+2018-08-16 18:23:38.607 [main] INFO NettyServer.java:128 - game tcp server start is success.
+game-server is running, interval=427.21872 ms
+2018-08-16 18:23:38.607 [main] INFO AbstractServerBootstrap.java:76 - game-server is running, interval=427.21872 ms
+2018-08-16 18:23:38.609 [main] INFO AbstractServerBootstrap.java:166 - :: Noark :: 3.1.12.Final
+  _   _     U  ___ u    _       ____      _  __   _____  
+ | \ |&quot;|     \/&quot;_ \/U  /&quot;\  uU |  _&quot;\ u  |&quot;|/ /  |___&quot;/u 
+&lt;|  \| |&gt;    | | | | \/ _ \/  \| |_) |/  | ' /   U_|_ \/ 
+U| |\  |u.-,_| |_| | / ___ \   |  _ &lt;  U/| . \\u  ___) | 
+ |_| \_|  \_)-\___/ /_/   \_\  |_| \_\   |_|\_\  |____/  
+ ||   \\,-.    \\    \\    &gt;&gt;  //   \\_,-,&gt;&gt; \\,-._// \\ 
+ (_&quot;)  (_/    (__)  (__)  (__)(__)  (__)\.)   (_/(__)(__)
+</code></pre>
+
+<p>源码<a href="https://gitee.com/xiaoe/noark-learning/tree/master/chapter-1">下载</a></p>
+
+<h4>协议映射</h4>
+
+<p>负责完成协议请求到控制器的映射功能。</p>
+
+<p>系统内置了一套简单的封包结构</p>
+
+<pre><code>包长（short）+ 协议编号（int） + 内容（Json）
+
+BEFORE DECODE (306 bytes)                     AFTER DECODE (306 bytes)
++--------+------------+---------------+      +--------+------------+---------------+
+| length |   opcode   |   Json Data   |-----&gt;| length |   opcode   |   Json Data   |
+| 0xFFFF | 0xFFFFFFFF |  (300 bytes)  |      | 0xFFFF | 0xFFFFFFFF |  (300 bytes)  |
++--------+------------+---------------+      +--------+------------+---------------+
+</code></pre>
+
+<p>看不懂，没关系，先把协议跑通再说&hellip;</p>
+
+<p>1.先创建一个登录协议结构体，也就是一个标准JavaBean了</p>
+
+<pre><code>package com.company.slg.login;
+public class LoginRequest {
+	private String username;
+	private String password;
+	... 省略Get/Set方法
+}
+</code></pre>
+
+<p>2.创建处理协议映射的控制器</p>
+
+<pre><code>package com.company.slg.login;
+import static xyz.noark.log.LogHelper.logger;
+import xyz.noark.core.annotation.Controller;
+import xyz.noark.core.annotation.controller.ExecThreadGroup;
+import xyz.noark.core.annotation.controller.PacketMapping;
+@Controller(threadGroup = ExecThreadGroup.ModuleThreadGroup)
+public class LoginController {
+	@PacketMapping(opcode = 1001, state = State.CONNECTED)
+	public void login(LoginRequest request) {
+		logger.info(&quot;登录请求 username={}, password={}&quot;, request.getUsername(), request.getPassword());
+	}
+}
+</code></pre>
+
+<ul>
+<li>@Controller标识此类为一个协议映射的控制器，threadGroup参数为选择当前逻辑以模块为单位划分来处理，具体线程划分请参照Noark之线程模型<br /></li>
+<li>@PacketMapping标识此方法为一个协议映射处理方法，opcode参数就是此协议的编号，state参数选择Connected，刚刚链接的状态<br /></li>
+<li>登录方法目前什么都没有做只是简单的打印了一下请求账号和密码<br />
+<br /></li>
+</ul>
+
+<p>重启服务器，我们来写一个简单的测试客户端</p>
+
+<p>3.测试Socket协议</p>
+
+<pre><code>package com.company.slg;
+import java.net.Socket;
+import com.alibaba.fastjson.JSON;
+import com.company.slg.login.LoginRequest;
+import xyz.noark.core.util.ByteArrayUtils;
+public class SocketTest {
+	public static void main(String[] args) throws Exception {
+		Socket socket = new Socket(&quot;127.0.0.1&quot;, 9527);
+		// 接头暗号,具体个性化功能请参考后续文档
+		socket.getOutputStream().write(&quot;socket&quot;.getBytes());
+		socket.getOutputStream().flush();
+		Thread.sleep(100);
+		// 构建登录协议
+		LoginRequest request = new LoginRequest();
+		request.setUsername(&quot;abc&quot;);
+		request.setPassword(&quot;12356789&quot;);
+		// 模拟发送一个登录协议
+		send(socket, 1001, request);
+	}
+	private static void send(Socket socket, int opcode, Object protocal) throws Exception {
+		byte[] body = JSON.toJSONString(protocal).getBytes();
+		// 包长是一个Short，就是协议编号的长度+协议的长度
+		socket.getOutputStream().write(ByteArrayUtils.toByteArray((short) (body.length + 4)));
+		socket.getOutputStream().write(ByteArrayUtils.toByteArray(opcode));
+		socket.getOutputStream().write(body);
+		socket.getOutputStream().flush();
+	}
+}
+</code></pre>
+
+<p>一个再简单不过的Socket链接了，接头暗号功能先不讨论，忽略就好，先来看一下服务器端的运行日志</p>
+
+<pre><code>2018-08-17 16:29:17.941 [nioEventLoopGroup-4-1] INFO NettyServerHandler.java:48 - 发现客户端链接，channel=[id: 0xb81048ab, L:/127.0.0.1:9527 - R:/127.0.0.1:55129]
+2018-08-17 16:29:17.954 [nioEventLoopGroup-4-1] DEBUG SocketInitializeHandler.java:43 - Socket链接...
+2018-08-17 16:29:19.107 [business-1] INFO LoginController.java:33 - 登录请求 username=abc, password=12356789
+2018-08-17 16:29:19.107 [business-1] INFO AsyncTask.java:52 - handle protocal(opcode=1001),delay=0.285446 ms,exe=0.135813 ms
+2018-08-17 16:29:19.108 [nioEventLoopGroup-4-1] INFO NettyServerHandler.java:53 - 客户端断开链接，channel=[id: 0xb81048ab, L:/127.0.0.1:9527 ! R:/127.0.0.1:55129]
+</code></pre>
+
+<p>链接&gt;&gt;判定类型&gt;&gt;登录协议处理日志&gt;&gt;协议执行日志&gt;&gt;断开链接</p>
+
+<p>协议映射功能就这么简单的实现了</p>
+
+<p>源码<a href="https://gitee.com/xiaoe/noark-learning/tree/master/chapter-2">下载</a></p>
+
+<h4>配置文件</h4>
+
+<p>上面网络已跑通了，但要修改端口等配置呢？</p>
+
+<p>在类路径下创建配置文件[application.properties]</p>
+
+<pre><code>#服务器对外Tcp端口
+network.port=10001
+</code></pre>
+
+<p>重启服务器，观察日志</p>
+
+<pre><code>2018-08-17 17:02:08.342 [main] INFO NettyServer.java:119 - game tcp server start on 10001
+2018-08-17 17:02:08.343 [main] INFO NettyServer.java:128 - game tcp server start is success.
+</code></pre>
+
+<p>服务器端口已切换到10001了, 其他Noark系统默认的配置请参考Noark默认配置清单</p>
+
+<h4>模板加载</h4>
+
+<p>载入策划配置的模板数据了，Noark内置了一种CSV格式的模板解析器，简单方便，让我们来看个稀奇</p>
+
+<p>配置中心GameServerConfiguration类中添加CSV模板解析器，参数templatePath为模板文件放置位置，后面那个Tab符，CSV文件中的分隔符</p>
+
+<pre><code>@Value(&quot;template.path&quot;)
+private String templatePath;
+@Bean
+public CsvTemplateLoader templateLoader() {
+	return new CsvTemplateLoader(templatePath, '	');
+}
+</code></pre>
+
+<p>配置文件也要配置上template.path参数</p>
+
+<pre><code>template.path=E:\\slg\\slg-design\\trunk\\00数值配置\\data
+</code></pre>
+
+<p>Gradle引导CSV解析工程</p>
+
+<pre><code>implementation &quot;xyz.noark:noark-csv:3.1.12.Final&quot;
+</code></pre>
+
+<p>编码模板配置类</p>
+
+<pre><code>package com.company.slg.chat;
+import xyz.noark.core.annotation.tpl.TplAttr;
+import xyz.noark.core.annotation.tpl.TplFile;
+@TplFile(value = &quot;Chat.tpl&quot;)
+public class ChatTemplate {
+	@TplAttr(name = &quot;Id&quot;)
+	private int id;
+	/** 频道名称 */
+	@TplAttr(name = &quot;Name&quot;)
+	private String name;
+	/** 最低发言等级 */
+	@TplAttr(name = &quot;MinLevel&quot;)
+	private int minLevel;
+	/** 发言间隔（单位：秒） */
+	@TplAttr(name = &quot;WordCd&quot;)
+	private int wordCd;
+	/** 所需道具 */
+	@TplAttr(name = &quot;Item&quot;)
+	private String item;
+	/** 消息长度限制 */
+	@TplAttr(name = &quot;WordLimit&quot;)
+	private int wordLimit;
+	... 省略Get/Set方法
+}
+</code></pre>
+
+<p>编码模板管理类</p>
+
+<pre><code>package com.company.slg.chat;
+import java.util.Map;
+import xyz.noark.core.annotation.Service;
+import xyz.noark.game.template.AbstractTemplateManager;
+@Service
+public class ChatTemplateManager extends AbstractTemplateManager {
+	private Map&lt;Integer, ChatTemplate&gt; chat;
+	@Override
+	public String getModuleName() {
+		return &quot;聊天系统&quot;;
+	}
+	@Override
+	public void loadData() {
+		this.chat = templateLoader.loadAll(ChatTemplate.class, ChatTemplate::getId);
+	}
+	public ChatTemplate getChatTemplate(Integer id) {
+		return chat.get(id);
+	}
+}
+</code></pre>
+
+<p>重启服务器，发现Noark会自动载入CSV文件了</p>
+
+<pre><code>2018-08-17 17:17:05.572 [main] INFO ReloadManager.java:41 - loading template data. checkValidity=true
+2018-08-17 17:17:05.572 [main] INFO ReloadManager.java:43 - [聊天系统] loading template.
+2018-08-17 17:17:05.585 [main] INFO ReloadManager.java:45 - [聊天系统] load OK.
+2018-08-17 17:17:05.585 [main] INFO ReloadManager.java:47 - load template data success.
+</code></pre>
+
+<p>关于模板复杂属性的配置，请参考模板转化器</p>
+
+<p>为什么要选择CSV作为模板文件，请参考<a href="http://blog.noark.xyz/article/2017/6/13/%E8%81%8A%E4%B8%80%E8%81%8A%E7%AD%96%E5%88%92%E9%85%8D%E7%BD%AE%E8%A1%A8%E9%97%AE%E9%A2%98/">聊一聊策划配置表问题</a></p>
+
+<h4>数据存储</h4>
+
+<p>数据存储，Noark采用了JPA风格的编码方式.</p>
+
+<p>Gradle</p>
+
+<pre><code>implementation &quot;xyz.noark:noark-orm:3.1.12.Final&quot;
+implementation &quot;com.alibaba:druid:1.0.27&quot;
+implementation &quot;mysql:mysql-connector-java:5.1.40&quot;
+</code></pre>
+
+<p>配置数据源</p>
+
+<pre><code>server.id=100
+#Mysql配置
+data.mysql.ip=192.168.51.234
+data.mysql.port=3306
+data.mysql.user=root
+data.mysql.password=Huiyu@123
+data.mysql.db=slg-game-${server.id}
+
+@Value(&quot;data.mysql.ip&quot;)
+private String mysqlIp;
+@Value(&quot;data.mysql.port&quot;)
+private int mysqlPort;
+@Value(&quot;data.mysql.db&quot;)
+private String mysqlDB;
+@Value(&quot;data.mysql.user&quot;)
+private String mysqlUser;
+@Value(&quot;data.mysql.password&quot;)
+private String mysqlPassword;
+
+@Bean
+public DataAccessor dataAccessor() {
+	DruidDataSource dataSource = new DruidDataSource();
+	dataSource.setDriverClassName(&quot;com.mysql.jdbc.Driver&quot;);
+	dataSource.setUsername(mysqlUser);
+	dataSource.setPassword(mysqlPassword);
+	dataSource.setUrl(String.format(&quot;jdbc:mysql://%s:%d/%s?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&quot;, mysqlIp, mysqlPort, mysqlDB));
+	dataSource.setInitialSize(4);
+	dataSource.setMinIdle(4);
+	dataSource.setMaxActive(8);
+	dataSource.setPoolPreparedStatements(false);
+	
+	MysqlDataAccessor accessor = new MysqlDataAccessor(dataSource);
+	accessor.setStatementExecutableSqlLogEnable(true);
+	accessor.setStatementParameterSetLogEnable(true);
+	accessor.setSlowQuerySqlMillis(1);// 执行时间超过1秒的都要记录下.
+	return accessor;
+}
+
+@Bean
+public AsyncWriteService asyncWriteService() {
+	return new DefaultAsyncWriteServiceImpl();
+}
+</code></pre>
+
+<p>创建玩家信息实体类</p>
+
+<pre><code>package com.company.slg.player;
+
+import java.util.Date;
+import xyz.noark.core.annotation.PlayerId;
+import xyz.noark.core.annotation.orm.Column;
+import xyz.noark.core.annotation.orm.Entity;
+import xyz.noark.core.annotation.orm.Id;
+import xyz.noark.core.annotation.orm.Table;
+
+@Entity
+@Table(name = &quot;player_info&quot;)
+public class PlayerInfo {
+	@Id
+	@PlayerId
+	@Column(name = &quot;username&quot;, nullable = false, comment = &quot;账号&quot;, length = 64)
+	private String username;
+	@Column(name = &quot;password&quot;, nullable = false, comment = &quot;密码&quot;, length = 64)
+	private String password;
+	@Column(name = &quot;name&quot;, nullable = false, comment = &quot;名称&quot;, length = 128)
+	private String name;
+
+	@Column(name = &quot;level&quot;, nullable = false, defaultValue = &quot;0&quot;, comment = &quot;玩家等级&quot;)
+	private int level;
+	@Column(name = &quot;exp&quot;, nullable = false, defaultValue = &quot;0&quot;, comment = &quot;玩家经验值&quot;)
+	private int exp;
+
+	@Column(name = &quot;online_time&quot;, nullable = false, comment = &quot;上次上线时间&quot;, defaultValue = &quot;2018-07-06 05:04:03&quot;)
+	private Date onlineTime;
+	@Column(name = &quot;offline_time&quot;, comment = &quot;上次下线时间&quot;)
+	private Date offlineTime;
+
+	@Column(name = &quot;create_time&quot;, nullable = false, comment = &quot;创建时间&quot;, defaultValue = &quot;2018-07-06 05:04:03&quot;)
+	private Date createTime;
+	@Column(name = &quot;modify_time&quot;, nullable = false, comment = &quot;修改时间&quot;, defaultValue = &quot;2018-07-06 05:04:03&quot;)
+	private Date modifyTime;
+	
+	... 省略Get/Set方法
+}
+</code></pre>
+
+<p>创建数据访问类.</p>
+
+<pre><code>package com.company.slg.player;
+
+import xyz.noark.core.annotation.Repository;
+import xyz.noark.orm.repository.UniqueCacheRepository;
+
+@Repository
+public class PlayerInfoRepository extends UniqueCacheRepository&lt;PlayerInfo, String&gt; {}
+</code></pre>
+
+<p>这就完成了数据的存储功能，下面我们来改写一下登录逻辑.</p>
+
+<pre><code>public class LoginController {
+	@Autowired
+	private PlayerInfoRepository playerInfoRepository;
+	@PacketMapping(opcode = 1001, state = State.CONNECTED)
+	public void login(LoginRequest request) {
+		// 从缓存中取，如果没有，会自动从Mysql中取...
+		PlayerInfo player = playerInfoRepository.cacheGet(request.getUsername());
+		if (player == null) {
+			logger.info(&quot;账号不存在 username={}&quot;, request.getUsername());
+		} else if (!Md5Utils.encrypt(request.getPassword()).equalsIgnoreCase(player.getPassword())) {
+			logger.info(&quot;密码不正确 password={}&quot;, request.getPassword());
+		} else {
+			logger.info(&quot;登录成功 username={}, password={}&quot;, request.getUsername(), request.getPassword());
+		}
+	}
+}
+</code></pre>
+
+<p>重启服务器，发现Noark会自动为我们创建好player_info表</p>
+
+<pre><code>2018-08-17 18:06:02.567 [main] WARN AbstractSqlDataAccessor.java:243 - 实体类[class com.company.slg.player.PlayerInfo]对应的数据库表不存在，准备自动创建表结构，SQL如下:
+CREATE TABLE `player_info` (
+`username` VARCHAR(64) UNIQUE NOT NULL COMMENT '账号',
+`password` VARCHAR(64) NOT NULL COMMENT '密码',
+`name` VARCHAR(128) NOT NULL COMMENT '名称',
+`level` INT(11) NOT NULL DEFAULT 0 COMMENT '玩家等级',
+`exp` INT(11) NOT NULL DEFAULT 0 COMMENT '玩家经验值',
+`online_time` DATETIME NOT NULL DEFAULT '2018-07-06 05:04:03' COMMENT '上次上线时间',
+`offline_time` DATETIME NULL COMMENT '上次下线时间',
+`create_time` DATETIME NOT NULL DEFAULT '2018-07-06 05:04:03' COMMENT '创建时间',
+`modify_time` DATETIME NOT NULL DEFAULT '2018-07-06 05:04:03' COMMENT '修改时间',
+PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre>
+
+<p>运行Socket测试登录协议，由于刚创建的表，所以没有任何账号</p>
+
+<pre><code>SELECT username,password,name,level,exp,online_time,offline_time,create_time,modify_time FROM player_info WHERE username=abc
+2018-08-17 18:07:02.953 [business-1] INFO LoginController.java:44 - 账号不存在 username=abc
+2018-08-17 18:07:02.953 [business-1] INFO AsyncTask.java:52 - handle protocal(opcode=1001),delay=0.21093 ms,exe=15.611207 ms
+</code></pre>
+
+<p>源码<a href="https://gitee.com/xiaoe/noark-learning/tree/master/chapter-5">下载</a></p>
+
+<h4>异步事件</h4>
+
+<p>用于多模块解耦功能，当完成一个动作时，向外抛出一个事件，由关心的模块自己监听处理.</p>
+
+<p>引入事件管理器，发布一个上线事件</p>
+
+<pre><code>@Autowired
+private EventManager eventManager;
+
+// 假装他登录成功了...
+eventManager.publish(new OnlineEvent(1234));
+</code></pre>
+
+<p>自己监听</p>
+
+<pre><code>@EventListener(OnlineEvent.class)
+public void handleOnlineEvent(OnlineEvent event) {
+	logger.info(&quot;{} 上线了....&quot;, event.getPlayerId());
+}
+</code></pre>
+
+<p>重启服务器，与测试Socket</p>
+
+<pre><code>2018-08-17 18:18:36.797 [business-2] INFO LoginController.java:61 - 1234 上线了....
+2018-08-17 18:18:36.797 [business-2] INFO AsyncTask.java:52 - handle event(OnlineEvent),delay=0.458517 ms,exe=0.146028 ms
+</code></pre>
+
+<p>源码<a href="https://gitee.com/xiaoe/noark-learning/tree/master/chapter-6">下载</a></p>
+
+<h4>延迟任务</h4>
+
+<p>Noark也提供了一套延迟执行的任务，就是带有延迟功能的事件，统一了API</p>
+
+<p>编码一个延迟事件</p>
+
+<pre><code>public class OfflineEvent extends AbstractDelayEvent implements PlayerEvent {
+	private Long playerId;
+	public OfflineEvent(long playerId) {
+		this.playerId = playerId;
+	}
+	@Override
+	public Long getPlayerId() {
+		return playerId;
+	}
+}
+</code></pre>
+
+<p>发布延迟事件</p>
+
+<pre><code>// 模拟10秒后下线事件
+OfflineEvent event = new OfflineEvent(1234);
+event.setId(123456);// 唯一编号
+event.setEndTime(DateUtils.addSeconds(new Date(), 10));
+eventManager.publish(event);
+		
+@EventListener(OfflineEvent.class)
+public void handleOfflineEvent(OfflineEvent event) {
+	logger.info(&quot;{} 下线了....&quot;, event.getPlayerId());
+}	
+</code></pre>
+
+<p>重启服务器与测试Socket</p>
+
+<pre><code>2018-08-17 18:30:10.057 [business-2] INFO LoginController.java:70 - 1234 上线了....
+2018-08-17 18:30:10.058 [business-2] INFO AsyncTask.java:52 - handle event(OnlineEvent),delay=0.950687 ms,exe=0.092845 ms
+2018-08-17 18:30:20.057 [business-3] INFO LoginController.java:75 - 1234 下线了....
+2018-08-17 18:30:20.057 [business-3] INFO AsyncTask.java:52 - handle event(OfflineEvent),delay=0.235568 ms,exe=0.14092 ms
+</code></pre>
+
+<p>上线与下线日志之间时间刚刚好是10秒</p>
+
+<p>源码<a href="https://gitee.com/xiaoe/noark-learning/tree/master/chapter-7">下载</a></p>
+
+<h3>目标</h3>
+
+<p>我们的目标：稳定、高性能、可扩展、易维护、提高开发效率，我们没有要取代谁，也没有要超越谁，我们只做我们自己。</p>
+
+<h3>协议</h3>
+
+<p>Noark2遵循<a href="http://www.noark.xyz/LICENSE">流氓协议</a></p>
+
+<h3>QQ群</h3>
+
+<p>85750544(Noark官方交流群)</p>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2018/4/1/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e6%9e%81%e9%80%9f%e4%bd%93%e9%aa%8c/">http://blog.noark.xyz/article/2018/4/1/noark入门之极速体验/</a>
+            </p>
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2018-04-01</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Java">Java</a>&nbsp;
+                    
+                    <a href="/tag/Noark">Noark</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment_container post">
+        <div id="SOHUCS" sid="2c0a9d2d384d8d8fb6534a97f94671e0"></div>
+		<script type="text/javascript"> 
+		(function(){ 
+		var appid = 'cyt2AtDUF'; 
+		var conf = 'prod_846a5c8dcfd89035373fc1690cd74124'; 
+		var width = window.innerWidth || document.documentElement.clientWidth; 
+		if (width < 960) { 
+		window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>
