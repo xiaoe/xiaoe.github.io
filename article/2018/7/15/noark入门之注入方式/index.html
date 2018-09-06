@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="Java,Noark" />
+    <meta name="description" content="&lt;h3&gt;普通类注入&lt;/h3&gt;
+
+&lt;p&gt;只要是被IOC容器接管的类可以当作属性注入.&lt;/p&gt;
+
+&lt;p&gt;@Autowired&lt;br /&gt;
+private VipService vipService;&lt;/p&gt;
+
+&lt;h3&gt;接口注入&lt;/h3&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>Noark入门之注入方式</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/Noark%e5%85%a5%e9%97%a8">
+                    Noark入门
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">
+                    后台开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">
+                    游戏安全
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">
+                    游戏开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">
+                    职业技能
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">
+                    运维知识
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>Noark入门之注入方式
+            </h3>
+        </div>
+        <div class="post-content" id="content">
+
+            <h3>普通类注入</h3>
+
+<p>只要是被IOC容器接管的类可以当作属性注入.</p>
+
+<pre><code>@Autowired
+private VipService vipService;
+</code></pre>
+
+<h3>接口注入</h3>
+
+<p>如果有被IOC容器接管的类实现了此接口，也可以作属性一样注入实现类.</p>
+
+<pre><code>@Autowired
+private VipExportService vipExportService;
+</code></pre>
+
+<h3>List注入</h3>
+
+<p>如果有多个实现，又要注入全部实现，那就使用List注入的方式吧&hellip;</p>
+
+<pre><code>@Order(100)
+@Component(name = { &quot;@gm add ?&quot;, &quot;@gm add help&quot; })
+public class AddHelpCommand implements GmCommand {
+
+	@Autowired
+	private List&lt;AbstractAddCommand&gt; commands;
+
+	@Override
+	public String help() {
+		StringBuilder sb = new StringBuilder();
+		commands.forEach(v -&gt; sb.append(v.help()).append(&quot;\n&quot;));
+		return sb.toString();
+	}
+
+	@Override
+	public void exec(long playerId, String... args) {}
+}
+</code></pre>
+
+<p>又是一个无理又很现实的需求，添加命令要获得所有添加系列的命令，构建添加系列的帮助文档&hellip;</p>
+
+<p>如果List有排序需求，请参考@Order注解&hellip;</p>
+
+<h3>Map注入</h3>
+
+<p>在上面的命令中发现了@Component注解是有名称的，那是不是能实现Map的方式注入，还真可以&hellip;</p>
+
+<pre><code>@Autowired
+private Map&lt;String, GmCommand&gt; commands;
+</code></pre>
+
+<p>常规就是一个名称，如果有需要多个名称，功能相同别命而已，请随便&hellip;</p>
+
+<pre><code>@Component(name = &quot;@gm reload&quot;)
+public class ReloadCommand implements GmCommand {}
+</code></pre>
+
+<h3>如果是注入配置文件中的参数呢</h3>
+
+<p>请参考@Value注解，如果配置不存在则使用属性的默认值.</p>
+
+<pre><code>@Value(&quot;template.path&quot;)
+private String templatePath;
+</code></pre>
+
+<p>@Value所支持的类型等同于模板配置类型，亦支持模板转化器，所以他在理论上支持所有类型&hellip;</p>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2018/7/15/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e6%b3%a8%e5%85%a5%e6%96%b9%e5%bc%8f/">http://blog.noark.xyz/article/2018/7/15/noark入门之注入方式/</a>
+            </p>
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2018-07-15</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Java">Java</a>&nbsp;
+                    
+                    <a href="/tag/Noark">Noark</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment_container post">
+        <div id="SOHUCS" sid="de438d62dd1534c130dda520f70469cd"></div>
+		<script type="text/javascript"> 
+		(function(){ 
+		var appid = 'cyt2AtDUF'; 
+		var conf = 'prod_846a5c8dcfd89035373fc1690cd74124'; 
+		var width = window.innerWidth || document.documentElement.clientWidth; 
+		if (width < 960) { 
+		window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>
