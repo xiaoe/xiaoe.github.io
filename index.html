@@ -131,6 +131,92 @@
 
 <div class="post animated fadeInDown">
     <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2018/6/1/noark%e5%85%a5%e9%97%a8%e4%b9%8bwebsocket/">Noark入门之WebSocket</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <h3>支持WebSocket吗？</h3>
+
+<p>你还在为H5的前端链接头疼吗？你还在了解WebSocket的握手协议吗？WebSocket有没有粘包概念啊？</p>
+
+<p>之前忘了说了，很不好意思，Noark在原来Tcp端口上实现了WebSocket协议的判定与处理，实现了Socket与WebSocket共存的效果</p>
+
+<p>还记得Socket链接服务器那一串暗号吗？那之前是为Flash游戏留的安全沙箱策略文件准备的，分析了一下WebSocket判定也是可以实现的</p>
+
+<h3>天生的WebSocket</h3>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2018-06-01</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Java">Java</a>&nbsp;
+                
+                <a href="/tag/Noark">Noark</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2018/5/21/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e5%bc%82%e6%ad%a5%e4%ba%8b%e4%bb%b6/">Noark入门之异步事件</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>引入异步事件主要是为了各模块的解耦，每当完成一个动作时，向系统发布一个事件，由关心的模块自己监听处理，可选择同步处理，异步处理，延迟处理。</p>
+
+<p>何时发布事件，当其他模块关心此动作时<br><br />
+比如击杀一只怪物，成就模块需要统计击杀进度，便可监听怪物死亡事件。<br />
+比如获得道具时，任务系统模块要判定完成进度，BI模块需要上报等等都可以监听此事件，已达模块解耦</p>
+
+<h3>0x00事件源</h3>
+
+<p>一个实现xyz.noark.core.event.Event接口的实现类</p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2018-05-21</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Java">Java</a>&nbsp;
+                
+                <a href="/tag/Noark">Noark</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
         <h3><a style="color: #FF6600" href="/article/2018/5/20/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e5%8d%8f%e8%ae%ae%e6%98%a0%e5%b0%84/">Noark入门之协议映射</a>
         </h3>
     </div>
@@ -302,6 +388,47 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes</p>
 
 <div class="post animated fadeInDown">
     <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2017/11/15/%e4%bf%ae%e6%94%b9centos7%e7%9a%84%e7%bd%91%e5%8d%a1%e5%90%8d%e7%a7%b0ens160%e6%94%b9%e4%b8%baeth0/">修改Centos7的网卡名称ens160改为eth0</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <h4>1.修改网卡配置文件</h4>
+
+<p>vim /etc/sysconfig/network-scripts/ifcfg-ens160<br />
+修改下面两个配置项<br />
+NAME=ens160<br />
+DEVICE=ens160<br />
+改为<br />
+NAME=eth0<br />
+DEVICE=eth0</p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2017-11-15</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Linux">Linux</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
         <h3><a style="color: #FF6600" href="/article/2017/11/15/yum%e6%ba%90%e6%9b%b4%e6%8d%a2%e4%b8%ba%e9%98%bf%e9%87%8c%e7%9a%84%e6%ba%90/">Yum源更换为阿里的源</a>
         </h3>
     </div>
@@ -335,47 +462,6 @@ wget -O /etc/yum.repos.d/CentOS-Base.repo <a href="http://mirrors.aliyun.com/rep
                 <a href="/tag/Linux">Linux</a>&nbsp;
                 
                 <a href="/tag/Yum">Yum</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/11/15/%e4%bf%ae%e6%94%b9centos7%e7%9a%84%e7%bd%91%e5%8d%a1%e5%90%8d%e7%a7%b0ens160%e6%94%b9%e4%b8%baeth0/">修改Centos7的网卡名称ens160改为eth0</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <h4>1.修改网卡配置文件</h4>
-
-<p>vim /etc/sysconfig/network-scripts/ifcfg-ens160<br />
-修改下面两个配置项<br />
-NAME=ens160<br />
-DEVICE=ens160<br />
-改为<br />
-NAME=eth0<br />
-DEVICE=eth0</p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-11-15</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/Linux">Linux</a>&nbsp;
                 
 
             </div>
@@ -445,91 +531,6 @@ DEVICE=eth0</p>
 <li>要有hashCode和equals实现.<br /></li>
 <li>实现Serializable接口<br /></li>
 </ol>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-08-14</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">后台开发</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/Spring">Spring</a>&nbsp;
-                
-                <a href="/tag/JPA">JPA</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/8/14/jpa%e4%b9%8b%e4%b8%bb%e9%94%ae%e8%87%aa%e5%a2%9e%e9%95%bf/">JPA之主键自增长</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <p>在我们使用JPA时，需要数据库自增长主键，增加一个注解@GeneratedValue即可.</p>
-
-<p>正常在没有数据库移植时，建议写全参数指定使用哪种DB的增长方式.</p>
-
-<p>@Entity<br />
-@Table(name = &ldquo;log&rdquo;)<br />
-public class Log {<br />
-    @Id<br />
-    @Column(name = &ldquo;id&rdquo;)</p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-08-14</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">后台开发</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/Spring">Spring</a>&nbsp;
-                
-                <a href="/tag/JPA">JPA</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/8/14/jpa%e4%b9%8b%e5%8a%a8%e6%80%81%e6%9f%a5%e8%af%a2/">JPA之动态查询</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <p>Spring Data JPA 只要定义好接口就能访问对应的数据了，非常的简洁，但在实际应用中，我们有复杂的 <strong>可选</strong> 查询条件，还是需要动态查询，实际上就是手写Where查询。</p>
-
-<p>只要我们的Repo层继承JpaSpecificationExecutor接口就可以使用Specification进行动态查询了：</p>
-
-<p>@Repository<br />
-public interface LogRepository extends JpaRepository<Log, Long>, JpaSpecificationExecutor<Log> {}</p>
-
-<p>后台的操作日志，查询条件:可能以操作者或IP或操作时间或操作类型等等条件来组合查询，直接上代码</p>
 
         </div>
     </div>

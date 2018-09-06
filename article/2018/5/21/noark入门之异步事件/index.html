@@ -5,25 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="Mysql,Linux" />
-    <meta name="description" content="&lt;h4&gt;下载源码包&lt;/h4&gt;
+    <meta name="keywords" content="Java,Noark" />
+    <meta name="description" content="&lt;p&gt;引入异步事件主要是为了各模块的解耦，每当完成一个动作时，向系统发布一个事件，由关心的模块自己监听处理，可选择同步处理，异步处理，延迟处理。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;http://dev.mysql.com/downloads/mysql/5.5.html#downloads&#34;&gt;http://dev.mysql.com/downloads/mysql/5.5.html#downloads&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;何时发布事件，当其他模块关心此动作时&lt;br&gt;&lt;br /&gt;
+比如击杀一只怪物，成就模块需要统计击杀进度，便可监听怪物死亡事件。&lt;br /&gt;
+比如获得道具时，任务系统模块要判定完成进度，BI模块需要上报等等都可以监听此事件，已达模块解耦&lt;/p&gt;
 
-&lt;h4&gt;创建用户&lt;/h4&gt;
+&lt;h3&gt;0x00事件源&lt;/h3&gt;
 
-&lt;p&gt;shell&amp;gt; groupadd mysql&lt;br /&gt;
-shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
-
-&lt;h4&gt;解开源码包&lt;/h4&gt;
-
-&lt;p&gt;shell&amp;gt; tar zxvf mysql-VERSION.tar.gz&lt;/p&gt;" />
+&lt;p&gt;一个实现xyz.noark.core.event.Event接口的实现类&lt;/p&gt;" />
 
     <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
     <link href="/assets/css/basic.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
-    <title>小流氓简介</title>
+    <title>Noark入门之异步事件</title>
 </head>
 <style type="text/css">
     h1,h2,h3 {
@@ -141,29 +138,86 @@ shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
             <div class="post-page">
     <div class="post animated fadeInDown">
         <div class="post-title">
-            <h3>
+            <h3>Noark入门之异步事件
             </h3>
         </div>
         <div class="post-content" id="content">
 
-            <h1>关于我</h1>
+            <p>引入异步事件主要是为了各模块的解耦，每当完成一个动作时，向系统发布一个事件，由关心的模块自己监听处理，可选择同步处理，异步处理，延迟处理。</p>
 
-<p>江湖人称“<strong>小流氓</strong>”<br />
-专注于<strong>网络游戏</strong>相关技术<br />
-我的目标：做一款<strong>赚钱</strong>的游戏<br />
-热爱游戏事业, 正在努力为实现自我价值而奋斗中&hellip;</p>
+<p>何时发布事件，当其他模块关心此动作时<br><br />
+比如击杀一只怪物，成就模块需要统计击杀进度，便可监听怪物死亡事件。<br />
+比如获得道具时，任务系统模块要判定完成进度，BI模块需要上报等等都可以监听此事件，已达模块解耦</p>
 
-<p>欢迎相关领域的朋友一起交流，与大家一起分享经验，共享资源。<br />
-欢迎感兴趣的同行加入QQ群(50329551)进行在线交流与咨询，期望大家参与！</p>
+<h3>0x00事件源</h3>
 
-<h3>微信公众号:</h3>
+<p>一个实现xyz.noark.core.event.Event接口的实现类</p>
 
-<p><img src="http://blog.noark.xyz/assets/images/weixin.jpg" alt="公众号" title="公众号" /></p>
+<pre><code>public class ItemIncrEvent extends AbstractPlayerEvent {
+	private String itemcode;
+	private int count;
+	private IncrSource source;
+
+	public ItemIncrEvent(long playerId, String itemcode, int count, IncrSource source) {
+		super(playerId);
+		this.itemcode = itemcode;
+		this.count = count;
+		this.source = source;
+	}
+}
+</code></pre>
+
+<h3>0x01发布事件</h3>
+
+<p>在我们获得道具逻辑下面发布此事件</p>
+
+<pre><code>@Autowired
+private EventManager eventManager;
+
+eventManager.publish(new ItemIncrEvent(playerId, item.getTemplateId(), e.getValue(), source));
+</code></pre>
+
+<h3>0x02处理事件</h3>
+
+<p>在对应的模块入口类中，也就是前面提到的Controller类.</p>
+
+<pre><code>@EventListener(ItemIncrEvent.class)
+public void handleItemIncrEvent(ItemIncrEvent event) {}
+</code></pre>
+
+<p>这样便完成的事件处理逻辑.</p>
+
+<h3>0x03同步处理</h3>
+
+<p>注解@xyz.noark.core.annotation.controller.EventListener#async标识是否异步执行，默认为true</p>
+
+<p>如果设置为false,此处理事件的逻辑将同步进行，如果有需要的话</p>
+
+<p>如果要关闭事件显示的话，可以设置printLog=false</p>
+
+<pre><code>@EventListener(value = ItemIncrEvent.class, printLog = false)
+</code></pre>
+
+<h3>0x04多事件异步有序执行</h3>
+
+<p>一个很无理又急需要用的需求，请在监听处理方法上添加@Order，值越小就越先执行.</p>
+
+<h3>0x05线程模型</h3>
+
+<p>在这里有必要聊一下线程问题，大多数异步事件功能的实现，都是在独立的线程池中执行的，这是一个区别</p>
+
+<p>在0x02处理事件提到的Controller类，是不是我们的事件处理线程也遵循线程模型的划分呢，答案是肯定的</p>
+
+<p>由于ItemIncrEvent实现了xyz.noark.core.event.PlayerEvent接口，如果Controller类上的标识为玩家线程组执行，则会自动派发给此玩家ID所对应的线程来执行.</p>
+
+<p>eventManager在这里仅仅是一个调度者的身份，正式执行的任务线程是取决于Controller入口注解的线程组。</p>
+
+<p>事件功能在冥冥之中响应了前面的线程模型的规划&hellip;</p>
 
 
             <p>
                 <code>转载请注明原地址:</code>
-                <a href="http://blog.noark.xyz">http://blog.noark.xyz</a>
+                <a href="http://blog.noark.xyz/article/2018/5/21/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e5%bc%82%e6%ad%a5%e4%ba%8b%e4%bb%b6/">http://blog.noark.xyz/article/2018/5/21/noark入门之异步事件/</a>
             </p>
         </div>
 
@@ -171,12 +225,18 @@ shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
             <div class="meta">
                 <div class="info">
                     <i class="fa fa-calendar"></i>
-                    <span class="date">2018-09-06</span>
+                    <span class="date">2018-05-21</span>
                     &nbsp;&nbsp;
                     <i class="fa fa-folder-open"></i>
                     
+                    <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
+                    
                     &nbsp;&nbsp;
                     <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Java">Java</a>&nbsp;
+                    
+                    <a href="/tag/Noark">Noark</a>&nbsp;
                     
                 </div>
             </div>
@@ -184,7 +244,7 @@ shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
     </div>
 
     <div class="comment_container post">
-        <div id="SOHUCS" sid="d41d8cd98f00b204e9800998ecf8427e"></div>
+        <div id="SOHUCS" sid="a29ed0cd956e718e9b414d4840fd3eed"></div>
 		<script type="text/javascript"> 
 		(function(){ 
 		var appid = 'cyt2AtDUF'; 

@@ -5,25 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="Mysql,Linux" />
-    <meta name="description" content="&lt;h4&gt;下载源码包&lt;/h4&gt;
+    <meta name="keywords" content="Java,Noark" />
+    <meta name="description" content="&lt;h3&gt;支持WebSocket吗？&lt;/h3&gt;
 
-&lt;p&gt;&lt;a href=&#34;http://dev.mysql.com/downloads/mysql/5.5.html#downloads&#34;&gt;http://dev.mysql.com/downloads/mysql/5.5.html#downloads&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;你还在为H5的前端链接头疼吗？你还在了解WebSocket的握手协议吗？WebSocket有没有粘包概念啊？&lt;/p&gt;
 
-&lt;h4&gt;创建用户&lt;/h4&gt;
+&lt;p&gt;之前忘了说了，很不好意思，Noark在原来Tcp端口上实现了WebSocket协议的判定与处理，实现了Socket与WebSocket共存的效果&lt;/p&gt;
 
-&lt;p&gt;shell&amp;gt; groupadd mysql&lt;br /&gt;
-shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
+&lt;p&gt;还记得Socket链接服务器那一串暗号吗？那之前是为Flash游戏留的安全沙箱策略文件准备的，分析了一下WebSocket判定也是可以实现的&lt;/p&gt;
 
-&lt;h4&gt;解开源码包&lt;/h4&gt;
-
-&lt;p&gt;shell&amp;gt; tar zxvf mysql-VERSION.tar.gz&lt;/p&gt;" />
+&lt;h3&gt;天生的WebSocket&lt;/h3&gt;" />
 
     <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
     <link href="/assets/css/basic.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
-    <title>小流氓简介</title>
+    <title>Noark入门之WebSocket</title>
 </head>
 <style type="text/css">
     h1,h2,h3 {
@@ -141,29 +138,42 @@ shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
             <div class="post-page">
     <div class="post animated fadeInDown">
         <div class="post-title">
-            <h3>
+            <h3>Noark入门之WebSocket
             </h3>
         </div>
         <div class="post-content" id="content">
 
-            <h1>关于我</h1>
+            <h3>支持WebSocket吗？</h3>
 
-<p>江湖人称“<strong>小流氓</strong>”<br />
-专注于<strong>网络游戏</strong>相关技术<br />
-我的目标：做一款<strong>赚钱</strong>的游戏<br />
-热爱游戏事业, 正在努力为实现自我价值而奋斗中&hellip;</p>
+<p>你还在为H5的前端链接头疼吗？你还在了解WebSocket的握手协议吗？WebSocket有没有粘包概念啊？</p>
 
-<p>欢迎相关领域的朋友一起交流，与大家一起分享经验，共享资源。<br />
-欢迎感兴趣的同行加入QQ群(50329551)进行在线交流与咨询，期望大家参与！</p>
+<p>之前忘了说了，很不好意思，Noark在原来Tcp端口上实现了WebSocket协议的判定与处理，实现了Socket与WebSocket共存的效果</p>
 
-<h3>微信公众号:</h3>
+<p>还记得Socket链接服务器那一串暗号吗？那之前是为Flash游戏留的安全沙箱策略文件准备的，分析了一下WebSocket判定也是可以实现的</p>
 
-<p><img src="http://blog.noark.xyz/assets/images/weixin.jpg" alt="公众号" title="公众号" /></p>
+<h3>天生的WebSocket</h3>
+
+<p>想象一下，我司正在开发U3D手游，协议Protobuf，这时候老板招了一个H5的，让我把他们服务器也带一下，实现需求与U3D一样一样的</p>
+
+<p>你猜我会复制一份服务器代码改为为H5Server吗？不，我是直接把protobuf文件丢给他了，一行代码不用改的等着H5对接&hellip;</p>
+
+<p>具体实现请参考</p>
+
+<pre><code>xyz.noark.network.InitializeDecoder.decode(ChannelHandlerContext, ByteBuf, List&lt;Object&gt;)
+</code></pre>
+
+<p>WebSocket与Socket的对接区别，就是在封包上少一个包长，其他长得一样一样的&hellip;</p>
+
+<pre><code>2018-09-06 17:12:32.620 [nioEventLoopGroup-4-1] INFO NettyServerHandler.java:48 - 发现客户端链接，channel=[id: 0x41f4f6c6, L:/192.168.50.40:52113 - R:/192.168.50.40:53442]
+2018-09-06 17:12:32.620 [nioEventLoopGroup-4-1] DEBUG WebsocketInitializeHandler.java:49 - WebSocket链接...
+</code></pre>
+
+<p>一个服务器，一个端口，两种协议的客户端&hellip;</p>
 
 
             <p>
                 <code>转载请注明原地址:</code>
-                <a href="http://blog.noark.xyz">http://blog.noark.xyz</a>
+                <a href="http://blog.noark.xyz/article/2018/6/1/noark%e5%85%a5%e9%97%a8%e4%b9%8bwebsocket/">http://blog.noark.xyz/article/2018/6/1/noark入门之websocket/</a>
             </p>
         </div>
 
@@ -171,12 +181,18 @@ shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
             <div class="meta">
                 <div class="info">
                     <i class="fa fa-calendar"></i>
-                    <span class="date">2018-09-06</span>
+                    <span class="date">2018-06-01</span>
                     &nbsp;&nbsp;
                     <i class="fa fa-folder-open"></i>
                     
+                    <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
+                    
                     &nbsp;&nbsp;
                     <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Java">Java</a>&nbsp;
+                    
+                    <a href="/tag/Noark">Noark</a>&nbsp;
                     
                 </div>
             </div>
@@ -184,7 +200,7 @@ shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
     </div>
 
     <div class="comment_container post">
-        <div id="SOHUCS" sid="d41d8cd98f00b204e9800998ecf8427e"></div>
+        <div id="SOHUCS" sid="353157bc17841d254ee976ee65357826"></div>
 		<script type="text/javascript"> 
 		(function(){ 
 		var appid = 'cyt2AtDUF'; 
