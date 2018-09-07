@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="Java,Gradle" />
+    <meta name="description" content="&lt;p&gt;记录一下发布Noark到Maven中央仓库过程&lt;/p&gt;
+
+&lt;h3&gt;0x00创建Jira工单&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://issues.sonatype.org/secure/Dashboard.jspa&#34;&gt;https://issues.sonatype.org/secure/Dashboard.jspa&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;第一步注册账号，创建工单，就是提个单子说明一下你要发布的信息&lt;/p&gt;
+
+&lt;p&gt;其中有个GroupID要注意，如果是自己买的域名，直接在描述证明一下你对这个域名的所有权，不要因为这个浪费时间&lt;/p&gt;" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
+    <link href="/assets/css/basic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>发布Maven中央仓库小记</title>
+</head>
+<style type="text/css">
+    h1,h2,h3 {
+        font-size: 22px;
+    }
+    ul li {
+        list-style: none;
+    }
+</style>
+<body style="zoom: 1;">
+
+
+<div class="sidebar">
+
+    <div class="logo-title">
+        <div class="title animated fadeInDown">
+            <img src="/assets/avatar.gif" style="width:127px;border-radius: 50%;">
+            <hgroup>
+                <h1 class="header-author"><a href="http://blog.noark.xyz/">小流氓</a></h1>
+            </hgroup>
+
+            <div class="description animated fadeInDown">
+                <p>一边开车，一边换轮子</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links animated fadeInDown">
+        <li><a href="https://git.oschina.net/xiaoe"><i class="fa fa-git"></i></a>
+        </li>
+		<li><a href="mailto:176543888@qq.com"><i class="fa fa-envelope"></i></a>
+        </li>		
+    </ul>
+
+    <div class="footer">
+        
+        分类：
+
+        
+
+            <span>
+                <a href="/category/Noark%e5%85%a5%e9%97%a8">
+                    Noark入门
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e5%90%8e%e5%8f%b0%e5%bc%80%e5%8f%91">
+                    后台开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%ae%89%e5%85%a8">
+                    游戏安全
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91">
+                    游戏开发
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">
+                    职业技能
+                </a>&nbsp;
+            </span>
+
+        
+
+            <span>
+                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">
+                    运维知识
+                </a>&nbsp;
+            </span>
+
+        
+
+    </div>
+</div>
+
+
+
+<div class="main">      
+
+    <div class="page-top animated fadeInDown">
+        <div class="nav">
+            <li><a href="/">博客首页</a>
+            </li>
+            <li><a href="/archive">文章归档</a>
+            </li>
+            <li><a href="/about.html">关于作者</a>
+            </li>
+        </div>
+        <div class="information">
+            <div class="back_btn">
+            </div>
+            <div class="avatar"><img src="/assets/avatar.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+
+            <div class="post-page">
+    <div class="post animated fadeInDown">
+        <div class="post-title">
+            <h3>发布Maven中央仓库小记
+            </h3>
+        </div>
+        <div class="post-content" id="content">
+
+            <p>记录一下发布Noark到Maven中央仓库过程</p>
+
+<h3>0x00创建Jira工单</h3>
+
+<p><a href="https://issues.sonatype.org/secure/Dashboard.jspa">https://issues.sonatype.org/secure/Dashboard.jspa</a></p>
+
+<p>第一步注册账号，创建工单，就是提个单子说明一下你要发布的信息</p>
+
+<p>其中有个GroupID要注意，如果是自己买的域名，直接在描述证明一下你对这个域名的所有权，不要因为这个浪费时间</p>
+
+<p>其他带有红色星号为必选项，按自己的信息写上就行了</p>
+
+<h3>0x01证明域名所有权</h3>
+
+<p>单子提交后，一会工作人员就给了一个回复</p>
+
+<pre><code>Do you own the domain noark.xyz? If not, please read:
+http://central.sonatype.org/pages/choosing-your-coordinates.html
+</code></pre>
+
+<p>刚开始我就简单回复了一下我有，然后就没有下文了，我以为这是周末的关系所以没有回复，浪费了两天</p>
+
+<p>最后参考别人证明方式，我修正了noark.xyz域名下首页添加了一个跳转向开源项目地址以表示我真的拥有这个域名</p>
+
+<pre><code>&lt;meta http-equiv=&quot;refresh&quot; content=&quot;0;url=https://gitee.com/xiaoe/noark3&quot; name=&quot;&quot; content=&quot;&quot; /&gt;
+</code></pre>
+
+<p>这个方式不科学，但是简单，最好改域名解析那里哈，我是忘记账号密码了&hellip;</p>
+
+<p>然后回复了老外</p>
+
+<pre><code>HI,
+I own the he xyz.noark dom domain name. 
+It's set up to redirect to the Gitee repo:
+https://gitee.com/xiaoe/noark3
+Is that sufficient proof of ownership?
+Please se http://noark.xyz
+</code></pre>
+
+<p>嘿嘿，老外也很可爱，但最终还是给我过了&hellip;</p>
+
+<pre><code>I don't believe the redirect is working. When I navigate to noark.xyz, I'm not redirected to the gitee site. 
+</code></pre>
+
+<p>工单状态已变成了 RESOLVED</p>
+
+<pre><code>Configuration has been prepared, now you can:
+
+Deploy snapshot artifacts into repository https://oss.sonatype.org/content/repositories/snapshots
+Deploy release artifacts into the staging repository https://oss.sonatype.org/service/local/staging/deploy/maven2
+Promote staged artifacts into repository 'Releases'
+Download snapshot and release artifacts from group https://oss.sonatype.org/content/groups/public
+Download snapshot, release and staged artifacts from staging group https://oss.sonatype.org/content/groups/staging
+please comment on this ticket when you promoted your first release, thanks
+</code></pre>
+
+<h3>0x02生成秘钥</h3>
+
+<p>下载软件 <a href="https://www.gpg4win.org/download.html">https://www.gpg4win.org/download.html</a></p>
+
+<p>目前已是3.1.3版本了，所以生成后跟很多老的教程结果不太一样</p>
+
+<p>命令行方式</p>
+
+<pre><code>gpg --gen-key
+</code></pre>
+
+<p>Window下是有界面，不管用什么方式这个无所谓，生成好就可以了，上传服务器（要翻墙）</p>
+
+<pre><code>gpg2 --keyserver hkp://pool.sks-keyservers.net --send-keys 4CD194B81D40708364E1608CDE1CC1DA52468EED
+</code></pre>
+
+<p>查看所有keys</p>
+
+<pre><code>C:\Users\mayn&gt;gpg --list-keys
+C:/Users/mayn/AppData/Roaming/gnupg/pubring.kbx
+-----------------------------------------------
+pub   rsa2048 2018-09-05 [SC]
+      4CD194B81D40708364E1608CDE1CC1DA52468EED
+uid           [ultimate] xiaoe &lt;176543888@qq.com&gt;
+sub   rsa2048 2018-09-05 [E] [expires: 2020-09-04]
+</code></pre>
+
+<p>其实这里要添加一个参数，才能看到短ID</p>
+
+<pre><code>C:\Users\mayn&gt;gpg --list-keys --keyid-format short
+C:/Users/mayn/AppData/Roaming/gnupg/pubring.kbx
+-----------------------------------------------
+pub   rsa2048/52468EED 2018-09-05 [SC]
+      4CD194B81D40708364E1608CDE1CC1DA52468EED
+uid         [ultimate] xiaoe &lt;176543888@qq.com&gt;
+sub   rsa2048/15567893 2018-09-05 [E] [expires: 2020-09-04]
+</code></pre>
+
+<p>是不是配置Gradle提示GPG无效呢，新版本要用下面这个命令导出GPG格式</p>
+
+<pre><code>C:\Users\mayn&gt;gpg --export-secret-keys -o secring.gpg
+</code></pre>
+
+<h3>0x03配置脚本</h3>
+
+<p>配置Gradle脚本，这个脚本已修正好了，直接参考复制&hellip;</p>
+
+<pre><code>apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+apply plugin: 'signing'
+	
+group = 'xyz.noark'  
+version = '3.1.18.Final'
+sourceCompatibility = 1.8  
+targetCompatibility = 1.8  
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories {
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+	testImplementation 'junit:junit:4.12'
+}
+
+jar {
+    manifest.attributes provider: '小流氓'
+	manifest.attributes[&quot;Created-By&quot;] = &quot;${System.getProperty(&quot;java.version&quot;)} (${System.getProperty(&quot;java.specification.vendor&quot;)})&quot;
+	manifest.attributes[&quot;Implementation-Title&quot;] = project.name
+	manifest.attributes[&quot;Implementation-Version&quot;] = project.version
+}
+    
+javadoc {
+    options{
+    	encoding &quot;UTF-8&quot;
+		charSet 'UTF-8'
+    	author true
+    	version true
+    	links &quot;http://docs.oracle.com/javase/8/docs/api/&quot;
+    }
+}
+    
+ext.&quot;signing.keyId&quot;='15567893'
+ext.&quot;signing.password&quot;=System.getenv('SIGNING_PASSWORD')
+ext.&quot;signing.secretKeyRingFile&quot;=System.getenv('SIGNING_SECRETKEYRINGFILE')
+	
+signing {
+	sign configurations.archives
+}
+	
+uploadArchives {
+	repositories {
+	    mavenDeployer {
+	        beforeDeployment { MavenDeployment deployment -&gt; signing.signPom(deployment) }
+	
+	        repository(url: &quot;https://oss.sonatype.org/service/local/staging/deploy/maven2/&quot;) {
+	            authentication(userName: System.getenv('OSSRH_USER'), password: System.getenv('OSSRH_PASSWORD'))
+	        }
+	
+	        snapshotRepository(url: &quot;https://oss.sonatype.org/content/repositories/snapshots/&quot;) {
+	            authentication(userName: System.getenv('OSSRH_USER'), password: System.getenv('OSSRH_PASSWORD'))
+	        }
+	            
+	        pom.project {
+	        	name 'Noark'
+	        	packaging 'jar'
+	        	description 'This is a game server framework.'
+	        	url 'https://noark.xyz'
+	
+	        	scm {
+	          		connection 'scm:git:git@gitee.com:xiaoe/noark3.git'
+	          		developerConnection 'scm:git:git@gitee.com:xiaoe/noark3.git'
+	          		url 'https://gitee.com/xiaoe/noark3/'
+	        	}
+	
+	        	licenses {
+	          		license {
+	            		name 'The Apache License, Version 2.0'
+	            		url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+	          		}
+	        	}
+	
+	        	developers {
+	          		developer {
+	            		id 'xiaoe'
+		            	name '小流氓'
+		            	email '176543888@qq.com'
+		            	url &quot;http://blog.noark.xyz&quot;
+	          		}
+	        	}
+	        }
+	    }
+	}
+}
+	
+task sourceJar(type: Jar) {
+	from sourceSets.main.allJava
+	classifier = 'sources'
+}
+	
+task javadocJar(type: Jar) {
+	from javadoc
+	classifier = 'javadoc'
+}
+	
+artifacts {
+    archives sourceJar
+    archives javadocJar
+}
+</code></pre>
+
+<p>发布，如果提示什么异常信息，可以在单子上留言问一下工作人员，当时我之前发布一个版本，POM与签名都有问题我就删了central_bundles-14313，只能求助</p>
+
+<pre><code>I uploaded a version before and when logining https://oss.sonatype.org/#stagingRepositories,I found some problems with POM. So I droped the central_bundles-14313.
+
+Now an exception occurs when I upload again, it shows as below.
+
+'Failed to deploy artifacts: Could not transfer artifact xyz.noark:noa:noark-asm:jar:3.1.19.Final from/to remote (e (https://oss.sonatype.org/service/local/staging/deploy /maven2/): Access denied to: https://oss.sonatype.org/service/local/staging/deploy/maven2/xyz/noark/noark-asm/3.1.19.Final/noark-asm-3.1.19 .Final.jar, ReasonPhrase: Forbidden.'
+
+If the version is end by -SNAPSHOT, it can be published successfully.
+
+Here you may check all the published content through below, yet it always shows failure when publishing of 3.1.19.Final.
+
+'https://oss.sonatype.org/content/groups/public/xyz/noark/noark-asm/3.1.19-SNAPSHOT/'
+
+Now what should i do? Please help.Thanks and apprecaite.
+</code></pre>
+
+<p>第二天工作人员还是给与了回复与处理</p>
+
+<pre><code>There was a backend issue with your credentials that I've resolved. Please retry your deployment. 
+</code></pre>
+
+<p>再次发布，正常上传了。</p>
+
+<h3>0x04发布</h3>
+
+<p>登录<a href="https://oss.sonatype.org/#stagingRepositories">https://oss.sonatype.org/#stagingRepositories</a><br />
+账号密码就是前台注册的Jira单子账号密码</p>
+
+<p>搜索noark就可以看到自己的那个仓库了，xyznoark-1000，这个仓库里就是刚刚发布到sonatype仓库的项目，点击左上角的close按钮，会进行相关检测，之前POM与签名有问题就是这里提示的</p>
+
+<p>以为简单的删除就可以重来，结果不是我想得这样，所以有了上面的求助故事，这次发布全部分通过。</p>
+
+<p>项目状态变为closed之后，便可以点击release按钮，输入必要的description信息后，就发布成功了。</p>
+
+<p>此时单子下面会自动回复了一条</p>
+
+<pre><code>Central sync is activated for xyz.noark. After you successfully release, your component will be published to Central, typically within 10 minutes, though updates to search.maven.org can take up to two hours.
+</code></pre>
+
+<p>好像这就发布成功了，编写代码测试，可以拉到版本了&hellip;.</p>
+
+<p>最终我不是去单子上感谢了一下工作人员&hellip;</p>
+
+<p>结论，学好英语还是很有必要的，好怀念大学的英语老师，长得跟个校花似的&hellip;.</p>
+
+
+            <p>
+                <code>转载请注明原地址:</code>
+                <a href="http://blog.noark.xyz/article/2018/9/1/%e5%8f%91%e5%b8%83maven%e4%b8%ad%e5%a4%ae%e4%bb%93%e5%ba%93%e5%b0%8f%e8%ae%b0/">http://blog.noark.xyz/article/2018/9/1/发布maven中央仓库小记/</a>
+            </p>
+        </div>
+
+        <div class="post-footer">
+            <div class="meta">
+                <div class="info">
+                    <i class="fa fa-calendar"></i>
+                    <span class="date">2018-09-01</span>
+                    &nbsp;&nbsp;
+                    <i class="fa fa-folder-open"></i>
+                    
+                    <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">职业技能</a>&nbsp;
+                    
+                    &nbsp;&nbsp;
+                    <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Java">Java</a>&nbsp;
+                    
+                    <a href="/tag/Gradle">Gradle</a>&nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment_container post">
+        <div id="SOHUCS" sid="e44417e7bf350ba69a38d6b6c28e71da"></div>
+		<script type="text/javascript"> 
+		(function(){ 
+		var appid = 'cyt2AtDUF'; 
+		var conf = 'prod_846a5c8dcfd89035373fc1690cd74124'; 
+		var width = window.innerWidth || document.documentElement.clientWidth; 
+		if (width < 960) { 
+		window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+    </div>
+</div>
+
+            <div class="pagination">
+                <ul class="clearfix">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.9.1/languages/go.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+</body>
+</html>
