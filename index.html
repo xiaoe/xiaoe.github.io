@@ -174,6 +174,49 @@
 
 <div class="post animated fadeInDown">
     <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2018/8/1/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e5%86%85%e5%ad%98%e7%9b%91%e6%8e%a7/">Noark入门之内存监控</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>服务器正常都需要关注内存使用情况</p>
+
+<p>常规获取内存使用情况可以使用Runtime或MemoryMXBean</p>
+
+<p>Noark提供了一个内存监控服务，选择了Runtime实现，详情参考<br />
+xyz.noark.game.monitor.impl.MemoryMonitorService</p>
+
+<p>在GameServerConfiguration类中添加如下代码<br />
+@Bean</p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2018-08-01</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Java">Java</a>&nbsp;
+                
+                <a href="/tag/Noark">Noark</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
         <h3><a style="color: #FF6600" href="/article/2018/7/15/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e6%b3%a8%e5%85%a5%e6%96%b9%e5%bc%8f/">Noark入门之注入方式</a>
         </h3>
     </div>
@@ -506,49 +549,6 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes</p>
                 <i class="fa fa-tags"></i>
                 
                 <a href="/tag/Linux">Linux</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/11/15/yum%e6%ba%90%e6%9b%b4%e6%8d%a2%e4%b8%ba%e9%98%bf%e9%87%8c%e7%9a%84%e6%ba%90/">Yum源更换为阿里的源</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <p>1、备份自己信息<br />
-mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</p>
-
-<p>2、下载新的CentOS-Base.repo 到/etc/yum.repos.d/<br />
-CentOS 7<br />
-wget -O /etc/yum.repos.d/CentOS-Base.repo <a href="http://mirrors.aliyun.com/repo/Centos-7.repo">http://mirrors.aliyun.com/repo/Centos-7.repo</a></p>
-
-<p>CentOS 6<br />
-wget -O /etc/yum.repos.d/CentOS-Base.repo <a href="http://mirrors.aliyun.com/repo/Centos-6.repo">http://mirrors.aliyun.com/repo/Centos-6.repo</a></p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-11-15</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/Linux">Linux</a>&nbsp;
-                
-                <a href="/tag/Yum">Yum</a>&nbsp;
                 
 
             </div>
