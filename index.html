@@ -131,6 +131,132 @@
 
 <div class="post animated fadeInDown">
     <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2018/9/17/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e8%bd%ac%e5%8c%96%e5%99%a8/">Noark入门之转化器</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>在之前，我们编写的模板类文件时，总有个子类继承模板类，来重解析父类的字符串配置奖励&hellip;</p>
+
+<p>当项目功能越做越多时，这种很恶心的解析一次又一次的复制很是讨厌，多人之间写法又不完全一致，导致后期维护很头大&hellip;</p>
+
+<p>来看一下Noark提供的转化器带来的新感受</p>
+
+<p>比如副本通关奖励配置格式如下<br />
+道具编号:数量,道具编号:数量,道具编号:数量</p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2018-09-17</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Java">Java</a>&nbsp;
+                
+                <a href="/tag/Noark">Noark</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2018/9/17/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e7%ad%96%e5%88%92%e9%85%8d%e7%bd%ae/">Noark入门之策划配置</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>游戏开发中，策划就是导演，策划为了掌控游戏世界的规则，从而引入了策划配置文件.</p>
+
+<p>Noark内置了CSV文件到JavaBean映射，由Excel到CSV文件请参考导表工具的实现</p>
+
+<p>编码模板类文件ItemTemplate.java<br />
+@TplFile(&ldquo;Item.tpl&rdquo;)<br />
+public class ItemTemplate {<br />
+    /** 道具编号 */<br />
+    @TplAttr(name = &ldquo;Id&rdquo;)</p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2018-09-17</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Java">Java</a>&nbsp;
+                
+                <a href="/tag/Noark">Noark</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
+        <h3><a style="color: #FF6600" href="/article/2018/9/11/gradle%e5%8f%91%e5%b8%83%e7%a7%81%e6%9c%8d%e4%bb%93%e5%ba%93/">Gradle发布私服仓库</a>
+        </h3>
+    </div>
+    <div class="post-content">
+        <div class="p_part">
+            <p>内网的私服仓库安装请自行百度，这里只介绍一下Gradle发布私服仓库时的Gradle配置</p>
+
+<p>build.gradle</p>
+
+<p>引入插件<br />
+apply plugin: &lsquo;maven-publish&rsquo;</p>
+
+<p>配置发布URL与账号密码<br />
+task sourceJar(type: Jar) {</p>
+
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="meta">
+            <div class="info">
+                <i class="fa fa-calendar"></i>
+                <span class="date">2018-09-11</span>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-open"></i>
+                
+                <a href="/category/%e8%81%8c%e4%b8%9a%e6%8a%80%e8%83%bd">职业技能</a>&nbsp;
+                
+                &nbsp;&nbsp;
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tag/Gradle">Gradle</a>&nbsp;
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="post animated fadeInDown">
+    <div class="post-title">
         <h3><a style="color: #FF6600" href="/article/2018/9/1/%e5%8f%91%e5%b8%83maven%e4%b8%ad%e5%a4%ae%e4%bb%93%e5%ba%93%e5%b0%8f%e8%ae%b0/">发布Maven中央仓库小记</a>
         </h3>
     </div>
@@ -421,134 +547,6 @@ public class MailController {</p>
                 <a href="/tag/Java">Java</a>&nbsp;
                 
                 <a href="/tag/Noark">Noark</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2018/5/1/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e7%ba%bf%e7%a8%8b%e6%a8%a1%e5%9e%8b/">Noark入门之线程模型</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <h3>0x00单线程</h3>
-
-<p>多进程单线程与单进程多线程的目的都是想尽可能的利用CPU，减少CPU的空闲时间，特别是多核环境，今天咱不做深度解读，跳过&hellip;</p>
-
-<h3>0x01线程池+锁</h3>
-
-<p>最早的一部分游戏服务器是采用线程池的方式来处理玩家的业务请求，以达最大限度的利用多核优势来提高处理业务能力。</p>
-
-<p>但线程池同时也带来了并发问题，为了解决同一玩家多个业务请求不被并发，引入了锁的方式，每个Session一把锁，锁住业务处理逻辑，从而解决同步问题</p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2018-05-01</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/Java">Java</a>&nbsp;
-                
-                <a href="/tag/Noark">Noark</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2018/4/1/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e6%9e%81%e9%80%9f%e4%bd%93%e9%aa%8c/">Noark入门之极速体验</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <p>官方网站 <a href="http://www.noark.xyz">www.noark.xyz</a></p>
-
-<h3>简介</h3>
-
-<p>Noark是一个游戏服务器端框架，可快速开发出一个易维护、易扩展且稳定高能的游戏服务器，让开发者专注于逻辑功能的开发。<br />
-Noark也是从业多年的经验积累而产生的游戏服务器端框架，实现了协议映射，业务处理，模板加载，数据存储，异步事件，延迟任务，内部指令等功能模块，从而达到了松散耦合的效果，提高了系统的可重用性、可维护性以及可扩展性。<br />
-精心设计过的它大大简化了网络编程和多线程编程，还有很多改良版的工具类库，他就是为了解决开发中那些重复劳动而产生的框架。</p>
-
-<p><strong>优点：</strong></p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2018-04-01</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/Java">Java</a>&nbsp;
-                
-                <a href="/tag/Noark">Noark</a>&nbsp;
-                
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="post animated fadeInDown">
-    <div class="post-title">
-        <h3><a style="color: #FF6600" href="/article/2017/12/4/%e9%98%bf%e9%87%8c%e4%ba%91centos7%e6%8c%82%e8%bd%bd%e4%ba%91%e7%9b%98/">阿里云CentOS7挂载云盘</a>
-        </h3>
-    </div>
-    <div class="post-content">
-        <div class="p_part">
-            <p>刚买的阿里云机器，是不会自动挂载高效云盘的，需要手工处理.</p>
-
-<h3>1.查看云盘</h3>
-
-<p>[root@xxx ~]# fdisk -l</p>
-
-<p>Disk /dev/vda: 53.7 GB, 53687091200 bytes, 104857600 sectors<br />
-Units = sectors of 1 * 512 = 512 bytes<br />
-Sector size (logical/physical): 512 bytes / 512 bytes<br />
-I/O size (minimum/optimal): 512 bytes / 512 bytes</p>
-
-        </div>
-    </div>
-    <div class="post-footer">
-        <div class="meta">
-            <div class="info">
-                <i class="fa fa-calendar"></i>
-                <span class="date">2017-12-04</span>
-                &nbsp;&nbsp;
-                <i class="fa fa-folder-open"></i>
-                
-                <a href="/category/%e8%bf%90%e7%bb%b4%e7%9f%a5%e8%af%86">运维知识</a>&nbsp;
-                
-                &nbsp;&nbsp;
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tag/Linux">Linux</a>&nbsp;
                 
 
             </div>

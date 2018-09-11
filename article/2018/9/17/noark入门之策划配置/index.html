@@ -5,25 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="Mysql,Linux" />
-    <meta name="description" content="&lt;h4&gt;下载源码包&lt;/h4&gt;
+    <meta name="keywords" content="Java,Noark" />
+    <meta name="description" content="&lt;p&gt;游戏开发中，策划就是导演，策划为了掌控游戏世界的规则，从而引入了策划配置文件.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;http://dev.mysql.com/downloads/mysql/5.5.html#downloads&#34;&gt;http://dev.mysql.com/downloads/mysql/5.5.html#downloads&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Noark内置了CSV文件到JavaBean映射，由Excel到CSV文件请参考导表工具的实现&lt;/p&gt;
 
-&lt;h4&gt;创建用户&lt;/h4&gt;
-
-&lt;p&gt;shell&amp;gt; groupadd mysql&lt;br /&gt;
-shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
-
-&lt;h4&gt;解开源码包&lt;/h4&gt;
-
-&lt;p&gt;shell&amp;gt; tar zxvf mysql-VERSION.tar.gz&lt;/p&gt;" />
+&lt;p&gt;编码模板类文件ItemTemplate.java&lt;br /&gt;
+@TplFile(&amp;ldquo;Item.tpl&amp;rdquo;)&lt;br /&gt;
+public class ItemTemplate {&lt;br /&gt;
+    /** 道具编号 */&lt;br /&gt;
+    @TplAttr(name = &amp;ldquo;Id&amp;rdquo;)&lt;/p&gt;" />
 
     <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
     <link href="/assets/css/basic.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
-    <title>小流氓简介</title>
+    <title>Noark入门之策划配置</title>
 </head>
 <style type="text/css">
     h1,h2,h3 {
@@ -141,29 +138,101 @@ shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
             <div class="post-page">
     <div class="post animated fadeInDown">
         <div class="post-title">
-            <h3>
+            <h3>Noark入门之策划配置
             </h3>
         </div>
         <div class="post-content" id="content">
 
-            <h1>关于我</h1>
+            <p>游戏开发中，策划就是导演，策划为了掌控游戏世界的规则，从而引入了策划配置文件.</p>
 
-<p>江湖人称“<strong>小流氓</strong>”<br />
-专注于<strong>网络游戏</strong>相关技术<br />
-我的目标：做一款<strong>赚钱</strong>的游戏<br />
-热爱游戏事业, 正在努力为实现自我价值而奋斗中&hellip;</p>
+<p>Noark内置了CSV文件到JavaBean映射，由Excel到CSV文件请参考导表工具的实现</p>
 
-<p>欢迎相关领域的朋友一起交流，与大家一起分享经验，共享资源。<br />
-欢迎感兴趣的同行加入QQ群(50329551)进行在线交流与咨询，期望大家参与！</p>
+<p>编码模板类文件ItemTemplate.java</p>
 
-<h3>微信公众号:</h3>
+<pre><code>@TplFile(&quot;Item.tpl&quot;)
+public class ItemTemplate {
+	/** 道具编号 */
+	@TplAttr(name = &quot;Id&quot;)
+	private String id;
+	/** 道具名称 */
+	@TplAttr(name = &quot;Name&quot;)
+	private String name;
+	/** 品质 */
+	@TplAttr(name = &quot;Quality&quot;)
+	private int quality;
+	/** 道具图标 */
+	@TplAttr(name = &quot;ICON&quot;)
+	private String icon;
+	
+	...省略GetSet方法
+}
+</code></pre>
 
-<p><img src="http://blog.noark.xyz/assets/images/weixin.jpg" alt="公众号" title="公众号" /></p>
+<p>道具模板管理类ItemTemplateManager.java</p>
+
+<pre><code>@Service
+public class ItemTemplateManager extends AbstractTemplateManager {
+
+	private Map&lt;String, ItemTemplate&gt; itemTemplates;
+
+	@Override
+	public String getModuleName() {
+		return &quot;道具系统&quot;;
+	}
+
+	@Override
+	public void loadData() {
+		this.itemTemplates = templateLoader.loadAll(ItemTemplate.class, ItemTemplate::getId);
+	}
+
+	public ItemTemplate getItemTemplate(String id) {
+		return itemTemplates.get(id);
+	}
+}
+</code></pre>
+
+<p>是不是很简单&hellip;</p>
+
+<p><strong>使用场景1：道具表被策划分为多个Sheet来存放，比如普通道具一个Sheet，宝石一个Sheet，装备一个Sheet，如何来写模板呢&hellip;</strong></p>
+
+<p>建筑策划同学道具共有配置把名称搞一致，方便抽象.</p>
+
+<p>先来一个抽象类AbsItemTemplate,共有属性放这里，其他每一个功能实现一个子类&hellip;</p>
+
+<p>如果策划作死，两个表中同一功能的配置名称不一，那就定义一个接口子类实现，只是日后维护有点蛋疼，祝你性福&hellip;</p>
+
+<p>结论：Noark是支持父类中编写属性配置的</p>
+
+<p><strong>使用场景2：策划把XX属性配置给删了，但又想在日后加回来了&hellip;</strong></p>
+
+<p>直接参考编码</p>
+
+<pre><code>@TplAttr(name = &quot;Level&quot;, required=false)
+private int level = 1;
+</code></pre>
+
+<p>配置字段默认是必选项，但可以手工设置为false</p>
+
+<p>结论：Noark是支持属性为非必选，在没有配置的情况下使用属性的默认值</p>
+
+<p><strong>使用场景3：策划想配置一个数组，比如 1,2,3,5,6,7</strong></p>
+
+<pre><code>@TplAttr(name = &quot;UnlockList&quot;)
+private IntList unlockList;
+</code></pre>
+
+<p>IntList为Noark提供的int[]接口，具体由IntArrayList类实现，用法参考JDK的ArrayList</p>
+
+<p><strong>使用场景4：除了int, long, boolean, String, IntList还能使用哪些类型</strong></p>
+
+<p>目前默认支持JDK的基本数据类型和相关数组类型，自定义类型请参考转化器介绍</p>
+
+<p>理论上支持所有数据类型的映射&hellip;</p>
 
 
             <p>
                 <code>转载请注明原地址:</code>
-                <a href="http://blog.noark.xyz">http://blog.noark.xyz</a>
+                <a href="http://blog.noark.xyz/article/2018/9/17/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e7%ad%96%e5%88%92%e9%85%8d%e7%bd%ae/">http://blog.noark.xyz/article/2018/9/17/noark入门之策划配置/</a>
             </p>
         </div>
 
@@ -171,12 +240,18 @@ shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
             <div class="meta">
                 <div class="info">
                     <i class="fa fa-calendar"></i>
-                    <span class="date">2018-09-11</span>
+                    <span class="date">2018-09-17</span>
                     &nbsp;&nbsp;
                     <i class="fa fa-folder-open"></i>
                     
+                    <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
+                    
                     &nbsp;&nbsp;
                     <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Java">Java</a>&nbsp;
+                    
+                    <a href="/tag/Noark">Noark</a>&nbsp;
                     
                 </div>
             </div>
@@ -184,7 +259,7 @@ shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
     </div>
 
     <div class="comment_container post">
-        <div id="SOHUCS" sid="d41d8cd98f00b204e9800998ecf8427e"></div>
+        <div id="SOHUCS" sid="7415cd2abd6e4780e52187061a73c8e6"></div>
 		<script type="text/javascript"> 
 		(function(){ 
 		var appid = 'cyt2AtDUF'; 

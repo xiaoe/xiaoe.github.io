@@ -5,25 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="Mysql,Linux" />
-    <meta name="description" content="&lt;h4&gt;下载源码包&lt;/h4&gt;
+    <meta name="keywords" content="Java,Noark" />
+    <meta name="description" content="&lt;p&gt;在之前，我们编写的模板类文件时，总有个子类继承模板类，来重解析父类的字符串配置奖励&amp;hellip;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;http://dev.mysql.com/downloads/mysql/5.5.html#downloads&#34;&gt;http://dev.mysql.com/downloads/mysql/5.5.html#downloads&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;当项目功能越做越多时，这种很恶心的解析一次又一次的复制很是讨厌，多人之间写法又不完全一致，导致后期维护很头大&amp;hellip;&lt;/p&gt;
 
-&lt;h4&gt;创建用户&lt;/h4&gt;
+&lt;p&gt;来看一下Noark提供的转化器带来的新感受&lt;/p&gt;
 
-&lt;p&gt;shell&amp;gt; groupadd mysql&lt;br /&gt;
-shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
-
-&lt;h4&gt;解开源码包&lt;/h4&gt;
-
-&lt;p&gt;shell&amp;gt; tar zxvf mysql-VERSION.tar.gz&lt;/p&gt;" />
+&lt;p&gt;比如副本通关奖励配置格式如下&lt;br /&gt;
+道具编号:数量,道具编号:数量,道具编号:数量&lt;/p&gt;" />
 
     <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/solarized_dark.min.css" rel="stylesheet">
     <link href="/assets/css/basic.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
-    <title>小流氓简介</title>
+    <title>Noark入门之转化器</title>
 </head>
 <style type="text/css">
     h1,h2,h3 {
@@ -141,29 +137,96 @@ shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
             <div class="post-page">
     <div class="post animated fadeInDown">
         <div class="post-title">
-            <h3>
+            <h3>Noark入门之转化器
             </h3>
         </div>
         <div class="post-content" id="content">
 
-            <h1>关于我</h1>
+            <p>在之前，我们编写的模板类文件时，总有个子类继承模板类，来重解析父类的字符串配置奖励&hellip;</p>
 
-<p>江湖人称“<strong>小流氓</strong>”<br />
-专注于<strong>网络游戏</strong>相关技术<br />
-我的目标：做一款<strong>赚钱</strong>的游戏<br />
-热爱游戏事业, 正在努力为实现自我价值而奋斗中&hellip;</p>
+<p>当项目功能越做越多时，这种很恶心的解析一次又一次的复制很是讨厌，多人之间写法又不完全一致，导致后期维护很头大&hellip;</p>
 
-<p>欢迎相关领域的朋友一起交流，与大家一起分享经验，共享资源。<br />
-欢迎感兴趣的同行加入QQ群(50329551)进行在线交流与咨询，期望大家参与！</p>
+<p>来看一下Noark提供的转化器带来的新感受</p>
 
-<h3>微信公众号:</h3>
+<p>比如副本通关奖励配置格式如下</p>
 
-<p><img src="http://blog.noark.xyz/assets/images/weixin.jpg" alt="公众号" title="公众号" /></p>
+<pre><code>道具编号:数量,道具编号:数量,道具编号:数量
+</code></pre>
+
+<p>编码SimpleItem.java</p>
+
+<pre><code>public class SimpleItem {
+	private String id;
+	private int num;
+	//省略GetSet方法...
+}
+</code></pre>
+
+<p>编码SimpleItemList.java</p>
+
+<pre><code>public class SimpleItemList {
+	private List&lt;SimpleItem&gt; items;
+	//省略GetSet方法...
+}
+</code></pre>
+
+<p>副本模板类添加SimpleItemList注入</p>
+
+<pre><code>@TplAttr(name = &quot;Items&quot;)
+private SimpleItemList items;
+</code></pre>
+
+<p>是不是很像模板注入中的IntList，没错就是这样简单方便，但是这还不能正常工作&hellip;</p>
+
+<p>每一个成功运作的背后都有一个类型转化器在默默的为他解析构建生成注入&hellip;</p>
+
+<p>编写SimpleItemListConverter.java</p>
+
+<pre><code>@TemplateConverter(SimpleItemList.class)
+public class SimpleItemListConverter extends AbstractConverter&lt;SimpleItemList&gt; {
+
+	@Override
+	public SimpleItemList convert(String value) throws Exception {
+		SimpleItemList result = new SimpleItemList();
+		if (StringUtils.isNotEmpty(value)) {
+			String[] items = StringUtils.split(value, &quot;,&quot;);
+			List&lt;SimpleItem&gt; itemList = new ArrayList&lt;&gt;(items.length);
+			for (String item : items) {
+				String[] args = StringUtils.split(item, &quot;:&quot;);
+				itemList.add(new SimpleItem(args[0], Integer.parseInt(args[1])));
+			}
+			result.setItems(itemList);
+		} else {
+			result.setItems(Collections.emptyList());
+		}
+		return result;
+	}
+
+	@Override
+	public String buildErrorMsg() {
+		return &quot;道具编号:数量,道具编号:数量,道具编号:数量&quot;;
+	}
+}
+</code></pre>
+
+<p>需求又来了，如果策划说副本扫荡奖励也跟这个长一样，是不是还要写个类再写个转化器呢？</p>
+
+<p>如果是配置格式长得一样，那就直接用嘛</p>
+
+<pre><code>@TplAttr(name = &quot;SweepReward&quot;)
+private SimpleItemList sweepReward;
+</code></pre>
+
+<p>只要编写一次，到处转化&hellip;</p>
+
+<p>研发中，有了转化器的存在，整体性福感满满的，因为再也不会有相同功能的配置长两种格式，数值大爷都爱你了&hellip;</p>
+
+<p>想当年啊，策划A设计通关奖励是用逗号，策划B在扫荡奖励用分号，程序观点反正坑得是数值，数值观点反正出了问题找程序，一直在相互伤害中成长</p>
 
 
             <p>
                 <code>转载请注明原地址:</code>
-                <a href="http://blog.noark.xyz">http://blog.noark.xyz</a>
+                <a href="http://blog.noark.xyz/article/2018/9/17/noark%e5%85%a5%e9%97%a8%e4%b9%8b%e8%bd%ac%e5%8c%96%e5%99%a8/">http://blog.noark.xyz/article/2018/9/17/noark入门之转化器/</a>
             </p>
         </div>
 
@@ -171,12 +234,18 @@ shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
             <div class="meta">
                 <div class="info">
                     <i class="fa fa-calendar"></i>
-                    <span class="date">2018-09-11</span>
+                    <span class="date">2018-09-17</span>
                     &nbsp;&nbsp;
                     <i class="fa fa-folder-open"></i>
                     
+                    <a href="/category/Noark%e5%85%a5%e9%97%a8">Noark入门</a>&nbsp;
+                    
                     &nbsp;&nbsp;
                     <i class="fa fa-tags"></i>
+                    
+                    <a href="/tag/Java">Java</a>&nbsp;
+                    
+                    <a href="/tag/Noark">Noark</a>&nbsp;
                     
                 </div>
             </div>
@@ -184,7 +253,7 @@ shell&amp;gt; useradd -g mysql mysql&lt;/p&gt;
     </div>
 
     <div class="comment_container post">
-        <div id="SOHUCS" sid="d41d8cd98f00b204e9800998ecf8427e"></div>
+        <div id="SOHUCS" sid="76cda143f2c65be7f4335da80f33d2c1"></div>
 		<script type="text/javascript"> 
 		(function(){ 
 		var appid = 'cyt2AtDUF'; 
